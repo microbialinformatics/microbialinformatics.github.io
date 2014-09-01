@@ -1,4 +1,6 @@
-MICRBIOL 612: Microbial Informatics
+---
+title: MICRBIOL 612: Microbial Informatics
+layout: post
 ====
 
 This is the GitHub repository for a graduate level course in bioinformatics at the University of Michigan. The goals of the course include using the R programming language to teach the following concepts:
