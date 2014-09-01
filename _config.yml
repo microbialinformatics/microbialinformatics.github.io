@@ -1,0 +1,13 @@
+# Site settings
+title: Microbial Informatics
+email: pschloss@umich.edu
+description: > # this means to ignore newlines until "baseurl:"
+  The website for MICRBIOL 612: Microbial Informatics at the University of
+  Michigan being taught by Pat Schloss in the Fall Semester of 2014.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://microbialinformatics.github.io" # the base hostname & protocol for your site
+twitter_username: pschloss
+github_username:  pschloss
+
+# Build settings
+markdown: kramdown
