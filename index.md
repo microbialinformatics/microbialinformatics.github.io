@@ -11,7 +11,7 @@ This is the GitHub repository for a graduate level course in bioinformatics at t
 
 The course is offered in the fall of even years.
 
---
+----
 
 ### Texts
 **Required:**    
@@ -22,7 +22,7 @@ The course is offered in the fall of even years.
 * Bioinformatics data skills by Vincent Buffalo [ pdf, [O'Reilly](http://shop.oreilly.com/product/0636920030157.do) ]  
 * ProGit by Scott Chacon [ [pdf](http://git-scm.com/book), [Amazon](http://www.amazon.com/Pro-Git-Scott-Chacon/dp/1430218339) ]  
 
---
+----
 
 ### Lectures
 * [Lecture 01](slides/Lecture01.html): Introduction to reproducible research
