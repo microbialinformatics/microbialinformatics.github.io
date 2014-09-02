@@ -100,13 +100,13 @@ plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pc
 ---
 ## [nbviewer]()
 
-<img src="assets/img/nbviewerScreenShot.png", style="margin:0px auto;display:block" width="900">
+<img src="assets/img/nbviewerScreenShot.png", style="margin:0px auto;display:block" width="600">
 
 ---
 
 ## [Rpubs]()
 
-<img src="assets/img/rPubsScreenShot.png", style="margin:0px auto;display:block" width="900">
+<img src="assets/img/rPubsScreenShot.png", style="margin:0px auto;display:block" width="600">
 
 
 --- &twocol

@@ -93,6 +93,18 @@ plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pc
 
 <img src="assets/fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" />
 
+---
+## [nbviewer]()
+
+<img src="assets/img/nbviewerScreenShot.png", style="margin:0px auto;display:block" width="600">
+
+---
+
+## [Rpubs]()
+
+<img src="assets/img/rPubsScreenShot.png", style="margin:0px auto;display:block" width="600">
+
+
 --- &twocol
 ## Version control software (VCS)
 
@@ -174,7 +186,8 @@ plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pc
 * Data processing pipeline
 * Convert ODs from a plate reader to growth curve characteristics
 * Primer design
-* 
+* PubMed crawler
+* Anything you do that is repitious
 
 ---
 
