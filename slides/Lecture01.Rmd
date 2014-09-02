@@ -244,6 +244,7 @@ plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pc
 * Install appropriate software
 * Order books
 * Sign-up for an account on [GitHub](http://github.com)
+* Check out Software Carpentry [Git tutorial](http://software-carpentry.org/v5/novice/git/index.html)
 
 --- .segue .dark
 
