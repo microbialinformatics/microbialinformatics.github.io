@@ -87,6 +87,11 @@ knit        : slidify::knit2slides
 *** {name: right}
   <img src="assets/img/phd101212s.gif" alt="Piled Higher and Deeper by Jorge Cham, http://www.phdcomics.com", style="margin:0px auto;display:block" width="400">
 
+--- &vcenter
+
+<img src="assets/img/RepoHistory.png", style="margin:0px auto;display:block" width="900">
+
+
 ---
 
 ## Objectives for semester
@@ -144,6 +149,14 @@ knit        : slidify::knit2slides
 * High-level programming language
 * Many people from sociology to molecular biology are using and developing; you can too!
 * The Comprehensive R Archive Network (CRAN)
+
+---
+
+## Possible applications for your research
+* Data processing pipeline
+* Convert ODs from a plate reader to growth curve characteristics
+* Primer design
+* 
 
 ---
 
