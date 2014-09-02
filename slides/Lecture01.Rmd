@@ -97,6 +97,18 @@ par(mar=c(5,4,0.5,0.5))
 plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pch=19, cex=1.25)
 ```
 
+---
+## [nbviewer]()
+
+<img src="assets/img/nbviewerScreenShot.png", style="margin:0px auto;display:block" width="900">
+
+---
+
+## [Rpubs]()
+
+<img src="assets/img/rPubsScreenShot.png", style="margin:0px auto;display:block" width="900">
+
+
 --- &twocol
 ## Version control software (VCS)
 
