@@ -178,7 +178,8 @@ plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pc
 * Data processing pipeline
 * Convert ODs from a plate reader to growth curve characteristics
 * Primer design
-* 
+* PubMed crawler
+* Anything you do that is repitious
 
 ---
 
