@@ -3,4 +3,4 @@ _site
 .sass-cache
 .Rhistory
 .cache
-assets/fig/
+/slides/assets/fig/
