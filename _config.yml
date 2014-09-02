@@ -6,7 +6,7 @@ description: > # this means to ignore newlines until "baseurl:"
   Michigan being taught by Pat Schloss in the Fall Semester of 2014.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://microbialinformatics.github.io" # the base hostname & protocol for your site
-twitter_username: pschloss
+twitter_username: patschloss
 github_username:  pschloss
 
 # Build settings
