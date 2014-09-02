@@ -12,6 +12,13 @@ mode        : standalone    # {selfcontained, standalone, draft}
 knit        : slidify::knit2slides
 
 --- 
+
+## Learning objectives
+* Understand the concepts of reproducible research
+* Learn what's wrong with how we currently do data analysis
+* Gain exposure to tools that will help us to do reproducible research
+
+--- 
 ## Introduction
 * Need for...
  * electron/paper trail
@@ -164,7 +171,7 @@ plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pc
 
 ---
 
-##Philosophy...
+## Philosophy...
 * Think of this as a foreign language class.
 * There's a lot of vocabulary to learn in R, but a lot of it you can create on your own.  E.g. sum command
 * We will start with the basic parts of speech
@@ -240,6 +247,7 @@ plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pc
 * Install appropriate software
 * Order books
 * Sign-up for an account on [GitHub](http://github.com)
+* Check out Software Carpentry [Git tutorial](http://software-carpentry.org/v5/novice/git/index.html)
 
 --- .segue .dark
 

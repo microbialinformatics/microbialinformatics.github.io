@@ -175,7 +175,7 @@ plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pc
 
 ---
 
-##Philosophy...
+## Philosophy...
 * Think of this as a foreign language class.
 * There's a lot of vocabulary to learn in R, but a lot of it you can create on your own.  E.g. sum command
 * We will start with the basic parts of speech
