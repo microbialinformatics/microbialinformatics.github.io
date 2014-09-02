@@ -75,6 +75,24 @@ knit        : slidify::knit2slides
  * slides and lecture notes will be provided using this format
  * homework assignments will be submitted in this format
 
+---
+
+## Embed source code in documents
+
+
+```r
+x <- runif(20)
+y <- runif(20)
+par(mar=c(5,4,0.5,0.5))
+plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pch=19, cex=1.25)
+```
+
+---
+
+## Embed source code in documents
+
+<img src="assets/fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" />
+
 --- &twocol
 ## Version control software (VCS)
 
@@ -86,6 +104,11 @@ knit        : slidify::knit2slides
 
 *** {name: right}
   <img src="assets/img/phd101212s.gif" alt="Piled Higher and Deeper by Jorge Cham, http://www.phdcomics.com", style="margin:0px auto;display:block" width="400">
+
+--- &vcenter
+
+<img src="assets/img/RepoHistory.png", style="margin:0px auto;display:block" width="900">
+
 
 ---
 
@@ -144,6 +167,14 @@ knit        : slidify::knit2slides
 * High-level programming language
 * Many people from sociology to molecular biology are using and developing; you can too!
 * The Comprehensive R Archive Network (CRAN)
+
+---
+
+## Possible applications for your research
+* Data processing pipeline
+* Convert ODs from a plate reader to growth curve characteristics
+* Primer design
+* 
 
 ---
 
