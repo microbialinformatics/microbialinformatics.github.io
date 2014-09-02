@@ -12,6 +12,13 @@ mode        : standalone    # {selfcontained, standalone, draft}
 knit        : slidify::knit2slides
 
 --- 
+
+## Learning objectives
+* Understand the concepts of reproducible research
+* Learn what's wrong with how we currently do data analysis
+* Gain exposure to tools that will help us to do reproducible research
+
+--- 
 ## Introduction
 * Need for...
  * electron/paper trail
