@@ -227,7 +227,7 @@ plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pc
 * Friday labs will focus on practical aspects
 * Grading
  * **Problem sets (50%):** to be started in lab
- * **Project 1 (25%):** prepare a statistical report with graphs and analysis covering some type of statistical problem faced by your laboratory (or that interests you) (40%)
+ * **Project 1 (25%):** prepare a statistical report with graphs and analysis covering some type of statistical problem faced by your laboratory (or that interests you)
  * **Project 2 (25%):** write a program to solve a problem you or someone else face in the laboratory (or that interests you)
 
 ---
