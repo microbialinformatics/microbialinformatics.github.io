@@ -198,7 +198,7 @@ plot(x, y, xlab="Random X Value", ylab="Random Y Value", main="", col="blue", pc
 * Convert ODs from a plate reader to growth curve characteristics
 * Primer design
 * PubMed crawler
-* Anything you do that is repitious
+* Anything you do that is repetitious
 
 ---
 
