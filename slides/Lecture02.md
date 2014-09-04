@@ -14,10 +14,9 @@ knit        : slidify::knit2slides
 --- 
 
 ## Learning objectives
-* Introduce RStudio
-* Introduce knitr
-* Describe how to generate a document in markdown
-* Differentiate between different flavors of markdown
+* Gain familiarity with RStudio
+* Describe how to generate a document in markdown and the R flavor of markdown
+* Understand the basics of version control software using git
 
 --- &vcenter
 
@@ -122,7 +121,7 @@ knit        : slidify::knit2slides
 * "R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of markdown (an easy-to-write plain text format) with embedded R code chunks that are run so their output can be included in the final document. R Markdown documents are fully reproducible (they can be automatically regenerated whenever underlying R code or data changes)." - [RStudio website](http://rmarkdown.rstudio.com)
 * Keys...
  * Ability to format text
- * Imbed R code and output as chunks or inline
+ * Embed R code and output as chunks or inline
 
 ---
 
@@ -144,7 +143,7 @@ knit        : slidify::knit2slides
 ## knitr
 * The chunks and inline approaches are implemented using an R package called knitr
 * We will talk about knitr later when we start digging into R's syntax
-* Documenation and a book (written in knitr) can be found on [Yi Hui's website](http://yihui.name/knitr/)
+* Documentation and a book (written in knitr) can be found on [Yi Hui's website](http://yihui.name/knitr/)
 
 
 ---
@@ -161,7 +160,7 @@ knit        : slidify::knit2slides
 *** =pnotes
 * Students are encouraged to go through the rmarkdown.rstudio.com on their own
 * We will be using the basics of R markdown in this course, but if you want to make documents
-more attactive you'll likely want to play with the formating styles.
+more attractive you'll likely want to play with the formatting styles.
 
 --- &vcenter
 
@@ -204,19 +203,73 @@ Encourage students to muck around with R Markdown syntax here
 
 ---
 
----
+## Version control software (VCS)
+* Example scenarios:
+ * You are working by yourself on the data analysis for your thesis. Your advisor wants to see the bleeding edge code for what you are doing.
+ * You are working with collaborators on the data analysis for a paper. Since each has a different piece of the story to take care of, everyone has their own workflows, versions of the raw data, etc. 
+ * You discover a bug in your favorite R package and have found a fix for it
+* Each of these problems can be solved using VCS
 
 ---
 
+## Version control defined  
+> "A tool for managing changes to a set of files. Each set of changes creates a new revision of the files; the version control system allows users to recover old revisions reliably, and helps manage conflicting changes made by different users."
+-- [Software Carpentry Workshop](http://software-carpentry.org/v5/gloss.html#version-control)
+
 ---
 
+## Important points
+* It's virtually impossible to lose old versions of text
+* Can be used like the "undo/redo" features in Word, but with branches
+* Keeps a record of who made changes and when
+* Difficult to ignore other people's contributions since software notifies of conflicts
+* git is one type of VCS, but it's the most popular
 
+--- &twocol
+
+## Theory ([From ProGit] (http://git-scm.com/book/en/Getting-Started-About-Version-Control))
+
+*** {name: left}
+<img src="http://git-scm.com/figures/18333fig0101-tn.png", style="margin:0px auto;display:block" width="470">
+
+*** {name: right}
+<img src="http://git-scm.com/figures/18333fig0102-tn.png", style="margin:0px auto;display:block" width="500">
+
+--- &vcenter
+
+## Theory ([From ProGit] (http://git-scm.com/book/en/Getting-Started-Git-Basics))
+
+<img src="http://git-scm.com/figures/18333fig0105-tn.png", style="margin:0px auto;display:block" width="1000">
+
+*** =pnotes
+Git keeps track of snapshots of your files over time and if a file hasn't changed since the last "save", the it uses a pointer to point back to the previous version
+
+--- &vcenter
+
+## Theory ([From ProGit] (http://git-scm.com/book/en/Getting-Started-Git-Basics))
+<img src="http://git-scm.com/figures/18333fig0106-tn.png", style="margin:0px auto;display:block" width="600">
+
+*** =pnotes
+* The working directory is a single checkout of one version of the project. These files are pulled out of the compressed database in the Git directory and placed on disk for you to use or modify.
+* The staging area is a simple file, generally contained in your Git directory, that stores information about what will go into your next commit. It’s sometimes referred to as the index, but it’s becoming standard to refer to it as the staging area.
+* The Git directory is where Git stores the data for your project. This is the most important part of Git, and it is what is copied when you clone a repository from another computer.
+
+---
+
+## Basic workflow...
+* Muck around with the files in your working directory. Possibly add or delete files.
+* You stage the files, adding snapshots of them to your staging area. (`git add`)
+* You take the files as they are in the staging area and store that to your Git directory. (`git commit`)
+
+---
 
 ## For Friday
 * Install appropriate software that we discussed on Tuesday
-* Get books
 * Sign-up for an account on [GitHub](http://github.com)
 * Check out Software Carpentry [Git tutorial](http://software-carpentry.org/v5/novice/git/index.html)
+* Read first two chapters of ProGit
+ * [Getting Started](http://git-scm.com/book/en/Getting-Started)
+ * [Git Basics](http://git-scm.com/book/en/Git-Basics)
 
 --- .segue .dark
 
