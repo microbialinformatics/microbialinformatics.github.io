@@ -26,7 +26,7 @@ The course is offered in the fall of even years.
 ----
 
 ### Lectures
-The following links go to html-based slide stacks that have embedded links to other resources. They are best viewed in the Chrome browser. If you want to see the slides in "presenter mode", then add `?presentme=true` at the end of the url. If you want to see the presenter notes for each slide press `p` on each slide.  
-
-* [Lecture 01](slides/Lecture01.html): Introduction to reproducible research
-* [Lecture 02](slides/Lecture02.html): Introduction to RStudio, R Markdown, and Git
+The following links go to html-based slide stacks that have embedded links to other resources. They are best viewed in the Chrome browser. If you want to see the slides in "presenter mode", then add `?presentme=true` at the end of the url. If you want to see the presenter notes for each slide press `p` on each slide. I've also added the number of slides in each deck. If you don't see the correct number of slides, please hit refresh until you do.
+  
+* [Lecture 01](slides/Lecture01.html): Introduction to reproducible research (29 slides)
+* [Lecture 02](slides/Lecture02.html): Introduction to RStudio, R Markdown, and Git (35 slides)
