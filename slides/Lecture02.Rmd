@@ -87,6 +87,7 @@ knit        : slidify::knit2slides
 *** =pnotes
 * Sweave was the predecessor to knitr - we want to use knitr
 * Set the "Weave Rnw files using" option to knitr
+* May need to go to the package pane to select and install knitr 
 
 --- &vcenter
 
@@ -105,31 +106,103 @@ knit        : slidify::knit2slides
 
 ---
 
-## What is Markdown?
+## What is Markdown (*.md)?
+* "Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML)." - [John Gruber](http://daringfireball.net/projects/markdown/)
+* The advantage is that you can read it as a text document and it will make sense and you can use conversion software to generate other file formats including html, pdf, docx
+* Can be rendered using:
+ * A Perl script from Gruber
+ * RStudio
+
+*** =pnotes
+* These slides and course materials will be written in Markdown
 
 --- 
 
-## What's special about R markdown?
+## What's special about R markdown (*.Rmd)?
+* "R Markdown is an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. It combines the core syntax of markdown (an easy-to-write plain text format) with embedded R code chunks that are run so their output can be included in the final document. R Markdown documents are fully reproducible (they can be automatically regenerated whenever underlying R code or data changes)." - [RStudio website](http://rmarkdown.rstudio.com)
+* Keys...
+ * Ability to format text
+ * Imbed R code and output as chunks or inline
 
+---
 
---- 
+## Chunks
+```{r, echo=FALSE, fig.align="center"}
+	par(mar=c(5,4,0.5,0.5))
+	plot(runif(100))
+```
+
+---  
+
+## Inline
+
+> * Let me pick a random number between 1 and 10.
+> * Hmmm, I pick `r z <- sample(1:10, 1); z`
+> * `r z` squared is `r z^2`
+> * All of the numbers (after 1 and 10) were generated within R
+> * The dynamic component is that you use R packages to allow a user to set the min and max values to bound your pick
+
+---
 
 ## Syntax
-* Headings
-* Italics, bold, bold italics
-* Lists
+* An R markdown "cheat sheet" is available for you to download and print from [rstudio.com](http://shiny.rstudio.com/articles/rm-cheatsheet.html)
+* Other documentation, examples, tutorials are available at [rmarkdown.rstudio.com](http://rmarkdown.rstudio.com)
+ * You can use existing [document templates](http://rmarkdown.rstudio.com/developer_document_templates.html)
+ * You can design your own [report templates](http://rmarkdown.rstudio.com/developer_custom_formats.html)
+ * Possible to insert [paper references](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
+ * There's a lot more there
+* We will be using R markdown tomorrow as part of the exercise
+
+*** =pnotes
+* Students are encouraged to go through the rmarkdown.rstudio.com on their own
+* We will be using the basics of R markdown in this course, but if you want to make documents
+more attactive you'll likely want to play with the formating styles.
+
+--- &vcenter
+
+<img src="assets/img/RMarkdownCheatSheetFormatting.png", style="margin:0px auto;display:block" width="550">
+
+*** =pnotes
+If you can learn this you'll be good to go...
 
 
---- 
+--- &vcenter
 
---- 
+<img src="assets/img/MarkdownCreateFile.png", style="margin:0px auto;display:block" width="1000">
+
+--- &vcenter
+
+<img src="assets/img/MarkdownSelectFormat.png", style="margin:0px auto;display:block" width="1000">
+
+--- &vcenter
+
+<img src="assets/img/MarkdownSourceCode.png", style="margin:0px auto;display:block" width="1000">
+
+--- &vcenter
+
+<img src="assets/img/MarkdownEditOptions.png", style="margin:0px auto;display:block" width="1000">
+
+--- &vcenter
+
+<img src="assets/img/MarkdownKeepMDFile.png", style="margin:0px auto;display:block" width="1000">
+
+--- &vcenter
+
+<img src="assets/img/MarkdownKnittedToHTML.png", style="margin:0px auto;display:block" width="1000">
+
+---
+
+---
+
+---
+
+---
 
 
---- 
 
 ## For Friday
-* Install appropriate software
-* Order books
+* Install appropriate software that we discussed on Tuesday
+* Get books
 * Sign-up for an account on [GitHub](http://github.com)
 * Check out Software Carpentry [Git tutorial](http://software-carpentry.org/v5/novice/git/index.html)
 
