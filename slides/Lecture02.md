@@ -141,6 +141,14 @@ knit        : slidify::knit2slides
 
 ---
 
+## knitr
+* The chunks and inline approaches are implemented using an R package called knitr
+* We will talk about knitr later when we start digging into R's syntax
+* Documenation and a book (written in knitr) can be found on [Yi Hui's website](http://yihui.name/knitr/)
+
+
+---
+
 ## Syntax
 * An R markdown "cheat sheet" is available for you to download and print from [rstudio.com](http://shiny.rstudio.com/articles/rm-cheatsheet.html)
 * Other documentation, examples, tutorials are available at [rmarkdown.rstudio.com](http://rmarkdown.rstudio.com)
