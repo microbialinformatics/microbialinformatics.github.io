@@ -175,6 +175,13 @@ If you can learn this you'll be good to go...
 
 <img src="assets/img/MarkdownSourceCode.png", style="margin:0px auto;display:block" width="1000">
 
+*** =pnotes
+Encourage students to muck around with R Markdown syntax here
+
+--- &vcenter
+
+<img src="assets/img/MarkdownReferenceButton.png", style="margin:0px auto;display:block" width="1000">
+
 --- &vcenter
 
 <img src="assets/img/MarkdownEditOptions.png", style="margin:0px auto;display:block" width="1000">
