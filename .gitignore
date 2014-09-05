@@ -4,3 +4,4 @@ _site
 .Rhistory
 .cache
 /slides/assets/fig/
+*.html
