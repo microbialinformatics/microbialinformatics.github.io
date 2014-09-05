@@ -25,6 +25,13 @@ The course is offered in the fall of even years.
 
 ----
 
+### Assignments
+The following links go to github repositories that have the homework assignments:
+
+* [Assignment 01](https://github.com/microbialinformatics/assignment01): Exploring github and markdown (Due 9/12/2014)
+
+----
+
 ### Lectures
 The following links go to html-based slide stacks that have embedded links to other resources. They are best viewed in the Chrome browser. If you want to see the slides in "presenter mode", then add `?presentme=true` at the end of the url. If you want to see the presenter notes for each slide press `p` on each slide. I've also added the number of slides in each deck. If you don't see the correct number of slides, please hit refresh until you do.
   
