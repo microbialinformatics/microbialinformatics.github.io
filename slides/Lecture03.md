@@ -24,10 +24,22 @@ knit        : slidify::knit2slides
 ## Learning objectives
 * Finalize introduction to git
 * Introduce R language
+* Introduce knitr
+* vectors
 
 --- 
 
-
+## More git
+* **When:** Each commit should represent a single functionality or error fix.
+* **How** (["The seven rules of a great git commit message"](http://chris.beams.io/posts/git-commit/#seven-rules)): 
+ 1. Separate subject from body with a blank line
+ 1. Limit the subject line to 50 characters
+ 1. Capitalize the subject line
+ 1. Do not end the subject line with a period
+ 1. Use the imperative mood in the subject line
+ 1. Wrap the body at 72 characters
+ 1. Use the body to explain what and why vs. how
+* [git cheat sheet](https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf)
 
 --- 
 
@@ -49,7 +61,6 @@ knit        : slidify::knit2slides
 * If there is a `+` instead of `>` as the prompt: Hit `Control+C` or `esc`
 * up arrow allows you to cycle through your history (it's also in the top right corner)
 * hitting tab from the command line auto-completes command and file names
-
 
 ---
 
@@ -76,6 +87,33 @@ floor(pi)
 ceiling(pi)
 5 %% 2
 ```
+
+--- 
+
+## Code chunks in knitr
+
+Show cheat sheet
+
+---
+
+## Examples
+
+echo=T, eval=T
+echo=F, eval=T
+echo=T, eval=F
+echo=F, eval=F #why???
+
+---
+
+## Cache
+* `, cache=TRUE`
+* Evaluate it once so that you don't have to waste time redoing the analysis over and over
+* Can cause problems as documents get bigger and bigger; may need to compile in command line R
+
+
+---
+
+## How to run code chunks 
 
 --- 
 
@@ -114,28 +152,18 @@ plot(x=1:10,y=(1:10)^2)
 ---
 
 ## Variables
-*	assignment: "<-" or "="
+*	assignment: `<-` or `=`
 
 
 ```r
 	x <- 3
 	x
-```
-
-```
-## [1] 3
-```
-
-```r
 	x * 3
-```
-
-```
-## [1] 9
 ```
 
 *	List current variables: `ls()`
 *	Remove a varaible: `rm(x)`
+* ***ProTip:*** use `<-` for assignment and `=` for parameter option values
 
 ---
 
@@ -203,7 +231,6 @@ genome <- "ATGCATCGTCCCGT"
 
 ---
 
-
 ##	Logical values as inputs (T/F; 1/0)
 
 
@@ -256,20 +283,144 @@ genome <- "ATGCATCGTCCCGT"
 
 ---
 
+##	Converting
+
+
+```r
+	as.numeric(x)
+	as.logical(x)
+	as.character(x)
+```
+
+* There are other conversions that can be done. How would you figure out which converters are out there?
+* Be sure to understand the "side effects" of the conversions
+
+---
+
+## Types of containers
+* Vectors
+* List
+* Matrix
+* Table
+* Data table
+* Factors
+*	We will go through these more in detail throughout the course and especially in second half of the course
+
+---
+
+##	Vectors
+* One-dimensional sets of values of the same type
+* Everything in R is some form of a vector
+* You can read in vectors from a file or create them on the fly.  Four common ways of creating a vector include using `c()`, `:`, `rep()`, `seq()`.  Here are several examples:
+
+
+```r
+	19:55                   # list the values from 19 to 55 by ones
+	c(1,2,3,4)              # concatenate 1, 2, 3, 4, 5 into a vector
+	rep("red", 5)           # repeat "red" five times
+	seq(1,10,by=3)          # list the values from 1 to 10 by 3's
+	seq(1,10,length.out=20) # list 20 evenly spaced elements from 1 to 10
+	seq(1,10,len=20)        # same thing; arguments of any function can be 
+	c(rep("red", 5), rep("white", 5), rep("blue", 5))
+	rep(c(0,1), 10)
+	countToTen <- 1:10
+```
 
 
 ---
 
+## Operations act on vectors
 
+
+```r
+	countToTen <- 1:10
+	length(countToTen)
+	countToTen
+	countToTen^2
+	countToTen > 5
+	typeof(countToTen)
+	is.vector(countToTen)  
+```
 
 ---
 
+## Indexing into vectors
+* Note that in contrast to many programming languages, vectors in R are indexed such that the first value is 1 NOT 0.
 
+	
+
+```r
+	code <- c("A", "T", "G", "C")
+	
+	code[2]				# get the second element
+	code[0]				# errr...
+	code[-1]			# remove the first element
+	code[c(1,2)]		# get the first and second elements
+	code[code > "M"]	# get any element greater than "M"
+```
+
+* What does this do?
+
+
+```r
+	code[length(code)]
+```
+
+---
+
+## Defining a vector
+
+
+```r
+	z <- numeric(5)			#	This creates a numerical vector with 5 zeros
+	z[3] <- 10
+	z
+	z[1:3] <- 5
+	z
+	z[10] <- pi					#	NA's are inserted between 5 and 9
+	z[4] <- "R rocks!"	#	everything changes to a character
+	
+	t <- character(5)
+	t[4] <- "DNA rocks!"
+```
+
+---
+
+## Indexing by characters
+
+* You can also create vectors that are indexed by character strings
+* In some programming languages these are called hash-maps or look-up tables.
+
+
+```r
+		v <- numeric(0)
+		v["A"] <- 1.23498
+		v["T"] <- 2.2342
+		v["C"] <- 3
+		v["G"] <- 4
+		v["A"]
+		v[["A"]]      # strips the name associated with value 1
+
+		v2 <- c(A=1.23498,T=2.2342,C=3,G=4)
+```
+
+---
+
+## Naming cells in your vectors
+
+
+```r
+		names(v)
+		names(v) <- c("A", "B", "C", "D")
+		names(v) <- NULL  # this removes names attribute
+```
 
 ---
 
 ## For Friday
-* Continue to work your way through the assignment
+* Continue to work your way through the assignment that is due on Friday
+* Read ***Introduction to Statistics with R*** (Chapters 1 and 2)
+* Will post new homework will come out by the weekend that will be due in two weeks
 
 
 --- .segue .dark
