@@ -91,17 +91,66 @@ ceiling(pi)
 --- 
 
 ## Code chunks in knitr
+* Embed R code into reports, documents, and slide shows
+* [Cheat sheet](http://shiny.rstudio.com/articles/rm-cheatsheet.html)
 
-Show cheat sheet
+--- &vcenter
 
----
+<img src="assets/img/knitrCheatSheet.jpg", style="margin:0px auto;display:block" width="500">
 
-## Examples
 
-echo=T, eval=T
-echo=F, eval=T
-echo=T, eval=F
-echo=F, eval=F #why???
+
+--- &twocol
+
+## `{r, echo=TRUE, eval=TRUE}`
+
+*** {name: left}
+
+```r
+exp(10)  
+```
+
+*** {name: right}
+
+```
+## [1] 22026
+```
+
+--- &twocol
+
+## `{r, echo=FALSE, eval=TRUE}`
+
+*** {name: left}
+
+
+*** {name: right}
+
+```
+## [1] 22026
+```
+
+--- &twocol
+
+## `{r, echo=TRUE, eval=FALSE}`
+
+*** {name: left}
+
+```r
+exp(10)  
+```
+
+*** {name: right}
+
+
+--- &twocol
+
+## `{r, echo=FALSE, eval=FALSE}`
+
+*** {name: left}
+
+
+*** {name: right}
+
 
 ---
 
@@ -111,9 +160,15 @@ echo=F, eval=F #why???
 * Can cause problems as documents get bigger and bigger; may need to compile in command line R
 
 
----
+--- &vcenter
 
 ## How to run code chunks 
+<img src="assets/img/knitrRunCodeChunk.png", style="margin:0px auto;display:block" width="900">
+
+--- &vcenter
+
+## Code chunk output
+<img src="assets/img/knitrCodeChunkOutput.png", style="margin:0px auto;display:block" width="900">
 
 --- 
 
@@ -124,7 +179,7 @@ echo=F, eval=F #why???
 plot(x=1:10,y=(1:10)^2)
 ```
 
-![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2.png) 
+![plot of chunk unnamed-chunk-10](assets/fig/unnamed-chunk-10.png) 
 
 ---
 
@@ -198,7 +253,7 @@ The most important person to write your code for is you. In a year from now.
 ```
 
 ```
-## [1] "double"
+## Error: object 'x' not found
 ```
 
 *	Numeric/double/integer: counts of things, measurements

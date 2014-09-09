@@ -90,17 +90,70 @@ ceiling(pi)
 --- 
 
 ## Code chunks in knitr
+* Embed R code into reports, documents, and slide shows
+* [Cheat sheet](http://shiny.rstudio.com/articles/rm-cheatsheet.html)
 
-Show cheat sheet
+--- &vcenter
 
----
+<img src="assets/img/knitrCheatSheet.jpg", style="margin:0px auto;display:block" width="500">
 
-## Examples
 
-echo=T, eval=T
-echo=F, eval=T
-echo=T, eval=F
-echo=F, eval=F #why???
+
+--- &twocol
+
+## `{r, echo=TRUE, eval=TRUE}`
+
+*** {name: left}
+```{r, echo=TRUE, eval=FALSE}  
+exp(10)  
+```
+
+*** {name: right}
+```{r, echo=FALSE, eval=TRUE}  
+exp(10)  
+```
+
+--- &twocol
+
+## `{r, echo=FALSE, eval=TRUE}`
+
+*** {name: left}
+```{r, echo=FALSE, eval=FALSE}  
+exp(10)  
+```
+
+*** {name: right}
+```{r, echo=FALSE, eval=TRUE}  
+exp(10)  
+```
+
+--- &twocol
+
+## `{r, echo=TRUE, eval=FALSE}`
+
+*** {name: left}
+```{r, echo=TRUE, eval=FALSE}  
+exp(10)  
+```
+
+*** {name: right}
+```{r, echo=FALSE, eval=FALSE}  
+exp(10)  
+```
+
+--- &twocol
+
+## `{r, echo=FALSE, eval=FALSE}`
+
+*** {name: left}
+```{r, echo=FALSE, eval=FALSE}  
+exp(10)  
+```
+
+*** {name: right}
+```{r, echo=FALSE, eval=FALSE}  
+exp(10)  
+```
 
 ---
 
@@ -110,11 +163,15 @@ echo=F, eval=F #why???
 * Can cause problems as documents get bigger and bigger; may need to compile in command line R
 
 
----
+--- &vcenter
 
 ## How to run code chunks 
+<img src="assets/img/knitrRunCodeChunk.png", style="margin:0px auto;display:block" width="900">
 
+--- &vcenter
 
+## Code chunk output
+<img src="assets/img/knitrCodeChunkOutput.png", style="margin:0px auto;display:block" width="900">
 
 --- 
 
