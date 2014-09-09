@@ -1,5 +1,5 @@
 --- 
-title       : Microbial Informatics
+title       : Microbial Informaticsgetwd()
 subtitle    : Lecture 03
 date        : September 8, 2014
 author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
@@ -22,10 +22,10 @@ knit        : slidify::knit2slides
 --- 
 
 ## Learning objectives
-* Finalize introduction to git
-* Introduce R language
-* Introduce knitr
-* vectors
+* Learn some best practices in using git
+* Learn how to integrate R code into R markdown documents using knitr
+* Learn to navigate your way around R
+* Learn the different types of variables within R
 
 --- 
 
@@ -67,28 +67,10 @@ knit        : slidify::knit2slides
 ## Looking for help...
 *	google
 *	?heatmap
-*	apropos("heat")
 *	example(heatmap)
+*	apropos("heat")
 
 ---
-
-## Overgrown calculator...
-
-```r
-2+2
-exp(10)
-sin(2*pi)
-log(pi)
-log2(pi)
-log10(pi)
-sqrt(pi)
-abs(pi)
-floor(pi)
-ceiling(pi)
-5 %% 2
-```
-
---- 
 
 ## Code chunks in knitr
 * Embed R code into reports, documents, and slide shows
@@ -172,6 +154,24 @@ exp(10)
 
 --- 
 
+## Overgrown calculator...
+
+```r
+2+2
+exp(10)
+sin(2*pi)
+log(pi)
+log2(pi)
+log10(pi)
+sqrt(pi)
+abs(pi)
+floor(pi)
+ceiling(pi)
+5 %% 2
+```
+
+--- 
+
 ## Can generate plots
 
 
@@ -249,16 +249,18 @@ The most important person to write your code for is you. In a year from now.
 
 
 ```r
+	x <- 3
 	typeof(x)
 ```
 
 ```
-## Error: object 'x' not found
+## [1] "double"
 ```
 
 *	Numeric/double/integer: counts of things, measurements
 *	Characters/strings: DNA sequence, amino acids, names
 * Logical: is something true or not
+* Functions: more complex...
 
 ---
 
@@ -349,126 +351,6 @@ genome <- "ATGCATCGTCCCGT"
 
 * There are other conversions that can be done. How would you figure out which converters are out there?
 * Be sure to understand the "side effects" of the conversions
-
----
-
-## Types of containers
-* Vectors
-* List
-* Matrix
-* Table
-* Data table
-* Factors
-*	We will go through these more in detail throughout the course and especially in second half of the course
-
----
-
-##	Vectors
-* One-dimensional sets of values of the same type
-* Everything in R is some form of a vector
-* You can read in vectors from a file or create them on the fly.  Four common ways of creating a vector include using `c()`, `:`, `rep()`, `seq()`.  Here are several examples:
-
-
-```r
-	19:55                   # list the values from 19 to 55 by ones
-	c(1,2,3,4)              # concatenate 1, 2, 3, 4, 5 into a vector
-	rep("red", 5)           # repeat "red" five times
-	seq(1,10,by=3)          # list the values from 1 to 10 by 3's
-	seq(1,10,length.out=20) # list 20 evenly spaced elements from 1 to 10
-	seq(1,10,len=20)        # same thing; arguments of any function can be 
-	c(rep("red", 5), rep("white", 5), rep("blue", 5))
-	rep(c(0,1), 10)
-	countToTen <- 1:10
-```
-
-
----
-
-## Operations act on vectors
-
-
-```r
-	countToTen <- 1:10
-	length(countToTen)
-	countToTen
-	countToTen^2
-	countToTen > 5
-	typeof(countToTen)
-	is.vector(countToTen)  
-```
-
----
-
-## Indexing into vectors
-* Note that in contrast to many programming languages, vectors in R are indexed such that the first value is 1 NOT 0.
-
-	
-
-```r
-	code <- c("A", "T", "G", "C")
-	
-	code[2]				# get the second element
-	code[0]				# errr...
-	code[-1]			# remove the first element
-	code[c(1,2)]		# get the first and second elements
-	code[code > "M"]	# get any element greater than "M"
-```
-
-* What does this do?
-
-
-```r
-	code[length(code)]
-```
-
----
-
-## Defining a vector
-
-
-```r
-	z <- numeric(5)			#	This creates a numerical vector with 5 zeros
-	z[3] <- 10
-	z
-	z[1:3] <- 5
-	z
-	z[10] <- pi					#	NA's are inserted between 5 and 9
-	z[4] <- "R rocks!"	#	everything changes to a character
-	
-	t <- character(5)
-	t[4] <- "DNA rocks!"
-```
-
----
-
-## Indexing by characters
-
-* You can also create vectors that are indexed by character strings
-* In some programming languages these are called hash-maps or look-up tables.
-
-
-```r
-		v <- numeric(0)
-		v["A"] <- 1.23498
-		v["T"] <- 2.2342
-		v["C"] <- 3
-		v["G"] <- 4
-		v["A"]
-		v[["A"]]      # strips the name associated with value 1
-
-		v2 <- c(A=1.23498,T=2.2342,C=3,G=4)
-```
-
----
-
-## Naming cells in your vectors
-
-
-```r
-		names(v)
-		names(v) <- c("A", "B", "C", "D")
-		names(v) <- NULL  # this removes names attribute
-```
 
 ---
 
