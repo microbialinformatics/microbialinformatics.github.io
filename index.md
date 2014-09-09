@@ -45,7 +45,7 @@ Class	|	Date	|	Topic	|	Reading
 1	|	9/2	|	[Introduction to reproducible research (29 slides)](slides/Lecture01.html)	|	
 2	|	9/4	|	[Introduction to RStudio, R Markdown, and Git (35 slides)](slides/Lecture02.html)	|	ProGit 1, 2
 3	|	9/5	|	[Computer lab: Exploring github and markdown](https://github.com/microbialinformatics/assignment01)	|	
-4	|	9/9	|	|	[Git best practices, knitr, and Introduction to R (38 slides)](slides/Lecture03.html)	|	ISwR 1, 2
+4	|	9/9	|	[Git best practices, knitr, and Introduction to R (38 slides)](slides/Lecture03.html)	|	ISwR 1, 2
 5	|	9/12	|	Introduction to R (first half of lab)  | ISwR 1, 2
 6	|	9/12	|	Computer lab	|	
 7   |   9/16    |	Descriptive statistics and basic plotting	|	ISwR 4
