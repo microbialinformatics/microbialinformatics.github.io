@@ -6,3 +6,4 @@ _site
 /slides/assets/fig/
 *.Rproj
 .Rproj.user/*
+.Rproj.user
