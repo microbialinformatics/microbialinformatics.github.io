@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 04</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>No class on Thursday or Friday.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li>Comments
+
+<ul>
+<li>Use your varible names as comments</li>
+<li>Comment your code with # (console) or ## (knitr)</li>
+</ul></li>
+<li>Variables hold information
+
+<ul>
+<li><strong>Numeric/double/integer:</strong> counts of things, measurements</li>
+<li><strong>Characters/strings:</strong> DNA sequence, amino acids, names</li>
+<li><strong>Logical:</strong> is something true or not</li>
+<li><strong>Functions:</strong> more complex...</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Review different data types</li>
+<li>Learn how to create and manipulate vectors</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Numerical varaibles</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x &lt;- pi
+y &lt;- 2
+z &lt;- -3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>String variables</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">office &lt;- &quot;1520A MSRB I&quot;
+grade &lt;- &quot;A&quot;
+genome &lt;- &quot;ATGCATCGTCCCGT&quot;
+</code></pre>
+
+<ul>
+<li><strong>Note:</strong> the the grade value is in quotes. What happens if it is not in quotes?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Logical values as inputs (T/F; 1/0)</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">    x &lt;- TRUE
+    y &lt;- FALSE
+
+    !x              # NOT operator
+    x &amp;&amp; y          # AND operator
+    x &amp; y           # bitwise AND operator (vectors)
+    x || y          # OR operator
+    x | y           # bitwise OR operator (vectors)
+    x == y          # is equal operator
+    x != y          # is not equal operator
+</code></pre>
+
+<ul>
+<li>Logical variables will be very useful when selecting subsets of data to work with</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Logical values as outptus on numbers</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">    x &lt;- 5
+    y &lt;- 3
+
+    x &gt; y          # greater than operator
+    x &gt;= y         # greater than or equal to operator
+    x &lt; y          # less than operator
+    x &lt;= y         # less than  or equal tooperator
+    x == y         # is equal to operator
+    x != y         # is not equal to operator
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Logical values as outptus on strings</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">    x &lt;- &quot;ATG&quot;
+    y &lt;- &quot;CCC&quot;
+
+    x &gt; y          # greater than operator
+    x &gt;= y         # greater than or equal to operator
+    x &lt; y          # less than operator
+    x &lt;= y         # less than  or equal tooperator
+    x == y         # is equal to operator
+    x != y         # is not equal to operator
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Converting</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">    as.numeric(x)
+    as.logical(x)
+    as.character(x)
+</code></pre>
+
+<ul>
+<li>There are other conversions that can be done. How would you figure out which converters are out there?</li>
+<li>Be sure to understand the &quot;side effects&quot; of the conversions</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Types of containers</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Vectors</li>
+<li>List</li>
+<li>Matrix</li>
+<li>Table</li>
+<li>Data table</li>
+<li>Factors</li>
+<li>  We will go through these more in detail throughout the course and especially in second half of the course</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Vectors</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>One-dimensional sets of values of the same type</li>
+<li>Everything in R is some form of a vector</li>
+<li>You can read in vectors from a file or create them on the fly.  Four common ways of creating a vector include using <code>c()</code>, <code>:</code>, <code>rep()</code>, <code>seq()</code>.  Here are several examples:</li>
+</ul>
+
+<pre><code class="r">    19:55                   # list the values from 19 to 55 by ones
+    c(1,2,3,4)              # concatenate 1, 2, 3, 4, 5 into a vector
+    rep(&quot;red&quot;, 5)           # repeat &quot;red&quot; five times
+    seq(1,10,by=3)          # list the values from 1 to 10 by 3&#39;s
+    seq(1,10,length.out=20) # list 20 evenly spaced elements from 1 to 10
+    seq(1,10,len=20)        # same thing; arguments of any function can be 
+    c(rep(&quot;red&quot;, 5), rep(&quot;white&quot;, 5), rep(&quot;blue&quot;, 5))
+    rep(c(0,1), 10)
+    countToTen &lt;- 1:10
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Operations act on vectors</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">    countToTen &lt;- 1:10
+    length(countToTen)
+    countToTen
+    countToTen^2
+    countToTen &gt; 5
+    typeof(countToTen)
+    is.vector(countToTen)  
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Indexing into vectors</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Note that in contrast to many programming languages, vectors in R are indexed such that the first value is 1 NOT 0.</li>
+</ul>
+
+<pre><code class="r">    code &lt;- c(&quot;A&quot;, &quot;T&quot;, &quot;G&quot;, &quot;C&quot;)
+
+    code[2]             # get the second element
+    code[0]             # errr...
+    code[-1]            # remove the first element
+    code[c(1,2)]        # get the first and second elements
+    code[code &gt; &quot;M&quot;]    # get any element greater than &quot;M&quot;
+</code></pre>
+
+<ul>
+<li>What does this do?</li>
+</ul>
+
+<pre><code class="r">    code[length(code)]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Defining a vector</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">    z &lt;- numeric(5)         #   This creates a numerical vector with 5 zeros
+    z[3] &lt;- 10
+    z
+    z[1:3] &lt;- 5
+    z
+    z[10] &lt;- pi             #   NA&#39;s are inserted between 5 and 9
+    z[4] &lt;- &quot;R rocks!&quot;      #   everything changes to a character
+
+    t &lt;- character(5)
+    t[4] &lt;- &quot;DNA rocks!&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Indexing by characters</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>You can also create vectors that are indexed by character strings</li>
+<li>In some programming languages these are called hash-maps or look-up tables.</li>
+</ul>
+
+<pre><code class="r">        v &lt;- numeric(0)
+        v[&quot;A&quot;] &lt;- 1.23498
+        v[&quot;T&quot;] &lt;- 2.2342
+        v[&quot;C&quot;] &lt;- 3
+        v[&quot;G&quot;] &lt;- 4
+        v[&quot;A&quot;]
+        v[[&quot;A&quot;]]      # strips the name associated with value 1
+
+        v2 &lt;- c(A=1.23498,T=2.2342,C=3,G=4)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Naming cells in your vectors</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">        names(v)
+        names(v) &lt;- c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;)
+        names(v) &lt;- NULL  # this removes names attribute
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>matrices</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>multidimensional data structure of the same data type</li>
+<li>we&#39;ll see a lot of overlap with tables and data.frames</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Create and access a matrix...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">        m &lt;- matrix(seq(1:96), nrow=8, ncol=12) #create a 8 x 12 matrix
+        colnames(m)&lt;-1:12
+        rownames(m)&lt;-c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;, &quot;G&quot;, &quot;H&quot;)
+
+        dim(m)
+        nrow(m)
+        ncol(m)
+        m[1:5,1:5]
+        m[1:5,]
+        m[,1:5]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Numerous operations that can be performed on a matrix</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">        t(m)             # transpose the matrix
+        1/m              # take each value of m and find it&#39;s reciprocal
+        m * m            # calculate the square of each value in m
+        m %*% t(m)          # performs matrix multiplication
+        crossprod(m,m)   # performs the cross product
+        rowSums(m)       # calculate the sum for each row
+        colSums(m)       # calculate the sum for each column
+        lower.tri(m)     # find the indices that are below the diagonal
+        m[lower.tri(m)]  # give the lower triangle of m
+        diag(m)          # the values on the diagonal of m
+        det(m[1:8,1:8])           # the determinent of m
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Apply functions to matrices</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">        apply(m, 1, sum)    # get the sum for each row - same as rowSums(m)
+        apply(m, 2, sum)    # get the sum for each column - same as colSums(m)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Data frames</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>multidimensional data structure that allows for multiple data types across columns</li>
+<li>think of gene statistics in a genome annotation</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>gene</th>
+<th>start</th>
+<th>end</th>
+<th>strand</th>
+<th>length</th>
+<th>annotation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>rbcA</td>
+<td>num</td>
+<td>num</td>
+<td>logic</td>
+<td>num</td>
+<td>character</td>
+</tr>
+<tr>
+<td>rbcB</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>rbcC</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>rbcD</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>etc.</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>important point is that the data is linked across the rows</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Working with data frames</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">        #be sure to set correct workign directory...
+        seq.summary &lt;- read.table(file=&quot;stool.trim.fasta.summary&quot;, header=T)
+        dim(seq.summary)
+        nrow(seq.summary)
+        ncol(seq.summary)
+        rownames(seq.summary)
+        colnames(seq.summary)
+
+        head(seq.summary)       # look at the first lines of table
+        summary(seq.summary)    # output a summary of each column in table
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Accessing values from data frames</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">        seq.summary$end                 # output column named &quot;end&quot;
+        seq.summary[,&quot;end&quot;]             # output column named &quot;end&quot;
+        seq.summary[,4]                 # output 4th column (&quot;end&quot;)
+        seq.summary[,-4]                # output everything but the 4th column (&quot;end&quot;)
+
+        seq.summary[&quot;something&quot;, ]      # output row named &quot;something&quot;
+        seq.summary[23, ]               # output 23rd row (aka &quot;something&quot;)
+        seq.summary[-23,]               # output everything but the 23rd row
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>More complicated stuff</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li><p>What do these commands do?  </p>
+
+<pre><code class="r, eval=FALSE">    seq.summary$end[1:5]
+    seq.summary[1:10,&quot;end&quot;]
+    seq.summary[&quot;F11Fcsw_2390&quot;,]
+</code></pre></li>
+<li><p>What&#39;s the difference between these commands?  </p>
+
+<pre><code class="r, eval=FALSE">    seq.summary[-23,]
+    seq.summary &lt;- seq.summary[-23,]
+</code></pre></li>
+<li><p>Can make new columns  </p>
+
+<pre><code class="r, eval=FALSE">    seq.summary[,&quot;length&quot;] &lt;- seq.summary[,&quot;end&quot;] - seq.summary[,&quot;start&quot;] + 1
+    seq.summary[,&quot;kingdom&quot;] &lt;- rep(&quot;Bacteria&quot;, nrow(seq.summary))
+</code></pre></li>
+</ul>
+
+<div style='float:left;width:48%;' class='centered'>
+  
+</div>
+<div style='float:right;width:48%;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Incorporating logic</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Define criteria to set rows you want to keep</li>
+</ul>
+
+<pre><code class="r">        seq.summary[]
+        seq.summary[&quot;something&quot;, ]  #outptu row named &quot;something&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Factors</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Defining categorical variables</li>
+<li>In a genome we might think of the forward/reverse orientation, reading frame, dna/protein sequence designation, or annotation category as categorical variables.<br></li>
+<li>Create factors</li>
+</ul>
+
+<pre><code class="r">        factor(seq.summary$polymer)
+        seq.summary$polymer &lt;-factor(seq.summary$polymer)
+        summary(seq.summary)
+        levels(seq.summary$polymer)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Lists</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Similar to data fames, but not necessarily read across rows and not all variables have the same length</li>
+<li>Could hold a genome&#39;s data within a list:
+
+<ul>
+<li>name: Character with organism name</li>
+<li>genome.size: Number with number of bases</li>
+<li>start.pos: Vector of start positions for each gene</li>
+<li>end.pos: Vector of end positions for each gene</li>
+<li>gene.name: Name of each gene</li>
+<li>hydrolases: Names of genes that are hydrolases</li>
+</ul></li>
+<li>Allow one to create complex data structures</li>
+<li>We&#39;ll use these only in passing</li>
+</ul>
+
+<pre><code class="r">        aggregate(seq.summary$nbases, by=seq.summary$polymer, mean)
+        aggregate(seq.summary$nbases, by=list(seq.summary$polymer), mean)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>For Tuesday</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Start working on new assignment that will be posted this weekend</li>
+<li>Read <strong><em>Introduction to Statistics with R</em></strong> (Chapters 1 and 2)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-29" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Learning objectives'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Numerical varaibles'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='String variables'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Logical values as inputs (T/F; 1/0)'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Logical values as outptus on numbers'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Logical values as outptus on strings'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Converting'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Types of containers'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Vectors'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Operations act on vectors'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Indexing into vectors'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Defining a vector'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Indexing by characters'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Naming cells in your vectors'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='matrices'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Create and access a matrix...'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Numerous operations that can be performed on a matrix'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Apply functions to matrices'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Data frames'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Working with data frames'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Accessing values from data frames'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='More complicated stuff'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Incorporating logic'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Factors'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Lists'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='For Tuesday'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='Questions?'>
+         29
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
