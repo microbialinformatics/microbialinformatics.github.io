@@ -4,6 +4,7 @@ layout: page
  
 Last, First (github) | Department | Year | Something unique about you | Picture
 ------------|-------------|-----------|------------|------|-------------------|-----------
+[Chiang, Edna](https://github.com/chianged) | Ecology and Evolutionary Biology | Undergrad Senior | I've been (poorly) trained in the art of machete-wielding | <img src="https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xfa1/v/t1.0-9/1002178_10151840773539328_1238145438_n.jpg?oh=55efbf458c74b2c7e1c9d42b33cddc00&oe=54D0334B&__gda__=1420043063_dc6d0175316d80eabc2057ce0c4484eb" style="width: 200px;"/>
 [Elmore, Amanda](https://github.com/agelmore) | Microbiology & Immunology | 2nd year PhD | My parents have llamas! | <img src="img/Elmore.jpg" style="width: 200px;"/>
 [Gubert, Catherine](https://github.com/cgubert) | Microbiology and Immunology | 1st year Masters | I run, cheer for the Wings, and compulisvely read ProMed updates. |<img src="img/CGubert.JPG" style="width: 200px;"/>
 [Holmes, Iris](https://github.com/iholmes) | Ecology and Evolutionary Biology | 1st year PhD | I grew up off the grid in Alaska |<img src="img/iholmes.JPG" style="width: 200px;"/>
