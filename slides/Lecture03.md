@@ -10,7 +10,6 @@ hitheme     : tomorrow      #
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : standalone    # {selfcontained, standalone, draft}
 knit        : slidify::knit2slides
-
 --- 
 
 ## Announcements
