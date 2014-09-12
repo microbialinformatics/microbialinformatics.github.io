@@ -10,6 +10,9 @@ Last, First (github) | Department | Year | Something unique about you | Picture
 [Gubert, Catherine](https://github.com/cgubert) | Microbiology and Immunology | 1st year Masters | I run, cheer for the Wings, and compulisvely read ProMed updates. |<img src="img/CGubert.JPG" style="width: 200px;"/>
 [Goodman, Danielle](https://github.com/danigood) | Cellular and Molecular Biology | 2nd Year PhD | I don't like milk... or bacon... but I do like the Tigers. | <img src="img/Goodman.jpg" style="width: 200px;"/>
 [Holmes, Iris](https://github.com/iholmes) | Ecology and Evolutionary Biology | 1st year PhD | I grew up off the grid in Alaska |<img src="img/iholmes.JPG" style="width: 200px;"/>
+
+[Schmidt, Marian](https://github.com/marschmi) | Ecology and Evolutionary Biology | 3rd Year PhD | Once upon a time, I was figure skater but I gave that up for rock climbing. | <img src="img/schmidt.jpg" style="width: 200px;"/>
+
 [Schloss, Pat](https://github.com/pschloss) | Microbiology & Immunology | Too Many | I have a farm with sheep, cows, chickens, pigs, and 7 kids | <img src="img/pschloss.jpg" style="width: 200px;"/>
 [Song, Isaiah](https://github.com/songis) | Microbiology & Immunology | 1st year Master's | I've been a gamer all my life | <img src="img/songis.png" style="width: 200px;"/>
 [Whitefield,Shawn](https://github.com/swhitefi) | PIBS M&I | First year | I like to snowboard but there are no mountains in MI | <img src="https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xap1/v/t1.0-9/10014537_10152012275833601_2133524278_n.jpg?oh=d0a686027c3b785549b49be876f2ee4b&oe=5484E75D&__gda__=1422983560_e0ba81962d76757980acbe48b35a441d" style="width: 200px;"/>
