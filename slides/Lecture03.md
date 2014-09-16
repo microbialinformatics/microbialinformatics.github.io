@@ -1,5 +1,5 @@
 --- 
-title       : Microbial Informaticsgetwd()
+title       : Microbial Informatics
 subtitle    : Lecture 03
 date        : September 9, 2014
 author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
