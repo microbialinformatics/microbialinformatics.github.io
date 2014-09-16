@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 05</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>No class on Thursday (9/18) or Friday (9/19).</li>
+<li>Start thinking about your project for the first half of the semester
+
+<ul>
+<li>Emphasis on data analysis</li>
+<li>Due 10/24/2104 (friday)</li>
+<li>Feel free to come to office hours to discuss project ideas</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Vectors are one-dimensional sets of values of the same type</li>
+<li>Everything in R is some form of a vector</li>
+<li>Can access values of a vector with square brackets (&quot;[]&quot;)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Types of containers</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Vectors</li>
+<li>List</li>
+<li>Matrix</li>
+<li>Table</li>
+<li>Data table</li>
+<li>Factors</li>
+<li>  We will go through these more in detail throughout the course and especially in second half of the course</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Be able to differentiate between matrices and data frames</li>
+<li>Make categorical variables using factors</li>
+<li>Develop complex data structures using lists</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Matrices</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Multidimensional data structure of the same data type</li>
+<li>We&#39;ll see a lot of overlap with tables and data.frames</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Create and access a matrix...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">m &lt;- matrix(seq(1:96), nrow=8, ncol=12) #create a 8 x 12 matrix
+colnames(m)&lt;-1:12
+rownames(m)&lt;-c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;, &quot;G&quot;, &quot;H&quot;)
+
+dim(m)
+nrow(m)
+ncol(m)
+m[1:5,1:5]
+m[1:5,]
+m[,1:5]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Numerous operations that can be performed on a matrix</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">t(m)             # transpose the matrix
+1/m              # take each value of m and find it&#39;s reciprocal
+m * m            # calculate the square of each value in m
+m %*% t(m)       # performs matrix multiplication
+crossprod(m,m)   # performs the cross product
+rowSums(m)       # calculate the sum for each row
+colSums(m)       # calculate the sum for each column
+lower.tri(m)     # find the indices that are below the diagonal
+m[lower.tri(m)]  # give the lower triangle of m
+diag(m)          # the values on the diagonal of m
+det(m[1:8,1:8])  # the determinent of m
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Apply functions to matrices</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">apply(m, 1, sum)    # get the sum for each row - same as rowSums(m)
+apply(m, 2, sum)    # get the sum for each column - same as colSums(m)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Data frames</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>multidimensional data structure that allows for multiple data types across columns</li>
+<li>think of gene statistics in a genome annotation</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>gene</th>
+<th>start</th>
+<th>end</th>
+<th>strand</th>
+<th>length</th>
+<th>annotation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>rbcA</td>
+<td>num</td>
+<td>num</td>
+<td>logic</td>
+<td>num</td>
+<td>character</td>
+</tr>
+<tr>
+<td>rbcB</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>rbcC</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>rbcD</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>etc.</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>important point is that the data is linked across the rows</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s get some data</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Want to work with metadata from a study looking at the gut microbiota of wild populations of <em>Peromyscus leucopis</em> and <em>P. maniculatis</em></li>
+<li><a href="https://raw.githubusercontent.com/SchlossLab/wild_mice/master/wild.metadata.txt">Download data</a></li>
+<li>Take a look at the data</li>
+<li>Save folder to your Desktop</li>
+<li>Set your working directory to the Desktop</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Working with data frames</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li>Be sure to set correct working directory in RStudio
+<code>{r, eval=FALSE}
+metadata &lt;- read.table(file=&quot;wild.metadata.txt&quot;, header=T)
+head(metadata)      # look at the first lines of table
+dim(metadata)
+nrow(metadata)
+ncol(metadata)
+colnames(metadata)
+rownames(metadata)  # notice a problem here?
+summary(metadata)   # output a summary of each column in table
+</code></li>
+<li>Check out the Data section of the Environment tab of RStudio</li>
+<li>What problems can you see with this output?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Accessing values from data frames</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">metadata$Age            # output column named &quot;Age&quot;
+metadata[,&quot;Age&quot;]        # output column named &quot;Age&quot;
+metadata[,7]            # output 4th column (&quot;end&quot;)
+metadata[,-7]           # output everything but the 4th column (&quot;end&quot;)
+
+metadata[&quot;23&quot;, ]        # output row with Group 6_16m33
+metadata[23, ]          # output 23rd row (aka Group 6_16m33)
+metadata[-23,]          # output everything but the 23rd row
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s use these functions to clean up the data</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>We&#39;d like to use the &quot;Group&quot;&quot; column as the rowname
+
+<ul>
+<li>Group names must be unique</li>
+<li>Case sensitive - &quot;group&quot; will not work</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">rownames(metadata) &lt;- metadata$Group
+metadata &lt;- metadata[,-1]
+head(metadata)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>More complicated stuff</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li><p>What do these commands do?  </p>
+
+<pre><code class="r, eval=FALSE">metadata$Weight[1:5]
+metadata[1:5,&quot;Weight&quot;]
+metadata[&quot;5_31m2&quot;,]
+</code></pre></li>
+<li><p>What&#39;s the difference between these commands?  </p>
+
+<pre><code class="r, eval=FALSE">metadata[-23,]
+metadata &lt;- metadata[-23,]
+</code></pre></li>
+<li><p>Can make new columns  </p>
+
+<pre><code class="r, eval=FALSE">metadata[,&quot;sequences&quot;] &lt;- rep(NA, nrow(metadata))
+</code></pre></li>
+</ul>
+
+<div style='float:left;width:48%;' class='centered'>
+  
+</div>
+<div style='float:right;width:48%;'>
+  
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Incorporating logic</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Define criteria to set rows you want to keep</li>
+<li>Let&#39;s get all of the <em>P. leucopis</em> samples</li>
+</ul>
+
+<pre><code class="r">metadata[metadata$SP==&quot;PL&quot;,]
+</code></pre>
+
+<ul>
+<li>Let&#39;s get all of the <em>P. leucopis</em> samples from males</li>
+</ul>
+
+<pre><code class="r">metadata[metadata$SP==&quot;PL&quot; &amp; metadata$Sex==&quot;M&quot;,]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Factors</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Defining categorical variables</li>
+<li>In a genome we might think of the forward/reverse orientation, reading frame, dna/protein sequence designation, or annotation category as categorical variables.<br></li>
+<li>Create factors</li>
+</ul>
+
+<pre><code class="r">factor(metadata$ET)
+metadata$ET &lt;-factor(metadata$ET)
+summary(metadata)
+levels(metadata$polymer)
+</code></pre>
+
+<ul>
+<li>What other variables here would be a factor?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Lists</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Similar to data fames, but not necessarily read across rows and not all variables have the same length</li>
+<li>Could hold a genome&#39;s data within a list:
+
+<ul>
+<li>name: Character with organism name</li>
+<li>genome.size: Number with number of bases</li>
+<li>start.pos: Vector of start positions for each gene</li>
+<li>end.pos: Vector of end positions for each gene</li>
+<li>gene.name: Name of each gene</li>
+<li>hydrolases: Names of genes that are hydrolases</li>
+</ul></li>
+<li>Allow one to create complex data structures</li>
+<li>We&#39;ll use these only in passing</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>An example of where we&#39;ll use lists...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Let&#39;s get the mean weight for each sex of mouse</li>
+</ul>
+
+<pre><code class="r">aggregate(metadata$Weight, by=metadata$Sex, mean)
+aggregate(metadata$Weight, by=list(metadata$Sex), mean)
+sex.weight &lt;- aggregate(metadata$Weight, by=list(metadata$Sex), mean)
+sex.weight$x
+</code></pre>
+
+<ul>
+<li>Let&#39;s get the mean weight for each sex and species of mouse</li>
+</ul>
+
+<pre><code class="r">aggregate(metadata$Weight, by=list(metadata$Sex, metadata$SP), mean)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>For next Tuesday</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Start working on new assignment that will be posted this weekend</li>
+<li>Read <strong><em>Introduction to Statistics with R</em></strong> (Chapters 1 and 2)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Types of containers'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Learning objectives'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Matrices'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Create and access a matrix...'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Numerous operations that can be performed on a matrix'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Apply functions to matrices'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Data frames'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Let&#39;s get some data'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Working with data frames'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Accessing values from data frames'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Let&#39;s use these functions to clean up the data'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='More complicated stuff'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Incorporating logic'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Factors'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Lists'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='An example of where we&#39;ll use lists...'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='For next Tuesday'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Questions?'>
+         20
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
