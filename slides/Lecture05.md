@@ -127,8 +127,9 @@ etc. |       |       |         |        |
 
 ## Working with data frames
 
-> * Be sure to set correct working directory in RStudio
->```{r, eval=FALSE}
+> * Be sure to set correct working directory in RStudio  
+
+>  ```{r, eval=FALSE}
 metadata <- read.table(file="wild.metadata.txt", header=T)
 head(metadata)		# look at the first lines of table
 dim(metadata)
@@ -137,7 +138,7 @@ ncol(metadata)
 colnames(metadata)
 rownames(metadata)  # notice a problem here?
 summary(metadata)	# output a summary of each column in table
-```
+``` 
 > * Check out the Data section of the Environment tab of RStudio
 > * What problems can you see with this output?
 

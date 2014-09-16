@@ -275,9 +275,9 @@ apply(m, 2, sum)    # get the sum for each column - same as colSums(m)
   </hgroup>
   <article data-timings="">
     <ul class = "build incremental">
-<li>Be sure to set correct working directory in RStudio
-<code>{r, eval=FALSE}
-metadata &lt;- read.table(file=&quot;wild.metadata.txt&quot;, header=T)
+<li><p>Be sure to set correct working directory in RStudio  </p>
+
+<pre><code class="r, eval=FALSE">metadata &lt;- read.table(file=&quot;wild.metadata.txt&quot;, header=T)
 head(metadata)      # look at the first lines of table
 dim(metadata)
 nrow(metadata)
@@ -285,9 +285,9 @@ ncol(metadata)
 colnames(metadata)
 rownames(metadata)  # notice a problem here?
 summary(metadata)   # output a summary of each column in table
-</code></li>
-<li>Check out the Data section of the Environment tab of RStudio</li>
-<li>What problems can you see with this output?</li>
+</code></pre></li>
+<li><p>Check out the Data section of the Environment tab of RStudio</p></li>
+<li><p>What problems can you see with this output?</p></li>
 </ul>
 
   </article>
