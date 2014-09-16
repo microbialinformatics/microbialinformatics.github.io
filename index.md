@@ -42,15 +42,16 @@ The following links go to html-based slide stacks that have embedded links to ot
 
 Class	|	Date	|	Topic	|	Reading
 :------:|:---------:|-----------|:----------:
-1	|	9/2	|	[Introduction to reproducible research (29 slides)](slides/Lecture01.html)	|	
-2	|	9/4	|	[Introduction to RStudio, R Markdown, and Git (35 slides)](slides/Lecture02.html)	|	ProGit 1, 2
+1	|	9/2	|	[Introduction to reproducible research (29 slides)](slides/Lecture01)	|	
+2	|	9/4	|	[Introduction to RStudio, R Markdown, and Git (35 slides)](slides/Lecture02)	|	ProGit 1, 2
 3	|	9/5	|	[Computer lab: Exploring github and markdown](https://github.com/microbialinformatics/assignment01)	|	
-4	|	9/9	|	[Git best practices, knitr, and Introduction to R (38 slides)](slides/Lecture03.html)	|	ISwR 1, 2
-5	|	9/12	|	[Introduction to R: Variables and containers (33 slides)](slides/Lecture03)  | ISwR 1, 2
+4	|	9/9	|	[Git best practices, knitr, and Introduction to R (31 slides)](slides/Lecture03)	|	ISwR 1, 2
+5	|	9/12	|	[Introduction to R: Variables and containers (19 slides)](slides/Lecture04)  | ISwR 1, 2
 6	|	9/12	|	Computer lab	|	
-7   |   9/16    |	Descriptive statistics and basic plotting	|	ISwR 4
+7	|	9/16	|	[Introduction to R: Containers (21 slides)](slides/Lecture05)  | ISwR 1, 2
 	|	9/18	|   Pat traveling	|
-8	|	9/19	|	Computer Lab (Pat away)	|
+8	|	9/19	|	Pat traveling   |
+9   |   9/23    |	Descriptive statistics and basic plotting	|	ISwR 4
 9	|	9/23	|	Randomness		|	ISwR 3
 10	|	9/25	|	Tabular data and tests	|	ISwR 8
 11	|	9/26	|	Computer lab	|	
