@@ -10,6 +10,7 @@ Last, First (github) | Department | Year | Something unique about you | Picture
 [Goodman, Danielle](https://github.com/danigood) | Cellular and Molecular Biology | 2nd Year PhD | I don't like milk... or bacon... but I do like the Tigers. | <img src="img/Goodman.jpg" style="width: 200px;"/>
 [Gubert, Catherine](https://github.com/cgubert) | Microbiology and Immunology | 1st year Masters | I run, cheer for the Wings, and compulisvely read ProMed updates. |<img src="img/CGubert.JPG" style="width: 200px;"/>
 [Holmes, Iris](https://github.com/iholmes) | Ecology and Evolutionary Biology | 1st year PhD | I grew up off the grid in Alaska |<img src="img/iholmes.JPG" style="width: 200px;"/>
+[Schmidt, Marian](https://github.com/marschmi) | Ecology and Evolutionary Biology | 3rd Year PhD | I was figure skater but I gave that up for rock climbing. | <img src="img/mschmidt.jpg" style="width: 200px;"/>
 [Schloss, Pat](https://github.com/pschloss) | Microbiology & Immunology | Too Many | I have a farm with sheep, cows, chickens, pigs, and 7 kids | <img src="img/pschloss.jpg" style="width: 200px;"/>
 [Song, Isaiah](https://github.com/songis) | Microbiology & Immunology | 1st year Master's | I've been a gamer all my life | <img src="img/songis.png" style="width: 200px;"/>
 [Van Steendam, Caroline](https://github.com/steendam)|Civil and Environmental Engineering | 1st Year PhD | I listen to Disney music while biking | <img src="img/carolinevansteendam.jpg" style="width: 200px;"/>
