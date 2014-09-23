@@ -1,7 +1,7 @@
 --- 
 title       : Microbial Informatics
-subtitle    : Lecture 05
-date        : September 15, 2014
+subtitle    : Lecture 06
+date        : September 22, 2014
 author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
 job         : Department of Microbiology & Immunology
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
