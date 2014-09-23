@@ -253,12 +253,10 @@ f.hist <- hist(metadata$Weight[metadata$Sex == "M"], breaks = 10, col = "blue",
 
 ---
 
-
 ## For Thursday
 * Start working on new assignment that will be posted this weekend
 * Assignment due Friday
-* Read ***Introduction to Statistics with R*** (Chapters 1 and 2)
-
+* Read ***Introduction to Statistics with R*** (Chapter 3 and 4)
 
 --- .segue .dark
 
