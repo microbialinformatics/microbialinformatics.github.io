@@ -51,7 +51,7 @@ Class	|	Date	|	Topic	|	Reading
 7	|	9/16	|	[Introduction to R: Containers (21 slides)](slides/Lecture05)  | ISwR 1, 2
 	|	9/18	|   Pat traveling	|
 8	|	9/19	|	[Computer lab: Data structures](https://github.com/microbialinformatics/assignment02) / Pat traveling   |
-9   |   9/23    |	[Descriptive statistics and basic plotting](slides/Lecture06)	|	ISwR 4
+9   |   9/23    |	[Descriptive statistics and basic plotting (19 slides)](slides/Lecture06)	|	ISwR 4
 10	|	9/25	|	Basic plotting and Randomness		|	ISwR 3
 10	|	9/25	|	Tabular data and tests	|	ISwR 8
 11	|	9/26	|	Computer lab	|	
