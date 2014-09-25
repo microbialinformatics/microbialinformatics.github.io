@@ -44,20 +44,20 @@ Class	|	Date	|	Topic	|	Reading
 :------:|:---------:|-----------|:----------:
 1	|	9/2	|	[Introduction to reproducible research (29 slides)](slides/Lecture01)	|	
 2	|	9/4	|	[Introduction to RStudio, R Markdown, and Git (35 slides)](slides/Lecture02)	|	ProGit 1, 2
-3	|	9/5	|	[Computer lab: Exploring github and markdown](https://github.com/microbialinformatics/assignment01)	|	
-4	|	9/9	|	[Git best practices, knitr, and Introduction to R (31 slides)](slides/Lecture03)	|	ISwR 1, 2
-5	|	9/12	|	[Introduction to R: Variables and containers (19 slides)](slides/Lecture04)  | ISwR 1, 2
-6	|	9/12	|	Computer lab	|	
-7	|	9/16	|	[Introduction to R: Containers (21 slides)](slides/Lecture05)  | ISwR 1, 2
+	|	9/5	|	[Computer lab: Exploring github and markdown](https://github.com/microbialinformatics/assignment01)	|	
+3	|	9/9	|	[Git best practices, knitr, and Introduction to R (31 slides)](slides/Lecture03)	|	ISwR 1, 2
+4	|	9/12	|	[Introduction to R: Variables and containers (19 slides)](slides/Lecture04)  | ISwR 1, 2
+	|	9/12	|	Computer lab	|	
+5	|	9/16	|	[Introduction to R: Containers (21 slides)](slides/Lecture05)  | ISwR 1, 2
 	|	9/18	|   Pat traveling	|
-8	|	9/19	|	[Computer lab: Data structures](https://github.com/microbialinformatics/assignment02) / Pat traveling   |
-9   |   9/23    |	[Descriptive statistics (15 slides)](slides/Lecture06)	|	ISwR 4
-10	|	9/25	|	[Basic plotting and Randomness (XX slides)](slides/Lecture07)		|	ISwR 3
-11	|	9/26	|	Computer lab	|	
-10	|	9/25	|	Tabular data and tests	|	ISwR 8
-12	|	9/30	|	T- and Wilcoxon tests	|	ISwR 6
+	|	9/19	|	[Computer lab: Data structures](https://github.com/microbialinformatics/assignment02) / Pat traveling   |
+6   |   9/23    |	[Descriptive statistics (15 slides)](slides/Lecture06)	|	ISwR 4
+7	|	9/25	|	[Basic plotting (XX slides)](slides/Lecture07)		|	ISwR 4
+8	|	9/26	|	[Randomness and tests on tabular data](slides/Lecture07)	|	ISwR 3 and 8
+	|	9/26	|	Computer lab	|	
+10	|	9/30	|	T- and Wilcoxon tests	|	ISwR 6
 13	|	10/2	|	Power analysis	|	ISwR 9
-14	|	10/3	|	Computer lab	|	
+	|	10/3	|	Computer lab	|	
 15	|	10/7	|	ANOVA and Kruskal-Wallis	|	ISwR 7
 16	|	10/9	|	Regression and correlation	|	ISwR 5
 17	|	10/10	|	Computer lab	|	
