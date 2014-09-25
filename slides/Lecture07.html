@@ -295,110 +295,6 @@ stripchart(metadata$Weight ~ metadata$Sex, method = &quot;jitter&quot;, jitter =
 
 <slide class="" id="slide-14" style="background:;">
   <hgroup>
-    <h2>Dot plots</h2>
-  </hgroup>
-  <article data-timings="">
-    <ul>
-<li>  The above methods generally involve plotting a numerical value against a categorical value</li>
-<li>  We&#39;d also like to plot numerical variables against each other</li>
-</ul>
-
-<pre><code class="r">plot(metadata$Weight)  #\twhat is this using as an x-axis?
-plot(metadata$Weight, metadata$Ear)  #\twhat is this using as an x-axis?\t\t\t
-plot(metadata$Ear ~ metadata$Weight)  #\twhat is this using as an x-axis?
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-15" style="background:;">
-  <hgroup>
-    <h2>Fun with plots</h2>
-  </hgroup>
-  <article data-timings="">
-    <ul>
-<li>Be sure to see <code>?plot</code> and <code>?plot.default</code></li>
-</ul>
-
-<pre><code class="r">plot(metadata$Ear ~ metadata$Weight, col = &quot;blue&quot;, pch = 18)
-plot(metadata$Ear ~ metadata$Weight, col = &quot;blue&quot;, pch = 20)
-plot(metadata$Ear ~ metadata$Weight, col = &quot;blue&quot;, pch = 20, cex = 2)
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-16" style="background:;">
-  <hgroup>
-    <h2><code>points</code></h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="r">plot(metadata[metadata$Sex == &quot;M&quot;, &quot;Ear&quot;] ~ metadata[metadata$Sex == &quot;M&quot;, &quot;Weight&quot;], 
-    col = &quot;blue&quot;, pch = 18)
-points(metadata[metadata$Sex == &quot;F&quot;, &quot;Ear&quot;] ~ metadata[metadata$Sex == &quot;F&quot;, 
-    &quot;Weight&quot;], col = &quot;pink&quot;, pch = 20)
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-17" style="background:;">
-  <hgroup>
-    <h2>A different kind of histogram</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="r">plot(m.hist$density ~ m.hist$mids, type = &quot;h&quot;, col = &quot;blue&quot;, ylim = c(0, 0.2))
-points(f.hist$density ~ f.hist$mids, type = &quot;h&quot;, col = &quot;red&quot;)
-
-plot(m.hist$density ~ m.hist$mids, type = &quot;l&quot;, col = &quot;blue&quot;, ylim = c(0, 0.2))
-points(f.hist$density ~ f.hist$mids, type = &quot;l&quot;, col = &quot;red&quot;)
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-18" style="background:;">
-  <hgroup>
-    <h2>Legends</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="r">legend(x = 20, y = 0.18, legend = c(&quot;Female&quot;, &quot;Male&quot;), col = c(&quot;red&quot;, &quot;blue&quot;), 
-    lty = 1, lwd = 2)
-</code></pre>
-
-<pre><code class="r">location &lt;- locator(1)
-legend(location, legend = c(&quot;Female&quot;, &quot;Male&quot;), col = c(&quot;red&quot;, &quot;blue&quot;), lty = 1, 
-    lwd = 2)
-location
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-19" style="background:;">
-  <hgroup>
-    <h2>Line segments</h2>
-  </hgroup>
-  <article data-timings="">
-    <pre><code class="r">abline(a = 0.01, b = 0.01)
-abline(v = 20, col = &quot;red&quot;, lwd = 3)
-abline(h = 0.05, col = &quot;blue&quot;, lty = 2, lwd = 3)
-
-segments(x0 = 10, x1 = 15, y0 = 0.2, y1 = 0.15)
-segments(x0 = c(10, 21), x1 = c(15, 25), y0 = c(0.2, 0.15), y1 = c(0.15, 0.12))
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-20" style="background:;">
-  <hgroup>
     <h2>For Friday</h2>
   </hgroup>
   <article data-timings="">
@@ -411,7 +307,7 @@ segments(x0 = c(10, 21), x1 = c(15, 25), y0 = c(0.2, 0.15), y1 = c(0.15, 0.12))
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue dark" id="slide-21" style="background:;">
+<slide class="segue dark" id="slide-15" style="background:;">
   <hgroup>
     <h2>Questions?</h2>
   </hgroup>
@@ -505,50 +401,14 @@ segments(x0 = c(10, 21), x1 = c(15, 25), y0 = c(0.2, 0.15), y1 = c(0.15, 0.12))
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='Dot plots'>
+        data-slide=14 title='For Friday'>
          14
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='Fun with plots'>
+        data-slide=15 title='Questions?'>
          15
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='<code>points</code>'>
-         16
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=17 title='A different kind of histogram'>
-         17
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=18 title='Legends'>
-         18
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=19 title='Line segments'>
-         19
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title='For Friday'>
-         20
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=21 title='Questions?'>
-         21
       </a>
     </li>
   </ul>
