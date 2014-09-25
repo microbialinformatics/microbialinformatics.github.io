@@ -235,6 +235,21 @@ names(v) <- NULL  # this removes names attribute
 
 ---
 
+## Sorting vectors
+
+```{r, eval=FALSE}
+z <- runif(10)  #generates a vector with 10 random numbers in it
+z
+sort(z)	#sort the vector
+order(z)	#get the correct order of the elements in the vector
+
+#sort a vector, matrix, data frame using the order command
+o <- order(z)
+z[o]
+```
+
+---
+
 ## For Tuesday
 * Start working on new assignment that will be posted this weekend
 * Read ***Introduction to Statistics with R*** (Chapters 1 and 2)
