@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 08</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Homework 2 due today</li>
+<li>Homework 3 is out</li>
+<li>Read <strong><em>Introduction to Statistics with R</em></strong> (Chapter 8)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Histograms</li>
+<li>Box plots</li>
+<li>Bar plots</li>
+<li>Strip charts</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Graphics
+
+<ul>
+<li>Dot plots</li>
+<li>Legends</li>
+<li>Line segments</li>
+</ul></li>
+<li>Random variables</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s get some data</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">metadata &lt;- read.table(file = &quot;wild.metadata.txt&quot;, header = T)
+rownames(metadata) &lt;- metadata$Group
+metadata &lt;- metadata[, -1]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Dot plots</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  The above methods generally involve plotting a numerical value against a categorical value</li>
+<li>  We&#39;d also like to plot numerical variables against each other</li>
+</ul>
+
+<pre><code class="r">plot(metadata$Weight)  # what is this using as an x-axis?
+plot(metadata$Weight, metadata$Ear)  # what is this using as an x-axis?\t\t\t
+plot(metadata$Ear ~ metadata$Weight)  # what is this using as an x-axis?
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Fun with plots</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Be sure to see <code>?plot</code> and <code>?plot.default</code></li>
+</ul>
+
+<pre><code class="r">plot(metadata$Ear ~ metadata$Weight, col = &quot;blue&quot;, pch = 18)
+plot(metadata$Ear ~ metadata$Weight, col = &quot;blue&quot;, pch = 20)
+plot(metadata$Ear ~ metadata$Weight, col = &quot;blue&quot;, pch = 20, cex = 2)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2><code>points</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">plot(metadata[metadata$Sex == &quot;M&quot;, &quot;Ear&quot;] ~ metadata[metadata$Sex == &quot;M&quot;, &quot;Weight&quot;], 
+    col = &quot;blue&quot;, pch = 18)
+points(metadata[metadata$Sex == &quot;F&quot;, &quot;Ear&quot;] ~ metadata[metadata$Sex == &quot;F&quot;, 
+    &quot;Weight&quot;], col = &quot;pink&quot;, pch = 20)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>A different kind of histogram</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">m.hist &lt;- hist(metadata$Weight[metadata$Sex == &quot;F&quot;], breaks = 10, ylim = c(0, 
+    20), xlim = c(0, 30), col = &quot;pink&quot;)
+f.hist &lt;- hist(metadata$Weight[metadata$Sex == &quot;M&quot;], breaks = 10, col = &quot;blue&quot;, 
+    add = T)
+
+plot(m.hist$density ~ m.hist$mids, type = &quot;h&quot;, col = &quot;blue&quot;, ylim = c(0, 0.2))
+points(f.hist$density ~ f.hist$mids, type = &quot;h&quot;, col = &quot;red&quot;)
+
+plot(m.hist$density ~ m.hist$mids, type = &quot;l&quot;, col = &quot;blue&quot;, ylim = c(0, 0.2))
+points(f.hist$density ~ f.hist$mids, type = &quot;l&quot;, col = &quot;red&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Legends</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">legend(x = 20, y = 0.18, legend = c(&quot;Female&quot;, &quot;Male&quot;), col = c(&quot;red&quot;, &quot;blue&quot;), 
+    lty = 1, lwd = 2)
+</code></pre>
+
+<pre><code class="r">location &lt;- locator(1)
+legend(location, legend = c(&quot;Female&quot;, &quot;Male&quot;), col = c(&quot;red&quot;, &quot;blue&quot;), lty = 1, 
+    lwd = 2)
+location
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Line segments</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">abline(a = 0.01, b = 0.01)
+abline(v = 20, col = &quot;red&quot;, lwd = 3)
+abline(h = 0.05, col = &quot;blue&quot;, lty = 2, lwd = 3)
+
+segments(x0 = 10, x1 = 15, y0 = 0.2, y1 = 0.15)
+segments(x0 = c(10, 21), x1 = c(15, 25), y0 = c(0.2, 0.15), y1 = c(0.15, 0.12))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Randomness and probabilities</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>In science, much of what we do assumes that samples are observed randomly</li>
+<li>We live in a probabilistic world where everything has a probability, even if it is very small</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Randomness</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li>Pick a number between 1 and 10 and write it down</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Randomness</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li>What would you expect a random sampling of the numbers from 1 to 10 to look like?</li>
+<li>What would it depend on?</li>
+<li>Mean?</li>
+<li>Min?</li>
+<li>Max?</li>
+<li>What type of plot would we use?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s get R to do it for us</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li><p>Use the <code>sample</code> command to randomly draw a number from a range of integers</p>
+
+<pre><code class="r">r&lt;-sample(1:10, 10, replace=T)
+r
+</code></pre></li>
+<li><p>What should these look like?</p>
+
+<pre><code class="r">hist(r)
+stripchart(r, method=&quot;jitter&quot;)
+plot(r)
+summary(r)
+</code></pre></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>How do we get a more reliable shape to our distribution?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li><p>What happens if we run the following repeatedly?</p>
+
+<pre><code class="r">r&lt;-sample(1:10, 1000, replace=T)
+hist(r, xlim=c(0,10), breaks=seq(0,10, 1))
+</code></pre></li>
+<li><p>We can &quot;fix&quot; the distribution:</p>
+
+<pre><code class="r">set.seed(1)
+r&lt;-sample(1:10, 1000, replace=T)
+hist(r, xlim=c(0,10), breaks=seq(0,10, 1))
+</code></pre></li>
+<li><p>Being able to set the random seed is an importat feature for reproducible reserach</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>There are discrete and continuous variables</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li><p><strong><em>Discrete:</em></strong> Hits in baseball, number of infected mice, number of people   </p>
+
+<pre><code class="r">r&lt;-sample(1:10, 1000, replace=T)
+plot(r, ylim=c(0,10))
+</code></pre></li>
+<li><p><strong><em>Continuous:</em></strong> Weight, temperature, concentrations  </p>
+
+<pre><code class="r">r&lt;-runif(1000, min=1, max=10)
+plot(r, ylim=c(0,10))
+</code></pre></li>
+<li><p>Notice a difference?</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Binomial distribution</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Flipping a fair coin...</li>
+</ul>
+
+<pre><code class="r">sample(c(&quot;H&quot;, &quot;T&quot;), 100, replace = T)  # probability of H | T = 0.50
+rbinom(10, size = 1, prob = 0.5)  # what if the coin were cooked or you were a hall of fame hitter?
+</code></pre>
+
+<ul>
+<li>Flipping a cooked coin...</li>
+</ul>
+
+<pre><code class="r">heads &lt;- rbinom(10, size = 1, prob = 0.8)  #\twhat if the coin were cooked or you were a hall of fame hitter?
+sum(heads)
+</code></pre>
+
+<ul>
+<li>Hall of fame hitter...</li>
+</ul>
+
+<pre><code class="r">hits &lt;- rbinom(5, size = 1, prob = 0.3)  #\twhat if the coin were cooked or you were a hall of fame hitter?
+sum(hits)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>What are the odds assuming it&#39;s cooked?...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">n.heads &lt;- 4
+n.flips &lt;- 10
+prob &lt;- 0.3
+dbinom(n.heads, size = n.flips, prob = prob)
+plot(1:n.flips, dbinom(1:n.flips, n.flips, prob), type = &quot;h&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>What are the odds assuming it&#39;s cooked?...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>What are the odds of seeing <code>n.heads</code> heads or fewer?</li>
+</ul>
+
+<pre><code class="r">sum(dbinom(0:n.heads, size = n.flips, prob = prob))
+pbinom(n.heads, n.flips, prob)  # probability of seeing this count or smaller
+1 - pbinom(n.heads, n.flips, prob)  # probability of seeing this count or larger
+</code></pre>
+
+<ul>
+<li>For a given probability of flipping a heads, how many heads would we see in <code>n.flips</code> with a specified probability?</li>
+</ul>
+
+<pre><code class="r">qbinom(0.15, n.flips, prob)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Things to think about: Baseball...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  What is the probability of a 0.300 hiter going 0 for 4?</li>
+<li>What is the probability of a 0.300 hiter going 4 for 4?</li>
+<li>  What&#39;s the probability of replicating Joe DiMaggio&#39;s 56 game hitting streak?</li>
+<li>  What&#39;s the probability of another person matching the streak next season?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Things to think about: DNA sequencing</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>If sequencing errors are random and 1% of base calls are errors, then...</li>
+<li class='..what'>fraction of 250 bp sequences would have more than one error?</li>
+<li class='..if'>you had 1 million sequences, how many would have the exact same error?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Things to think about:  Mice breeding</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>What&#39;s the probability that a litter of 8 mice will have 4 males?</li>
+<li>What&#39;s the probability that a litter of 8 mice will have 6 males?</li>
+<li>What&#39;s the probability that a litter of 8 mice will have 6 or more males?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Other important distributions</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  <code>dunif</code>, <code>punif</code>, <code>qunif</code>, <code>runif</code></li>
+<li>  <code>dnorm</code>, <code>pnorm</code>, <code>qnorm</code>, <code>rnorm</code></li>
+<li>  <code>dbinom</code>, <code>pbinom</code>, <code>qbinom</code>, <code>rbinom</code></li>
+<li>  many others...  see pg 332, Appendix C in ISwR</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Learning objectives'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Let&#39;s get some data'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Dot plots'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Fun with plots'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='<code>points</code>'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='A different kind of histogram'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Legends'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Line segments'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Randomness and probabilities'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Randomness'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Randomness'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Let&#39;s get R to do it for us'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='How do we get a more reliable shape to our distribution?'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='There are discrete and continuous variables'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Binomial distribution'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='What are the odds assuming it&#39;s cooked?...'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='What are the odds assuming it&#39;s cooked?...'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Things to think about: Baseball...'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Things to think about: DNA sequencing'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Things to think about:  Mice breeding'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Other important distributions'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Questions?'>
+         24
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
