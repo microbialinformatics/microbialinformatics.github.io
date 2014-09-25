@@ -44,15 +44,15 @@ Class	|	Date	|	Topic	|	Reading
 :------:|:---------:|-----------|:----------:
 1	|	9/2	|	[Introduction to reproducible research (29 slides)](slides/Lecture01)	|	
 2	|	9/4	|	[Introduction to RStudio, R Markdown, and Git (35 slides)](slides/Lecture02)	|	ProGit 1, 2
-	|	9/5	|	[Computer lab: Exploring github and markdown](https://github.com/microbialinformatics/assignment01)	|	
+	|	9/5	|	[Computer lab: Exploring github and markdown](https://github.com/microbialinformatics/assignment01)	| f
 3	|	9/9	|	[Git best practices, knitr, and Introduction to R (31 slides)](slides/Lecture03)	|	ISwR 1, 2
-4	|	9/12	|	[Introduction to R: Variables and containers (19 slides)](slides/Lecture04)  | ISwR 1, 2
+4	|	9/12	|	[Introduction to R: Variables and containers (20 slides)](slides/Lecture04)  | ISwR 1, 2
 	|	9/12	|	Computer lab	|	
 5	|	9/16	|	[Introduction to R: Containers (21 slides)](slides/Lecture05)  | ISwR 1, 2
 	|	9/18	|   Pat traveling	|
 	|	9/19	|	[Computer lab: Data structures](https://github.com/microbialinformatics/assignment02) / Pat traveling   |
 6   |   9/23    |	[Descriptive statistics (15 slides)](slides/Lecture06)	|	ISwR 4
-7	|	9/25	|	[Basic plotting (22 slides)](slides/Lecture07)		|	ISwR 4
+7	|	9/25	|	[Basic plotting (16 slides)](slides/Lecture07)		|	ISwR 4
 8	|	9/26	|	[Basic plotting and randomness (XX slides)](slides/Lecture08)	|	ISwR 3 and 4
 	|	9/26	|	Computer lab	|	
 9   |   9/30    |   Tests on tabular data   |  ISwr 8
