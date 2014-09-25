@@ -28,7 +28,7 @@ knit        : slidify::knit2slides
 * Everything in R is some form of a vector - even output
 * R has a rich set of descriptive statistics that can be used to simplify datasets
 
-```{r, eval=T, echo=F}
+```{r, eval=T, echo=F, cache=FALSE}
 library(knitr)
 opts_chunk$set(eval = FALSE)
 opts_chunk$set(echo = TRUE)
@@ -189,7 +189,7 @@ stripchart(metadata$Weight~metadata$Sex, method="jitter", jitter=0.02, vertical=
 ---
 
 ## Fun with plots
-* Be sure to see `?plot` and `r ?plot.default`
+* Be sure to see `?plot` and `?plot.default`
 ```{r}
 	plot(metadata$Ear~metadata$Weight, col="blue", pch=18)
 	plot(metadata$Ear~metadata$Weight, col="blue", pch=20)

@@ -204,7 +204,7 @@ plot(metadata$Ear ~ metadata$Weight)  #\twhat is this using as an x-axis?
 ---
 
 ## Fun with plots
-* Be sure to see `?plot` and ??
+* Be sure to see `?plot` and `?plot.default`
 
 ```r
 plot(metadata$Ear ~ metadata$Weight, col = "blue", pch = 18)
