@@ -239,7 +239,7 @@ points(f.hist$density ~ f.hist$mids, type = "l", col = "red")
 
 ---
 
-## legends
+## Legends
 
 
 ```r
@@ -253,6 +253,20 @@ location <- locator(1)
 legend(location, legend = c("Female", "Male"), col = c("red", "blue"), lty = 1, 
     lwd = 2)
 location
+```
+
+---
+
+## Line segments
+
+
+```r
+abline(a = 0.01, b = 0.01)
+abline(v = 20, col = "red", lwd = 3)
+abline(h = 0.05, col = "blue", lty = 2, lwd = 3)
+
+segments(x0 = 10, x1 = 15, y0 = 0.2, y1 = 0.15)
+segments(x0 = c(10, 21), x1 = c(15, 25), y0 = c(0.2, 0.15), y1 = c(0.15, 0.12))
 ```
 
 ---
