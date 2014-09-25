@@ -53,14 +53,14 @@ Class	|	Date	|	Topic	|	Reading
 	|	9/19	|	[Computer lab: Data structures](https://github.com/microbialinformatics/assignment02) / Pat traveling   |
 6   |   9/23    |	[Descriptive statistics (15 slides)](slides/Lecture06)	|	ISwR 4
 7	|	9/25	|	[Basic plotting (22 slides)](slides/Lecture07)		|	ISwR 4
-8	|	9/26	|	[Basic plotting and randomness (XX slides)](slides/Lecture08)	|	ISwR 3 and 8
+8	|	9/26	|	[Basic plotting and randomness (XX slides)](slides/Lecture08)	|	ISwR 3 and 4
 	|	9/26	|	Computer lab	|	
-9   |   9/30    |   Tests on tabular data   |  ISwr X
-10	|	9/30	|	T- and Wilcoxon tests	|	ISwR 6
+9   |   9/30    |   Tests on tabular data   |  ISwr 8
+10	|	9/30	|	T- and Wilcoxon tests	|	ISwR 5
 13	|	10/2	|	Power analysis	|	ISwR 9
 	|	10/3	|	Computer lab	|	
 15	|	10/7	|	ANOVA and Kruskal-Wallis	|	ISwR 7
-16	|	10/9	|	Regression and correlation	|	ISwR 5
+16	|	10/9	|	Regression and correlation	|	ISwR 6
 17	|	10/10	|	Computer lab	|	
 	|	10/14	|	Fall Study Period (no class)	|	
 19	|	10/16	|	Introduction to programming	|	TAoRP 1
