@@ -33,6 +33,8 @@ The course is offered in the fall of even years.
 The following links go to github repositories that have the homework assignments:
 
 * [Assignment 01](https://github.com/microbialinformatics/assignment01): Exploring github and markdown (Due 9/12/2014)
+* [Assignment 02](https://github.com/microbialinformatics/assignment02): Manipulating data structures in R (Due 9/26/2014)
+* [Assignment 03](https://github.com/microbialinformatics/assignment03): Plotting, randomness, and tabular data (Due 10/10/2014)
 
 ----
 
@@ -53,8 +55,8 @@ Class	|	Date	|	Topic	|	Reading
 	|	9/19	|	[Computer lab: Data structures](https://github.com/microbialinformatics/assignment02) / Pat traveling   |
 6   |   9/23    |	[Descriptive statistics (15 slides)](slides/Lecture06)	|	ISwR 4
 7	|	9/25	|	[Basic plotting (16 slides)](slides/Lecture07)		|	ISwR 4
-8	|	9/26	|	[Basic plotting and randomness (25 slides)](slides/Lecture08)	|	ISwR 3 and 4
-	|	9/26	|	Computer lab	|	
+8	|	9/26	|	[Basic plotting and randomness (30 slides)](slides/Lecture08)	|	ISwR 3 and 4
+	|	9/26	|	[Computer lab: Plotting, randomness, tabular data](https://github.com/microbialinformatics/assignment03) 	|	
 9   |   9/30    |   Tests on tabular data   |  ISwr 8
 10	|	9/30	|	T- and Wilcoxon tests	|	ISwR 5
 13	|	10/2	|	Power analysis	|	ISwR 9
