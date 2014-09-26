@@ -1,7 +1,7 @@
 --- 
 title       : Microbial Informatics
 subtitle    : Lecture 08
-date        : September 25, 2014
+date        : September 26, 2014
 author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
 job         : Department of Microbiology & Immunology
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -43,31 +43,9 @@ knit        : slidify::knit2slides
 
 
 ```r
-metadata <- read.table(file="wild.metadata.txt", header=T)
-```
-
-```
-## Warning: cannot open file 'wild.metadata.txt': No such file or directory
-```
-
-```
-## Error: cannot open the connection
-```
-
-```r
+metadata <- read.table(file = "wild.metadata.txt", header = T)
 rownames(metadata) <- metadata$Group
-```
-
-```
-## Error: object 'metadata' not found
-```
-
-```r
-metadata <- metadata[,-1]
-```
-
-```
-## Error: object 'metadata' not found
+metadata <- metadata[, -1]
 ```
 
 ---
@@ -78,27 +56,9 @@ metadata <- metadata[,-1]
 
 
 ```r
-	plot(metadata$Weight)				# what is this using as an x-axis?
-```
-
-```
-## Error: object 'metadata' not found
-```
-
-```r
-	plot(metadata$Weight, metadata$Ear)			# what is this using as an x-axis?			
-```
-
-```
-## Error: object 'metadata' not found
-```
-
-```r
-	plot(metadata$Ear~metadata$Weight)			# what is this using as an x-axis?
-```
-
-```
-## Error: object 'metadata' not found
+plot(metadata$Weight)  # what is this using as an x-axis?
+plot(metadata$Weight, metadata$Ear)  # what is this using as an x-axis?\t\t\t
+plot(metadata$Ear ~ metadata$Weight)  # what is this using as an x-axis?
 ```
 
 ---
@@ -107,27 +67,9 @@ metadata <- metadata[,-1]
 * Be sure to see `?plot` and `?plot.default`
 
 ```r
-	plot(metadata$Ear~metadata$Weight, col="blue", pch=18)
-```
-
-```
-## Error: object 'metadata' not found
-```
-
-```r
-	plot(metadata$Ear~metadata$Weight, col="blue", pch=20)
-```
-
-```
-## Error: object 'metadata' not found
-```
-
-```r
-	plot(metadata$Ear~metadata$Weight, col="blue", pch=20, cex=2)
-```
-
-```
-## Error: object 'metadata' not found
+plot(metadata$Ear ~ metadata$Weight, col = "blue", pch = 18)
+plot(metadata$Ear ~ metadata$Weight, col = "blue", pch = 20)
+plot(metadata$Ear ~ metadata$Weight, col = "blue", pch = 20, cex = 2)
 ```
 
 ---
@@ -136,19 +78,10 @@ metadata <- metadata[,-1]
 
 
 ```r
-	plot(metadata[metadata$Sex=="M","Ear"]~metadata[metadata$Sex=="M","Weight"], col="blue", pch=18)
-```
-
-```
-## Error: object 'metadata' not found
-```
-
-```r
-	points(metadata[metadata$Sex=="F","Ear"]~metadata[metadata$Sex=="F","Weight"], col="pink", pch=20)
-```
-
-```
-## Error: object 'metadata' not found
+plot(metadata[metadata$Sex == "M", "Ear"] ~ metadata[metadata$Sex == "M", "Weight"], 
+    col = "blue", pch = 18)
+points(metadata[metadata$Sex == "F", "Ear"] ~ metadata[metadata$Sex == "F", 
+    "Weight"], col = "pink", pch = 20)
 ```
 
 ---
@@ -157,51 +90,16 @@ metadata <- metadata[,-1]
 
 
 ```r
-m.hist <- hist(metadata$Weight[metadata$Sex=="F"], breaks=10, ylim=c(0,20), xlim=c(0,30), col="pink")
-```
+m.hist <- hist(metadata$Weight[metadata$Sex == "F"], breaks = 10, ylim = c(0, 
+    20), xlim = c(0, 30), col = "pink")
+f.hist <- hist(metadata$Weight[metadata$Sex == "M"], breaks = 10, col = "blue", 
+    add = T)
 
-```
-## Error: object 'metadata' not found
-```
+plot(m.hist$density ~ m.hist$mids, type = "h", col = "blue", ylim = c(0, 0.2))
+points(f.hist$density ~ f.hist$mids, type = "h", col = "red")
 
-```r
-f.hist <- hist(metadata$Weight[metadata$Sex=="M"], breaks=10, col="blue", add=T)
-```
-
-```
-## Error: object 'metadata' not found
-```
-
-```r
-plot(m.hist$density~m.hist$mids, type="h", col="blue", ylim=c(0,0.2))
-```
-
-```
-## Error: object 'm.hist' not found
-```
-
-```r
-points(f.hist$density~f.hist$mids, type="h", col="red")
-```
-
-```
-## Error: object 'f.hist' not found
-```
-
-```r
-plot(m.hist$density~m.hist$mids, type="l", col="blue", ylim=c(0,0.2))
-```
-
-```
-## Error: object 'm.hist' not found
-```
-
-```r
-points(f.hist$density~f.hist$mids, type="l", col="red")
-```
-
-```
-## Error: object 'f.hist' not found
+plot(m.hist$density ~ m.hist$mids, type = "l", col = "blue", ylim = c(0, 0.2))
+points(f.hist$density ~ f.hist$mids, type = "l", col = "red")
 ```
 
 ---
@@ -210,36 +108,16 @@ points(f.hist$density~f.hist$mids, type="l", col="red")
 
 
 ```r
-legend(x=20, y=0.18, legend=c("Female", "Male"), col=c("red", "blue"), lty=1, lwd=2)
-```
-
-```
-## Error: plot.new has not been called yet
+legend(x = 20, y = 0.18, legend = c("Female", "Male"), col = c("red", "blue"), 
+    lty = 1, lwd = 2)
 ```
 
 
 ```r
 location <- locator(1)
-```
-
-```
-## Error: plot.new has not been called yet
-```
-
-```r
-legend(location, legend=c("Female", "Male"), col=c("red", "blue"), lty=1, lwd=2)
-```
-
-```
-## Error: object 'location' not found
-```
-
-```r
+legend(location, legend = c("Female", "Male"), col = c("red", "blue"), lty = 1, 
+    lwd = 2)
 location
-```
-
-```
-## Error: object 'location' not found
 ```
 
 ---
@@ -248,43 +126,12 @@ location
 
 
 ```r
-abline(a=0.01, b=0.01)
-```
+abline(a = 0.01, b = 0.01)
+abline(v = 20, col = "red", lwd = 3)
+abline(h = 0.05, col = "blue", lty = 2, lwd = 3)
 
-```
-## Error: plot.new has not been called yet
-```
-
-```r
-abline(v=20, col="red", lwd=3)
-```
-
-```
-## Error: plot.new has not been called yet
-```
-
-```r
-abline(h=0.05, col="blue", lty=2, lwd=3)
-```
-
-```
-## Error: plot.new has not been called yet
-```
-
-```r
-segments(x0=10, x1=15, y0=0.20, y1=0.15)
-```
-
-```
-## Error: plot.new has not been called yet
-```
-
-```r
-segments(x0=c(10, 21), x1=c(15, 25), y0=c(0.20, 0.15), y1=c(0.15, 0.12))
-```
-
-```
-## Error: plot.new has not been called yet
+segments(x0 = 10, x1 = 15, y0 = 0.2, y1 = 0.15)
+segments(x0 = c(10, 21), x1 = c(15, 25), y0 = c(0.2, 0.15), y1 = c(0.15, 0.12))
 ```
 
 ---
@@ -365,46 +212,22 @@ plot(r, ylim=c(0,10))
 * Flipping a fair coin...
 
 ```r
-sample(c("H", "T"), 100, replace=T)		# probability of H | T = 0.50
-```
-
-```
-##   [1] "T" "H" "H" "T" "T" "H" "T" "H" "T" "H" "H" "T" "T" "T" "H" "H" "T"
-##  [18] "T" "T" "H" "H" "H" "H" "H" "H" "T" "H" "H" "T" "H" "H" "H" "H" "H"
-##  [35] "H" "H" "T" "H" "H" "H" "T" "T" "H" "H" "H" "H" "T" "H" "H" "T" "T"
-##  [52] "H" "H" "T" "H" "T" "T" "T" "H" "T" "H" "T" "H" "T" "H" "T" "T" "T"
-##  [69] "H" "H" "T" "H" "T" "H" "T" "T" "H" "H" "T" "T" "H" "H" "T" "T" "T"
-##  [86] "H" "T" "H" "H" "H" "H" "T" "H" "T" "H" "H" "H" "T" "H" "T"
-```
-
-```r
-rbinom(10, size=1, prob=0.5)			# what if the coin were cooked or you were a hall of fame hitter?
-```
-
-```
-##  [1] 0 1 1 0 1 0 0 0 1 1
+sample(c("H", "T"), 100, replace = T)  # probability of H | T = 0.50
+rbinom(10, size = 1, prob = 0.5)  # what if the coin were cooked or you were a hall of fame hitter?
 ```
 
 * Flipping a cooked coin...
 
 ```r
-heads <- rbinom(10, size=1, prob=0.8)			#	what if the coin were cooked or you were a hall of fame hitter?
+heads <- rbinom(10, size = 1, prob = 0.8)  #\twhat if the coin were cooked or you were a hall of fame hitter?
 sum(heads)
-```
-
-```
-## [1] 7
 ```
 
 * Hall of fame hitter...
 
 ```r
-hits <- rbinom(5, size=1, prob=0.3)			#	what if the coin were cooked or you were a hall of fame hitter?
+hits <- rbinom(5, size = 1, prob = 0.3)  #\twhat if the coin were cooked or you were a hall of fame hitter?
 sum(hits)
-```
-
-```
-## [1] 2
 ```
 
 ---
@@ -469,12 +292,12 @@ arrows(x0 = 2, x1 = 2, y0 = 0.15, y1 = 0.08, lwd = 2, col = "red")
 
 ```r
 n.two <- sum(r == obs.males)
-p.two.empirical <- n.two / breedings
+p.two.empirical <- n.two/breedings
 p.two.empirical
 ```
 
 ```
-## [1] 0.04
+## [1] 0.046
 ```
 
 ---
@@ -496,7 +319,7 @@ p.two.empirical - p.two.R
 ```
 
 ```
-## [1] -0.003945
+## [1] 0.002055
 ```
 
 * How would you reduce the difference?
@@ -521,12 +344,12 @@ points(x = 0:10, dbinom(0:10, 10, 0.5), col = "red", lwd = 3, type = "l", lty = 
 
 ```r
 n.two.or.fewer <- sum(r <= obs.males)
-p.two.or.fewer.empirical <- n.two.or.fewer / breedings
+p.two.or.fewer.empirical <- n.two.or.fewer/breedings
 p.two.or.fewer.empirical
 ```
 
 ```
-## [1] 0.053
+## [1] 0.057
 ```
 
 ```r
@@ -539,11 +362,11 @@ p.two.or.fewer.R
 ```
 
 ```r
-p.two.or.fewer.empirical-p.two.or.fewer.R
+p.two.or.fewer.empirical - p.two.or.fewer.R
 ```
 
 ```
-## [1] -0.001687
+## [1] 0.002313
 ```
 
 ---
@@ -552,10 +375,10 @@ p.two.or.fewer.empirical-p.two.or.fewer.R
 
 
 ```r
-inv.cdf <- qbinom(0.9, 10, 0.5)  
+inv.cdf <- qbinom(0.9, 10, 0.5)
 ```
 
-* In a litter of 10 mice, we should expect to have as many as 7 females in 90% of our litters
+* In a litter of 10 mice, we should expect to have as many as ?? females in 90% of our litters
 
 ---
 

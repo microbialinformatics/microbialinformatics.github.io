@@ -29,7 +29,7 @@ knit        : slidify::knit2slides
 ```{r, eval=T, echo=F}
 library(knitr)
 opts_chunk$set(hide = TRUE)
-opts_chunk$set(eval = TRUE)
+opts_chunk$set(eval = FALSE)
 opts_chunk$set(tidy = TRUE)
 ```
 
