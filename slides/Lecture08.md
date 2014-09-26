@@ -43,9 +43,31 @@ knit        : slidify::knit2slides
 
 
 ```r
-metadata <- read.table(file = "wild.metadata.txt", header = T)
+metadata <- read.table(file="wild.metadata.txt", header=T)
+```
+
+```
+## Warning: cannot open file 'wild.metadata.txt': No such file or directory
+```
+
+```
+## Error: cannot open the connection
+```
+
+```r
 rownames(metadata) <- metadata$Group
-metadata <- metadata[, -1]
+```
+
+```
+## Error: object 'metadata' not found
+```
+
+```r
+metadata <- metadata[,-1]
+```
+
+```
+## Error: object 'metadata' not found
 ```
 
 ---
@@ -56,9 +78,27 @@ metadata <- metadata[, -1]
 
 
 ```r
-plot(metadata$Weight)  # what is this using as an x-axis?
-plot(metadata$Weight, metadata$Ear)  # what is this using as an x-axis?\t\t\t
-plot(metadata$Ear ~ metadata$Weight)  # what is this using as an x-axis?
+	plot(metadata$Weight)				# what is this using as an x-axis?
+```
+
+```
+## Error: object 'metadata' not found
+```
+
+```r
+	plot(metadata$Weight, metadata$Ear)			# what is this using as an x-axis?			
+```
+
+```
+## Error: object 'metadata' not found
+```
+
+```r
+	plot(metadata$Ear~metadata$Weight)			# what is this using as an x-axis?
+```
+
+```
+## Error: object 'metadata' not found
 ```
 
 ---
@@ -67,9 +107,27 @@ plot(metadata$Ear ~ metadata$Weight)  # what is this using as an x-axis?
 * Be sure to see `?plot` and `?plot.default`
 
 ```r
-plot(metadata$Ear ~ metadata$Weight, col = "blue", pch = 18)
-plot(metadata$Ear ~ metadata$Weight, col = "blue", pch = 20)
-plot(metadata$Ear ~ metadata$Weight, col = "blue", pch = 20, cex = 2)
+	plot(metadata$Ear~metadata$Weight, col="blue", pch=18)
+```
+
+```
+## Error: object 'metadata' not found
+```
+
+```r
+	plot(metadata$Ear~metadata$Weight, col="blue", pch=20)
+```
+
+```
+## Error: object 'metadata' not found
+```
+
+```r
+	plot(metadata$Ear~metadata$Weight, col="blue", pch=20, cex=2)
+```
+
+```
+## Error: object 'metadata' not found
 ```
 
 ---
@@ -78,10 +136,19 @@ plot(metadata$Ear ~ metadata$Weight, col = "blue", pch = 20, cex = 2)
 
 
 ```r
-plot(metadata[metadata$Sex == "M", "Ear"] ~ metadata[metadata$Sex == "M", "Weight"], 
-    col = "blue", pch = 18)
-points(metadata[metadata$Sex == "F", "Ear"] ~ metadata[metadata$Sex == "F", 
-    "Weight"], col = "pink", pch = 20)
+	plot(metadata[metadata$Sex=="M","Ear"]~metadata[metadata$Sex=="M","Weight"], col="blue", pch=18)
+```
+
+```
+## Error: object 'metadata' not found
+```
+
+```r
+	points(metadata[metadata$Sex=="F","Ear"]~metadata[metadata$Sex=="F","Weight"], col="pink", pch=20)
+```
+
+```
+## Error: object 'metadata' not found
 ```
 
 ---
@@ -90,16 +157,51 @@ points(metadata[metadata$Sex == "F", "Ear"] ~ metadata[metadata$Sex == "F",
 
 
 ```r
-m.hist <- hist(metadata$Weight[metadata$Sex == "F"], breaks = 10, ylim = c(0, 
-    20), xlim = c(0, 30), col = "pink")
-f.hist <- hist(metadata$Weight[metadata$Sex == "M"], breaks = 10, col = "blue", 
-    add = T)
+m.hist <- hist(metadata$Weight[metadata$Sex=="F"], breaks=10, ylim=c(0,20), xlim=c(0,30), col="pink")
+```
 
-plot(m.hist$density ~ m.hist$mids, type = "h", col = "blue", ylim = c(0, 0.2))
-points(f.hist$density ~ f.hist$mids, type = "h", col = "red")
+```
+## Error: object 'metadata' not found
+```
 
-plot(m.hist$density ~ m.hist$mids, type = "l", col = "blue", ylim = c(0, 0.2))
-points(f.hist$density ~ f.hist$mids, type = "l", col = "red")
+```r
+f.hist <- hist(metadata$Weight[metadata$Sex=="M"], breaks=10, col="blue", add=T)
+```
+
+```
+## Error: object 'metadata' not found
+```
+
+```r
+plot(m.hist$density~m.hist$mids, type="h", col="blue", ylim=c(0,0.2))
+```
+
+```
+## Error: object 'm.hist' not found
+```
+
+```r
+points(f.hist$density~f.hist$mids, type="h", col="red")
+```
+
+```
+## Error: object 'f.hist' not found
+```
+
+```r
+plot(m.hist$density~m.hist$mids, type="l", col="blue", ylim=c(0,0.2))
+```
+
+```
+## Error: object 'm.hist' not found
+```
+
+```r
+points(f.hist$density~f.hist$mids, type="l", col="red")
+```
+
+```
+## Error: object 'f.hist' not found
 ```
 
 ---
@@ -108,16 +210,36 @@ points(f.hist$density ~ f.hist$mids, type = "l", col = "red")
 
 
 ```r
-legend(x = 20, y = 0.18, legend = c("Female", "Male"), col = c("red", "blue"), 
-    lty = 1, lwd = 2)
+legend(x=20, y=0.18, legend=c("Female", "Male"), col=c("red", "blue"), lty=1, lwd=2)
+```
+
+```
+## Error: plot.new has not been called yet
 ```
 
 
 ```r
 location <- locator(1)
-legend(location, legend = c("Female", "Male"), col = c("red", "blue"), lty = 1, 
-    lwd = 2)
+```
+
+```
+## Error: plot.new has not been called yet
+```
+
+```r
+legend(location, legend=c("Female", "Male"), col=c("red", "blue"), lty=1, lwd=2)
+```
+
+```
+## Error: object 'location' not found
+```
+
+```r
 location
+```
+
+```
+## Error: object 'location' not found
 ```
 
 ---
@@ -126,12 +248,43 @@ location
 
 
 ```r
-abline(a = 0.01, b = 0.01)
-abline(v = 20, col = "red", lwd = 3)
-abline(h = 0.05, col = "blue", lty = 2, lwd = 3)
+abline(a=0.01, b=0.01)
+```
 
-segments(x0 = 10, x1 = 15, y0 = 0.2, y1 = 0.15)
-segments(x0 = c(10, 21), x1 = c(15, 25), y0 = c(0.2, 0.15), y1 = c(0.15, 0.12))
+```
+## Error: plot.new has not been called yet
+```
+
+```r
+abline(v=20, col="red", lwd=3)
+```
+
+```
+## Error: plot.new has not been called yet
+```
+
+```r
+abline(h=0.05, col="blue", lty=2, lwd=3)
+```
+
+```
+## Error: plot.new has not been called yet
+```
+
+```r
+segments(x0=10, x1=15, y0=0.20, y1=0.15)
+```
+
+```
+## Error: plot.new has not been called yet
+```
+
+```r
+segments(x0=c(10, 21), x1=c(15, 25), y0=c(0.20, 0.15), y1=c(0.15, 0.12))
+```
+
+```
+## Error: plot.new has not been called yet
 ```
 
 ---
@@ -144,10 +297,6 @@ segments(x0 = c(10, 21), x1 = c(15, 25), y0 = c(0.2, 0.15), y1 = c(0.15, 0.12))
 
 ## Randomness
 > *	Pick a number between 1 and 10 and write it down
-
----
-
-## Randomness
 > *	What would you expect a random sampling of the numbers from 1 to 10 to look like?
 > *	What would it depend on?
 > *	Mean?
@@ -216,54 +365,197 @@ plot(r, ylim=c(0,10))
 * Flipping a fair coin...
 
 ```r
-sample(c("H", "T"), 100, replace = T)  # probability of H | T = 0.50
-rbinom(10, size = 1, prob = 0.5)  # what if the coin were cooked or you were a hall of fame hitter?
+sample(c("H", "T"), 100, replace=T)		# probability of H | T = 0.50
+```
+
+```
+##   [1] "T" "H" "H" "T" "T" "H" "T" "H" "T" "H" "H" "T" "T" "T" "H" "H" "T"
+##  [18] "T" "T" "H" "H" "H" "H" "H" "H" "T" "H" "H" "T" "H" "H" "H" "H" "H"
+##  [35] "H" "H" "T" "H" "H" "H" "T" "T" "H" "H" "H" "H" "T" "H" "H" "T" "T"
+##  [52] "H" "H" "T" "H" "T" "T" "T" "H" "T" "H" "T" "H" "T" "H" "T" "T" "T"
+##  [69] "H" "H" "T" "H" "T" "H" "T" "T" "H" "H" "T" "T" "H" "H" "T" "T" "T"
+##  [86] "H" "T" "H" "H" "H" "H" "T" "H" "T" "H" "H" "H" "T" "H" "T"
+```
+
+```r
+rbinom(10, size=1, prob=0.5)			# what if the coin were cooked or you were a hall of fame hitter?
+```
+
+```
+##  [1] 0 1 1 0 1 0 0 0 1 1
 ```
 
 * Flipping a cooked coin...
 
 ```r
-heads <- rbinom(10, size = 1, prob = 0.8)  #\twhat if the coin were cooked or you were a hall of fame hitter?
+heads <- rbinom(10, size=1, prob=0.8)			#	what if the coin were cooked or you were a hall of fame hitter?
 sum(heads)
+```
+
+```
+## [1] 7
 ```
 
 * Hall of fame hitter...
 
 ```r
-hits <- rbinom(5, size = 1, prob = 0.3)  #\twhat if the coin were cooked or you were a hall of fame hitter?
+hits <- rbinom(5, size=1, prob=0.3)			#	what if the coin were cooked or you were a hall of fame hitter?
 sum(hits)
 ```
 
----
-
-## What are the odds assuming it's cooked?...
-
-
-```r
-n.heads <- 4
-n.flips <- 10
-prob <- 0.3
-dbinom(n.heads, size = n.flips, prob = prob)
-plot(1:n.flips, dbinom(1:n.flips, n.flips, prob), type = "h")
+```
+## [1] 2
 ```
 
 ---
 
-## What are the odds assuming it's cooked?...
+## Other distribution functions
 
-* What are the odds of seeing `n.heads` heads or fewer?
+* `rbinom`: random samples
+  * Draw random values from a binomial distribution
+  * Example: Have the computer flip a coin for you
+* `dbinom`: distribution function
+  * Probability of drawing a certain number of something from a binomial distribution
+  * Example: Probability of getting 1 head out of 10 coin flips
+
+---
+
+## Other distribution functions
+
+* `pbinom`: cumulative distribution function
+  * Probability of drawing a certain number of something or fewere froma  binomial distribution
+  * Example: Probability of geting 1 or fewer heads out of 10 coin flips
+* `qbinom`: inverse cumulative distribution function
+  * Given a probability, return the number whose cumulative distribution matches the probability
+	* Example: Number of heads (and fewer) you should expect to get 25% of the time when you make 10 flips
+
+---
+
+## Example
+
+* You have a mouse breeding colony and you are disapointed because the mom you were counting on to give you an even mix of males and females has given you 2 males and 8 females.
+* Do you think something is wrong with her?
+* You could rebread her a bunch and see, but that will get expensive and take a long time.
+* Is there a faster way?
+
 
 ```r
-sum(dbinom(0:n.heads, size = n.flips, prob = prob))
-pbinom(n.heads, n.flips, prob)  # probability of seeing this count or smaller
-1 - pbinom(n.heads, n.flips, prob)  # probability of seeing this count or larger
+breedings <- 1000
+npups <- 10
+p.males <- 0.5
+obs.males <- 2
 ```
 
-* For a given probability of flipping a heads, how many heads would we see in `n.flips` with a specified probability?
+---
+
+## Number of males you get if you rebread her 1000 times and she has 10 pups per litter
+
 
 ```r
-qbinom(0.15, n.flips, prob)
+r <- rbinom(breedings, npups, p.males)
+r.hist <- hist(r, plot = FALSE, breaks = seq(-0.5, 10.5, 1))
+par(mar = c(5, 5, 0.5, 0.5))
+plot(r.hist$density ~ r.hist$mids, type = "h", lwd = 2, xlab = "Number of male mice", 
+    ylab = "Density", xlim = c(0, 10))
+arrows(x0 = 2, x1 = 2, y0 = 0.15, y1 = 0.08, lwd = 2, col = "red")
 ```
+
+<img src="assets/fig/unnamed-chunk-14.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" />
+
+---
+
+## Fraction of those 1000 times where you get two males (empirical)
+
+
+```r
+n.two <- sum(r == obs.males)
+p.two.empirical <- n.two / breedings
+p.two.empirical
+```
+
+```
+## [1] 0.04
+```
+
+---
+
+## Built in R function: `dbinom`
+
+
+```r
+p.two.R <- dbinom(2, 10, 0.5)
+p.two.R
+```
+
+```
+## [1] 0.04395
+```
+
+```r
+p.two.empirical - p.two.R
+```
+
+```
+## [1] -0.003945
+```
+
+* How would you reduce the difference?
+
+---
+
+## Number of males you get if you rebread her 1000 times and she has 10 pups per litter
+
+
+```r
+plot(r.hist$density ~ r.hist$mids, type = "h", lwd = 2, xlab = "Number of male mice", 
+    ylab = "Density", xlim = c(0, 10))
+points(x = 0:10, dbinom(0:10, 10, 0.5), col = "red", lwd = 3, type = "l", lty = 1)
+```
+
+<img src="assets/fig/unnamed-chunk-17.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" style="display: block; margin: auto;" />
+
+---
+
+## Fraction of those 1000 times where you get two or fewer males (empirical and `pbinom`)
+
+
+```r
+n.two.or.fewer <- sum(r <= obs.males)
+p.two.or.fewer.empirical <- n.two.or.fewer / breedings
+p.two.or.fewer.empirical
+```
+
+```
+## [1] 0.053
+```
+
+```r
+p.two.or.fewer.R <- pbinom(2, 10, 0.5)
+p.two.or.fewer.R
+```
+
+```
+## [1] 0.05469
+```
+
+```r
+p.two.or.fewer.empirical-p.two.or.fewer.R
+```
+
+```
+## [1] -0.001687
+```
+
+---
+
+## How many females should we expect to have 90% of the time?
+
+
+```r
+inv.cdf <- qbinom(0.9, 10, 0.5)  
+```
+
+* In a litter of 10 mice, we should expect to have as many as 7 females in 90% of our litters
 
 ---
 
@@ -279,13 +571,6 @@ qbinom(0.15, n.flips, prob)
 * If sequencing errors are random and 1% of base calls are errors, then...
 * ...what fraction of 250 bp sequences would have more than one error?
 * ...if you had 1 million sequences, how many would have the exact same error?
-
----
-
-## Things to think about:  Mice breeding
-* What's the probability that a litter of 8 mice will have 4 males?
-* What's the probability that a litter of 8 mice will have 6 males?
-* What's the probability that a litter of 8 mice will have 6 or more males?
 
 ---
 
