@@ -133,8 +133,8 @@ knit        : slidify::knit2slides
 ## Inline
 
 > * Let me pick a random number between 1 and 10.
-> * Hmmm, I pick 7
-> * 7 squared is 49
+> * Hmmm, I pick 2
+> * 2 squared is 4
 > * All of the numbers (after 1 and 10) were generated within R
 > * The dynamic component is that you use R packages to allow a user to set the min and max values to bound your pick
 

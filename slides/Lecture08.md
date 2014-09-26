@@ -349,7 +349,7 @@ p.two.or.fewer.empirical
 ```
 
 ```
-## [1] 0.057
+## [1] 0.054
 ```
 
 ```r
@@ -366,7 +366,7 @@ p.two.or.fewer.empirical - p.two.or.fewer.R
 ```
 
 ```
-## [1] 0.002313
+## [1] -0.0006875
 ```
 
 ---
