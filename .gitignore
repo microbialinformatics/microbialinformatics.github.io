@@ -7,3 +7,4 @@ _site
 *.Rproj
 .Rproj.user/*
 .Rproj.user
+./*.html
