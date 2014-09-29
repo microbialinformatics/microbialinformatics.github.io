@@ -57,34 +57,35 @@ Class	|	Date	|	Topic	|	Reading
 7	|	9/25	|	[Basic plotting (16 slides)](slides/Lecture07)		|	ISwR 4
 8	|	9/26	|	[Basic plotting and randomness (14 slides)](slides/Lecture08)	|	ISwR 3 and 4
 	|	9/26	|	[Computer lab: Plotting, randomness, tabular data](https://github.com/microbialinformatics/assignment03) 	|	
-9   |   9/30    |   Tests on tabular data   |  ISwr 8
-10	|	9/30	|	T- and Wilcoxon tests	|	ISwR 5
-13	|	10/2	|	Power analysis	|	ISwR 9
+9	|	9/30	|	[Randomness (23 slides)](slides/Lecture08)	|	ISwR 3 and 4
+10  |   10/2    |   [Tests on tabular data (XX slides)](slides/Lecture10)  |  ISwr 8
+11	|	10/3	|	T- and Wilcoxon tests	|	ISwR 5
 	|	10/3	|	Computer lab	|	
-15	|	10/7	|	ANOVA and Kruskal-Wallis	|	ISwR 7
-16	|	10/9	|	Regression and correlation	|	ISwR 6
-17	|	10/10	|	Computer lab	|	
+12	|	10/7	|	Power analysis	|	ISwR 9
+13	|	10/9	|	ANOVA and Kruskal-Wallis	|	ISwR 7
+14	|	10/10	|	Regression and correlation	|	ISwR 6
+	|	10/10	|	Computer lab	|	
 	|	10/14	|	Fall Study Period (no class)	|	
-19	|	10/16	|	Introduction to programming	|	TAoRP 1
-20	|	10/17	|	Computer lab	|	
-22	|	10/23	|	Data structures: vectors and matrices	|	TAoRP 2, 3
-23	|	10/24	|	Computer lab	|	
-24	|	10/28	|	Data structures: lists and data frames	|	TAoRP 4, 5
-25	|	10/30	|	Data structures: tables and factors	|	TAoRP 6
-26	|	10/31	|	Computer lab	|	
-27	|	11/4	|	Control statements	|	TAoRP 7
-28	|	11/6	|	Input and output	|	TAoRP 10
-29	|	11/7	|	Computer lab	|	
-30	|	11/11	|	String manipulation I	|	TAoRP 11
-31	|	11/13	|	String manipulation II	|	TAoRP 11
-32	|	11/14	|	Computer lab	|	
-33	|	11/18	|	Variables and functions	|	
-34	|	11/20	|	Optimization	|	
-35	|	11/21	|	Computer lab	|	
-36	|	11/25	|	Testing and debugging	|	TAoRP 13
+	|	10/16	|	Introduction to programming	|	TAoRP 1
+	|	10/17	|	Computer lab	|	
+	|	10/23	|	Data structures: vectors and matrices	|	TAoRP 2, 3
+	|	10/24	|	Computer lab	|	
+	|	10/28	|	Data structures: lists and data frames	|	TAoRP 4, 5
+	|	10/30	|	Data structures: tables and factors	|	TAoRP 6
+	|	10/31	|	Computer lab	|	
+	|	11/4	|	Control statements	|	TAoRP 7
+	|	11/6	|	Input and output	|	TAoRP 10
+	|	11/7	|	Computer lab	|	
+	|	11/11	|	String manipulation I	|	TAoRP 11
+	|	11/13	|	String manipulation II	|	TAoRP 11
+	|	11/14	|	Computer lab	|	
+	|	11/18	|	Variables and functions	|	
+	|	11/20	|	Optimization	|	
+	|	11/21	|	Computer lab	|	
+	|	11/25	|	Testing and debugging	|	TAoRP 13
 	|	11/27	|	Thanksgiving (no class)	|	
 	|	11/28	|	Thanksgiving (no class)	|	
-37	|	12/2	|	Creating a package	|	
-38	|	12/4	|	Graphics	|	TAoRP 12
-39	|	12/5	|	Computer lab	|	
+	|	12/2	|	Creating a package	|	
+	|	12/4	|	Graphics	|	TAoRP 12
+	|	12/5	|	Computer lab	|	
 40	|	12/9	|	Graphics	|	TAoRP 12
