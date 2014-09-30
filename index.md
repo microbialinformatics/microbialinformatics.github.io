@@ -57,7 +57,7 @@ Class	|	Date	|	Topic	|	Reading
 7	|	9/25	|	[Basic plotting (16 slides)](slides/Lecture07)		|	ISwR 4
 8	|	9/26	|	[Basic plotting and randomness (14 slides)](slides/Lecture08)	|	ISwR 3 and 4
 	|	9/26	|	[Computer lab: Plotting, randomness, tabular data](https://github.com/microbialinformatics/assignment03) 	|	
-9	|	9/30	|	[Randomness (23 slides)](slides/Lecture08)	|	ISwR 3 and 4
+9	|	9/30	|	[Randomness (23 slides)](slides/Lecture09)	|	ISwR 3 and 4
 10  |   10/2    |   [Tests on tabular data (XX slides)](slides/Lecture10)  |  ISwr 8
 11	|	10/3	|	T- and Wilcoxon tests	|	ISwR 5
 	|	10/3	|	Computer lab	|	
