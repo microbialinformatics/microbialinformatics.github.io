@@ -1,0 +1,163 @@
+--- 
+title       : Microbial Informatics
+subtitle    : Lecture 10
+date        : October 2, 2014
+author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
+job         : Department of Microbiology & Immunology
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : standalone    # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+
+--- 
+
+## Announcements
+* Homework 3 is out
+* For the next two Fridays, the first hour of class will be a lecture
+* Read ***Introduction to Statistics with R*** (Chapter 5: T- and Wilcoxon tests)
+
+--- 
+
+## Review
+* Human are poor sources of random numbers!
+* Can perform simulations using random number generators
+* Binomial distribution is a discrete distribution
+* Several `xbinom` functions in R
+
+```{r, eval=T, echo=F}
+library(knitr)
+opts_chunk$set(hide = TRUE)
+opts_chunk$set(eval = FALSE)
+opts_chunk$set(tidy = TRUE)
+opts_chunk$set(cache = FALSE)
+```
+
+---
+
+## Learning objectives
+* How to generate tabular data
+* How to test associations between tabular data
+
+---
+
+## Let's get some data to work with...
+
+```{r, eval=TRUE}
+metadata <- read.table(file="wild.metadata.txt", header=T)
+rownames(metadata) <- metadata$Group
+metadata <- metadata[,-1]
+```
+
+---
+
+## Testing a hypothesis
+*	What is a hypothesis?
+    - Testable
+    - Falsifiable
+    - Leads to predictions
+    - Cannot prove a hypothesis is true!
+* What's are null and alternative hypotheses? 
+    - Null hypothesis is the hypothesis you are trying to reject
+    - Cannot prove a null hypothesis true, can only reject
+
+---
+
+## Remember: everything is probabilistic
+
+* Errors
+    - Type I: Falsely rejecting a null hypothesis
+    - Type II: Falsely supporting a null hypothesis
+* P-value
+    - The probability that you would see something as extreme or more so if the null hypothesis is true (Type I)
+    - Generally willing to accept a Type I error of 0.05
+* Power
+    - The ability to reject a null hypothesis if false (Type II)
+    - Generally desire a power of 0.80
+
+---
+
+## Two types of tests
+*	Single tailed
+    * Probability that the difference is greater than expected
+    * Example: Are there more males than females?
+* Two-tailed:
+    * Probability that the difference is greater or less than expected
+    * Example: Is there a difference in the number of males and females?
+
+---
+
+## Testing
+
+*	How would we know whether we had a even sampling of M & F in the previous example?
+	-	How to test?
+	-	Binomial distribution
+	
+```{r}
+pbinom(2, 10, 0.5)
+2*pbinom(2, 10, 0.5)
+binom.test(2, 10, 0.5)
+binom.test(2, 10, 0.5, alternative="less")
+```
+
+---
+
+## An aside: the table commands
+
+* Will convert your observations (individuals by variables) into tables (varaibles by variables)
+
+```{r}
+table(metadata$Sex)
+table(metadata$Sex, metadata$SP)
+table(metadata$Sex, metadata$SP, metadata$Repro)
+```
+
+---
+
+##	Generating marginal sums
+
+```{r}
+sex.sp <- table(metadata$Sex, metadata$SP)
+margin.table(sex.sp)
+margin.table(sex.sp, 1)
+margin.table(sex.sp, 2)
+```
+
+---
+
+## Generating relative abundance tables
+
+```{r}
+prop.table(sex.sp)
+prop.table(sex.sp, 1)
+prop.table(sex.sp, 2)
+```
+
+---
+
+
+---
+
+
+Testing a hypothesis - two "independent" proportions - are two proportions the same?
+
+
+lewitt.success <- c(9,4)
+lewitt.failure <- c(3, 9)
+lewitt.total <- lewitt.success + lewitt.failure
+
+
+	
+	-	Fisher exact test - imagine a 2x2 table and the cells are a, b, c, d going from left to right and top-down
+	-	p = [(a+b)!(c+d)!(a+c)!(b+d)!] / [a!b!c!d!]
+	-	Odds ratio: [p1 / (1-p1)] / [p2 / (1-p2)]
+	-	requires a matrix
+	
+	lewitt.matrix <- matrix(c(lewitt.success, lewitt.failure), nrow=2)
+
+
+
+--- .segue .dark
+
+## Questions?

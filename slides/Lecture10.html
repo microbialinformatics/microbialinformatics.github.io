@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 10</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Homework 3 is out</li>
+<li>For the next two Fridays, the first hour of class will be a lecture</li>
+<li>Read <strong><em>Introduction to Statistics with R</em></strong> (Chapter 5: T- and Wilcoxon tests)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Human are poor sources of random numbers!</li>
+<li>Can perform simulations using random number generators</li>
+<li>Binomial distribution is a discrete distribution</li>
+<li>Several <code>xbinom</code> functions in R</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>How to generate tabular data</li>
+<li>How to test associations between tabular data</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">opts_chunk$get()
+</code></pre>
+
+<pre><code>## $eval
+## [1] TRUE
+## 
+## $echo
+## [1] TRUE
+## 
+## $results
+## [1] &quot;markup&quot;
+## 
+## $tidy
+## [1] FALSE
+## 
+## $tidy.opts
+## NULL
+## 
+## $collapse
+## [1] FALSE
+## 
+## $prompt
+## [1] FALSE
+## 
+## $comment
+## [1] &quot;##&quot;
+## 
+## $highlight
+## [1] TRUE
+## 
+## $strip.white
+## [1] TRUE
+## 
+## $size
+## [1] &quot;normalsize&quot;
+## 
+## $background
+## [1] &quot;#F7F7F7&quot;
+## 
+## $cache
+## [1] TRUE
+## 
+## $cache.path
+## [1] &quot;.cache/&quot;
+## 
+## $cache.vars
+## NULL
+## 
+## $cache.lazy
+## [1] TRUE
+## 
+## $dependson
+## NULL
+## 
+## $autodep
+## [1] FALSE
+## 
+## $fig.keep
+## [1] &quot;high&quot;
+## 
+## $fig.show
+## [1] &quot;asis&quot;
+## 
+## $fig.align
+## [1] &quot;default&quot;
+## 
+## $fig.path
+## [1] &quot;assets/fig/&quot;
+## 
+## $dev
+## [1] &quot;png&quot;
+## 
+## $dev.args
+## NULL
+## 
+## $dpi
+## [1] 72
+## 
+## $fig.ext
+## NULL
+## 
+## $fig.width
+## [1] 7
+## 
+## $fig.height
+## [1] 7
+## 
+## $fig.env
+## [1] &quot;figure&quot;
+## 
+## $fig.cap
+## NULL
+## 
+## $fig.scap
+## NULL
+## 
+## $fig.lp
+## [1] &quot;fig:&quot;
+## 
+## $fig.subcap
+## NULL
+## 
+## $fig.pos
+## [1] &quot;&quot;
+## 
+## $out.width
+## NULL
+## 
+## $out.height
+## NULL
+## 
+## $out.extra
+## NULL
+## 
+## $fig.retina
+## [1] 1
+## 
+## $external
+## [1] TRUE
+## 
+## $sanitize
+## [1] FALSE
+## 
+## $interval
+## [1] 1
+## 
+## $aniopts
+## [1] &quot;controls,loop&quot;
+## 
+## $warning
+## [1] TRUE
+## 
+## $error
+## [1] TRUE
+## 
+## $message
+## [1] TRUE
+## 
+## $render
+## NULL
+## 
+## $ref.label
+## NULL
+## 
+## $child
+## NULL
+## 
+## $engine
+## [1] &quot;R&quot;
+## 
+## $split
+## [1] FALSE
+## 
+## $include
+## [1] TRUE
+## 
+## $purl
+## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s get some data to work with...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">metadata &lt;- read.table(file=&quot;wild.metadata.txt&quot;, header=T)
+rownames(metadata) &lt;- metadata$Group
+metadata &lt;- metadata[,-1]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>The table command</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Will convert your observations (individuals by variables) into tables (varaibles by variables)</li>
+</ul>
+
+<pre><code class="r">table(metadata$Sex)
+</code></pre>
+
+<pre><code>## 
+##  F  M 
+## 60 51
+</code></pre>
+
+<pre><code class="r">table(metadata$Sex, metadata$SP)
+</code></pre>
+
+<pre><code>##    
+##     PL PMG
+##   F 24  36
+##   M 34  17
+</code></pre>
+
+<pre><code class="r">table(metadata$Sex, metadata$SP, metadata$Repro)
+</code></pre>
+
+<pre><code>## , ,  = A
+## 
+##    
+##     PL PMG
+##   F  0   0
+##   M  3   0
+## 
+## , ,  = ABD
+## 
+##    
+##     PL PMG
+##   F  0   0
+##   M  7   1
+## 
+## , ,  = N
+## 
+##    
+##     PL PMG
+##   F  1   2
+##   M  0   0
+## 
+## , ,  = NE
+## 
+##    
+##     PL PMG
+##   F 12  15
+##   M  0   0
+## 
+## , ,  = NT
+## 
+##    
+##     PL PMG
+##   F 11  19
+##   M  0   0
+## 
+## , ,  = SCR
+## 
+##    
+##     PL PMG
+##   F  0   0
+##   M 24  16
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Generating marginal sums</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">sex.sp &lt;- table(metadata$Sex, metadata$SP)
+margin.table(sex.sp)
+</code></pre>
+
+<pre><code>## [1] 111
+</code></pre>
+
+<pre><code class="r">margin.table(sex.sp, 1)
+</code></pre>
+
+<pre><code>## 
+##  F  M 
+## 60 51
+</code></pre>
+
+<pre><code class="r">margin.table(sex.sp, 2)
+</code></pre>
+
+<pre><code>## 
+##  PL PMG 
+##  58  53
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Generating relative abundance tables</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">prop.table(sex.sp)
+</code></pre>
+
+<pre><code>##    
+##         PL    PMG
+##   F 0.2162 0.3243
+##   M 0.3063 0.1532
+</code></pre>
+
+<pre><code class="r">prop.table(sex.sp, 1)
+</code></pre>
+
+<pre><code>##    
+##         PL    PMG
+##   F 0.4000 0.6000
+##   M 0.6667 0.3333
+</code></pre>
+
+<pre><code class="r">prop.table(sex.sp, 2)
+</code></pre>
+
+<pre><code>##    
+##         PL    PMG
+##   F 0.4138 0.6792
+##   M 0.5862 0.3208
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Testing a hypothesis</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  What is a hypothesis?
+
+<ul>
+<li>Testable</li>
+<li>Falsifiable</li>
+<li>Leads to predictions</li>
+<li>Cannot prove a hypothesis is true!</li>
+</ul></li>
+<li>What&#39;s are null and alternative hypotheses? 
+
+<ul>
+<li>Null hypothesis is the hypothesis you are trying to reject</li>
+<li>Cannot prove a null hypothesis true, can only reject</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Remember: everything is probabilistic</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Errors
+
+<ul>
+<li>Type I: Falsely rejecting a null hypothesis</li>
+<li>Type II: Falsely supporting a null hypothesis</li>
+</ul></li>
+<li>P-value
+
+<ul>
+<li>The probability that you would see something as extreme or more so if the null hypothesis is true (Type I)</li>
+<li>Generally willing to accept a Type I error of 0.05</li>
+</ul></li>
+<li>Power
+
+<ul>
+<li>The ability to reject a null hypothesis if false (Type II)</li>
+<li>Generally desire a power of 0.80</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Two types of tests</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Single tailed
+
+<ul>
+<li>Probability that the difference is greater than expected</li>
+<li>Example: Are there more males than females?</li>
+</ul></li>
+<li>Two-tailed:
+
+<ul>
+<li>Probability that the difference is greater or less than expected</li>
+<li>Example: Is there a difference in the number of males and females?</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Testing</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  How would we know whether we had a even sampling of M &amp; F in the previous example?
+
+<ul>
+<li>  How to test?</li>
+<li>  Binomial distribution</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">pbinom(2, 10, 0.5)
+</code></pre>
+
+<pre><code>## [1] 0.05469
+</code></pre>
+
+<pre><code class="r">2*pbinom(2, 10, 0.5)
+</code></pre>
+
+<pre><code>## [1] 0.1094
+</code></pre>
+
+<pre><code class="r">binom.test(2, 10, 0.5)
+</code></pre>
+
+<pre><code>## 
+##  Exact binomial test
+## 
+## data:  2 and 10
+## number of successes = 2, number of trials = 10, p-value = 0.1094
+## alternative hypothesis: true probability of success is not equal to 0.5
+## 95 percent confidence interval:
+##  0.02521 0.55610
+## sample estimates:
+## probability of success 
+##                    0.2
+</code></pre>
+
+<pre><code class="r">binom.test(2, 10, 0.5, alternative=&quot;less&quot;)
+</code></pre>
+
+<pre><code>## 
+##  Exact binomial test
+## 
+## data:  2 and 10
+## number of successes = 2, number of trials = 10, p-value = 0.05469
+## alternative hypothesis: true probability of success is less than 0.5
+## 95 percent confidence interval:
+##  0.0000 0.5069
+## sample estimates:
+## probability of success 
+##                    0.2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h1></h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Testing a hypothesis - two &quot;independent&quot; proportions - are two proportions the same?</p>
+
+<p>lewitt.success &lt;- c(9,4)
+lewitt.failure &lt;- c(3, 9)
+lewitt.total &lt;- lewitt.success + lewitt.failure</p>
+
+<ul>
+<li><p>Different methods...</p>
+
+<ul>
+<li>  Test of proportions</li>
+</ul>
+
+<p>prop.test(lewitt.success, lewitt.total)</p>
+
+<ul>
+<li>  Fisher exact test - imagine a 2x2 table and the cells are a, b, c, d going from left to right and top-down</li>
+<li>  p = [(a+b)!(c+d)!(a+c)!(b+d)!] / [a!b!c!d!]</li>
+<li>  Odds ratio: [p1 / (1-p1)] / [p2 / (1-p2)]</li>
+<li>  requires a matrix</li>
+</ul>
+
+<p>lewitt.matrix &lt;- matrix(c(lewitt.success, lewitt.failure), nrow=2)</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Learning objectives'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title=''>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Let&#39;s get some data to work with...'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='The table command'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Generating marginal sums'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Generating relative abundance tables'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Testing a hypothesis'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Remember: everything is probabilistic'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Two types of tests'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Testing'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title=''>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Questions?'>
+         14
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
