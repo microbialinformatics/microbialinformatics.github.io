@@ -7,7 +7,7 @@ job         : Department of Microbiology & Immunology
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
 hitheme     : tomorrow      # 
-widgets     : []            # {mathjax, quiz, bootstrap}
+widgets     : mathjax       # {mathjax, quiz, bootstrap}
 mode        : standalone    # {selfcontained, standalone, draft}
 knit        : slidify::knit2slides
 
@@ -26,12 +26,14 @@ knit        : slidify::knit2slides
 * Binomial distribution is a discrete distribution
 * Several `xbinom` functions in R
 
-```{r, eval=T, echo=F}
+```{r, eval=TRUE, echo=FALSE}
+
 library(knitr)
 opts_chunk$set(hide = TRUE)
 opts_chunk$set(eval = FALSE)
 opts_chunk$set(tidy = TRUE)
 opts_chunk$set(cache = FALSE)
+par(mar=c(4,5,0.25, 0.25))
 ```
 
 ---
@@ -120,7 +122,7 @@ table(metadata$Sex, metadata$SP, metadata$Repro)
 
 ##	Generating marginal sums
 
-```{r}
+```{r, eval=TRUE, results='hide'}
 sex.sp <- table(metadata$Sex, metadata$SP)
 margin.table(sex.sp)
 margin.table(sex.sp, 1)
@@ -160,18 +162,18 @@ binom.test(species.sums)
 
 ## Is there a sex bias?
 
-```{r, echo=TRUE, eval=FALSE}
+```{r, echo=TRUE, eval=TRUE}
 sex.sums <- margin.table(sex.sp, 1)
 binom.test(sex.sums)
 ```
 
---- &twocol
+---
 
-## Is the sex/species distribution the same? Expected
+## Is the sex/species distribution the same?
 
-*** {name: left}
+* What would be expected?
 
-```{r expected, eval=F, echo=T}
+```{r expected, eval=T, echo=T}
 frac.male <- sex.sums["M"]/sum(sex.sums)
 frac.female <- 1-frac.male
 frac.sex <- c(F=frac.female, M=frac.male)
@@ -182,19 +184,17 @@ frac.species <- c(PL=frac.pl, PMG=frac.pmg)
 
 expected <- frac.sex %*% t(frac.species)
 expected <- expected * sum(sex.sp)
+expected
 ```
 
-*** {name: right}
-
-```{r expected, eval=TRUE, echo=FALSE}
-```
 
 ---
 
 ## What is the difference between what we expected and what we observed?
 
-* ChiSquared statistic
-* Test against a ChiSquared distribution with (n~row~-1)*(n~col~-1) degrees of freedom
+$$\chi^2 =\sum \frac{(O_{ij}-E_{ij})^2}{E_{ij}}$$
+
+* Test against a ChiSquared distribution with: $$df=(n_{row}-1)(n_{col}-1)$$
 
 ---
 
@@ -212,14 +212,13 @@ expected <- expected * sum(sex.sp)
 
 ## What is the difference between what we expected and what we observed?
 
-```{r}
+```{r, echo=TRUE, eval=TRUE, results='hide', fig.height=5, fig.align='center'}
 chi.sq <- sum((expected-sex.sp)^2/expected)
 df <- (nrow(sex.sp)-1)*(ncol(sex.sp)-1)
-1-pchisq(chi.sq, df=df)
 plot(seq(0,20,0.05), dchisq(seq(0,20,0.05), df=df), type="l", xlab="ChiSquared Statistic", ylab="Probability with 1 degree of freedom")
-arrows(x0=chi.sq, x1=chi.sq, y0=0.25, y1=0.05, lwd=2, col="red")
+arrows(x0=chi.sq, x1=chi.sq, y0=0.4, y1=0.05, lwd=2, col="red")
 ```
-	
+
 ---
 	
 ## Fisher exact test
@@ -227,7 +226,7 @@ arrows(x0=chi.sq, x1=chi.sq, y0=0.25, y1=0.05, lwd=2, col="red")
 * Imagine a 2x2 table and the cells are a, b, c, d going from left to right and top-down
 * The probability of seeing a specific table format...
 
-p = [(a+b)!(c+d)!(a+c)!(b+d)!] / [a!b!c!d!]
+$$P=\frac{(a+b)!(c+d)!(a+c)!(b+d)!}{a!b!c!d!}$$
 
 * Need to then find probability of more extreme tables via permutation
 * Can be computationally intensive	
