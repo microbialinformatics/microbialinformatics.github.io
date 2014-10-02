@@ -262,6 +262,23 @@ arrows(x0 = chi.sq, x1 = chi.sq, y0 = 0.4, y1 = 0.05, lwd = 2, col = "red")
 <img src="assets/fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
 
 ---
+
+## What is the difference between what we expected and what we observed?
+
+
+```r
+chisq.test(sex.sp)
+```
+
+```
+## 
+## 	Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  sex.sp
+## X-squared = 6.825, df = 1, p-value = 0.00899
+```
+
+---
 	
 ## Fisher exact test
 
@@ -327,9 +344,9 @@ prop.test(males, species.sums)
 
 ## Conclusions
 
-* Generall need at least 5 observations per cell of your table (rule of thumb)
-* Fisher exact test is best approach, but can be computationally demanding
+* Generally need at least 5 observations per cell of your table (rule of thumb)
 * Test possible with more that two levels per factor, but may be necessary use simulations to build distributions
+* Fisher exact test is best approach, but can be computationally demanding
 
 --- .segue .dark
 

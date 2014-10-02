@@ -413,6 +413,25 @@ arrows(x0 = chi.sq, x1 = chi.sq, y0 = 0.4, y1 = 0.05, lwd = 2, col = &quot;red&q
 
 <slide class="" id="slide-19" style="background:;">
   <hgroup>
+    <h2>What is the difference between what we expected and what we observed?</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">chisq.test(sex.sp)
+</code></pre>
+
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with Yates&#39; continuity correction
+## 
+## data:  sex.sp
+## X-squared = 6.825, df = 1, p-value = 0.00899
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
     <h2>Fisher exact test</h2>
   </hgroup>
   <article data-timings="">
@@ -432,7 +451,7 @@ arrows(x0 = chi.sq, x1 = chi.sq, y0 = 0.4, y1 = 0.05, lwd = 2, col = &quot;red&q
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-20" style="background:;">
+<slide class="" id="slide-21" style="background:;">
   <hgroup>
     <h2>Fisher exact test in R</h2>
   </hgroup>
@@ -457,7 +476,7 @@ arrows(x0 = chi.sq, x1 = chi.sq, y0 = 0.4, y1 = 0.05, lwd = 2, col = &quot;red&q
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-21" style="background:;">
+<slide class="" id="slide-22" style="background:;">
   <hgroup>
     <h2>Test of proportions</h2>
   </hgroup>
@@ -488,22 +507,22 @@ prop.test(males, species.sums)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-22" style="background:;">
+<slide class="" id="slide-23" style="background:;">
   <hgroup>
     <h2>Conclusions</h2>
   </hgroup>
   <article data-timings="">
     <ul>
-<li>Generall need at least 5 observations per cell of your table (rule of thumb)</li>
-<li>Fisher exact test is best approach, but can be computationally demanding</li>
+<li>Generally need at least 5 observations per cell of your table (rule of thumb)</li>
 <li>Test possible with more that two levels per factor, but may be necessary use simulations to build distributions</li>
+<li>Fisher exact test is best approach, but can be computationally demanding</li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="segue dark" id="slide-23" style="background:;">
+<slide class="segue dark" id="slide-24" style="background:;">
   <hgroup>
     <h2>Questions?</h2>
   </hgroup>
@@ -627,32 +646,38 @@ prop.test(males, species.sums)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=19 title='Fisher exact test'>
+        data-slide=19 title='What is the difference between what we expected and what we observed?'>
          19
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title='Fisher exact test in R'>
+        data-slide=20 title='Fisher exact test'>
          20
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=21 title='Test of proportions'>
+        data-slide=21 title='Fisher exact test in R'>
          21
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=22 title='Conclusions'>
+        data-slide=22 title='Test of proportions'>
          22
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title='Questions?'>
+        data-slide=23 title='Conclusions'>
          23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Questions?'>
+         24
       </a>
     </li>
   </ul>

@@ -27,14 +27,12 @@ knit        : slidify::knit2slides
 * Several `xbinom` functions in R
 
 ```{r, eval=TRUE, echo=FALSE}
-
 library(knitr)
 opts_chunk$set(hide = TRUE)
 opts_chunk$set(eval = FALSE)
 opts_chunk$set(tidy = TRUE)
 opts_chunk$set(cache = FALSE)
 par(mar=c(4,5,0.25, 0.25))
-
 ```
 
 ---
@@ -221,6 +219,14 @@ arrows(x0=chi.sq, x1=chi.sq, y0=0.4, y1=0.05, lwd=2, col="red")
 ```
 
 ---
+
+## What is the difference between what we expected and what we observed?
+
+```{r, echo=TRUE, eval=TRUE}
+chisq.test(sex.sp)
+```
+
+---
 	
 ## Fisher exact test
 
@@ -255,9 +261,9 @@ prop.test(males, species.sums)
 
 ## Conclusions
 
-* Generall need at least 5 observations per cell of your table (rule of thumb)
-* Fisher exact test is best approach, but can be computationally demanding
+* Generally need at least 5 observations per cell of your table (rule of thumb)
 * Test possible with more that two levels per factor, but may be necessary use simulations to build distributions
+* Fisher exact test is best approach, but can be computationally demanding
 
 --- .segue .dark
 
