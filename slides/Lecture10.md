@@ -31,173 +31,9 @@ knit        : slidify::knit2slides
 ---
 
 ## Learning objectives
-* How to generate tabular data
+* Describe the different types of hypotheses
 * How to test associations between tabular data
-
----
-
-
-```r
-opts_chunk$get()
-```
-
-```
-## $eval
-## [1] TRUE
-## 
-## $echo
-## [1] TRUE
-## 
-## $results
-## [1] "markup"
-## 
-## $tidy
-## [1] FALSE
-## 
-## $tidy.opts
-## NULL
-## 
-## $collapse
-## [1] FALSE
-## 
-## $prompt
-## [1] FALSE
-## 
-## $comment
-## [1] "##"
-## 
-## $highlight
-## [1] TRUE
-## 
-## $strip.white
-## [1] TRUE
-## 
-## $size
-## [1] "normalsize"
-## 
-## $background
-## [1] "#F7F7F7"
-## 
-## $cache
-## [1] TRUE
-## 
-## $cache.path
-## [1] ".cache/"
-## 
-## $cache.vars
-## NULL
-## 
-## $cache.lazy
-## [1] TRUE
-## 
-## $dependson
-## NULL
-## 
-## $autodep
-## [1] FALSE
-## 
-## $fig.keep
-## [1] "high"
-## 
-## $fig.show
-## [1] "asis"
-## 
-## $fig.align
-## [1] "default"
-## 
-## $fig.path
-## [1] "assets/fig/"
-## 
-## $dev
-## [1] "png"
-## 
-## $dev.args
-## NULL
-## 
-## $dpi
-## [1] 72
-## 
-## $fig.ext
-## NULL
-## 
-## $fig.width
-## [1] 7
-## 
-## $fig.height
-## [1] 7
-## 
-## $fig.env
-## [1] "figure"
-## 
-## $fig.cap
-## NULL
-## 
-## $fig.scap
-## NULL
-## 
-## $fig.lp
-## [1] "fig:"
-## 
-## $fig.subcap
-## NULL
-## 
-## $fig.pos
-## [1] ""
-## 
-## $out.width
-## NULL
-## 
-## $out.height
-## NULL
-## 
-## $out.extra
-## NULL
-## 
-## $fig.retina
-## [1] 1
-## 
-## $external
-## [1] TRUE
-## 
-## $sanitize
-## [1] FALSE
-## 
-## $interval
-## [1] 1
-## 
-## $aniopts
-## [1] "controls,loop"
-## 
-## $warning
-## [1] TRUE
-## 
-## $error
-## [1] TRUE
-## 
-## $message
-## [1] TRUE
-## 
-## $render
-## NULL
-## 
-## $ref.label
-## NULL
-## 
-## $child
-## NULL
-## 
-## $engine
-## [1] "R"
-## 
-## $split
-## [1] FALSE
-## 
-## $include
-## [1] TRUE
-## 
-## $purl
-## [1] TRUE
-```
+* How to generate tabular data
 
 ---
 
@@ -212,7 +48,104 @@ metadata <- metadata[,-1]
 
 ---
 
-## The table command
+## Testing a hypothesis
+*	What is a hypothesis?
+    - Testable
+    - Falsifiable
+    - Leads to predictions
+    - Cannot prove a hypothesis is true!
+* What's are null and alternative hypotheses? 
+    - Null hypothesis is the hypothesis you are trying to reject
+    - Cannot prove a null hypothesis true, can only reject
+
+---
+
+## Remember: everything is probabilistic
+
+* Errors
+    - Type I: Falsely rejecting a null hypothesis
+    - Type II: Falsely supporting a null hypothesis
+* P-value
+    - The probability that you would see something as extreme or more so if the null hypothesis is true (Type I)
+    - Generally willing to accept a Type I error of 0.05
+* Power
+    - The ability to reject a null hypothesis if false (Type II)
+    - Generally desire a power of 0.80
+
+---
+
+## Two types of tests
+*	Single tailed
+    * Probability that the difference is greater than expected
+    * Example: Are there more males than females?
+* Two-tailed:
+    * Probability that the difference is greater or less than expected
+    * Example: Is there a difference in the number of males and females?
+
+---
+
+## Testing
+
+*	How would we know whether we had a even sampling of M & F in the previous example?
+	-	How to test?
+	-	Binomial distribution
+	
+
+```r
+pbinom(2, 10, 0.5)
+```
+
+```
+## [1] 0.05469
+```
+
+```r
+2*pbinom(2, 10, 0.5)
+```
+
+```
+## [1] 0.1094
+```
+
+```r
+binom.test(2, 10, 0.5)
+```
+
+```
+## 
+## 	Exact binomial test
+## 
+## data:  2 and 10
+## number of successes = 2, number of trials = 10, p-value = 0.1094
+## alternative hypothesis: true probability of success is not equal to 0.5
+## 95 percent confidence interval:
+##  0.02521 0.55610
+## sample estimates:
+## probability of success 
+##                    0.2
+```
+
+```r
+binom.test(2, 10, 0.5, alternative="less")
+```
+
+```
+## 
+## 	Exact binomial test
+## 
+## data:  2 and 10
+## number of successes = 2, number of trials = 10, p-value = 0.05469
+## alternative hypothesis: true probability of success is less than 0.5
+## 95 percent confidence interval:
+##  0.0000 0.5069
+## sample estimates:
+## probability of success 
+##                    0.2
+```
+
+---
+
+## An aside: the table commands
 
 * Will convert your observations (individuals by variables) into tables (varaibles by variables)
 
@@ -360,119 +293,27 @@ prop.table(sex.sp, 2)
 
 ---
 
-## Testing a hypothesis
-*	What is a hypothesis?
-    - Testable
-    - Falsifiable
-    - Leads to predictions
-    - Cannot prove a hypothesis is true!
-* What's are null and alternative hypotheses? 
-    - Null hypothesis is the hypothesis you are trying to reject
-    - Cannot prove a null hypothesis true, can only reject
+## Is there a difference in the sex-species ratio?
 
----
-
-## Remember: everything is probabilistic
-
-* Errors
-    - Type I: Falsely rejecting a null hypothesis
-    - Type II: Falsely supporting a null hypothesis
-* P-value
-    - The probability that you would see something as extreme or more so if the null hypothesis is true (Type I)
-    - Generally willing to accept a Type I error of 0.05
-* Power
-    - The ability to reject a null hypothesis if false (Type II)
-    - Generally desire a power of 0.80
-
----
-
-## Two types of tests
-*	Single tailed
-    * Probability that the difference is greater than expected
-    * Example: Are there more males than females?
-* Two-tailed:
-    * Probability that the difference is greater or less than expected
-    * Example: Is there a difference in the number of males and females?
-
----
-
-## Testing
-
-*	How would we know whether we had a even sampling of M & F in the previous example?
-	-	How to test?
-	-	Binomial distribution
-	
 
 ```r
-pbinom(2, 10, 0.5)
+sex.sp
 ```
 
 ```
-## [1] 0.05469
-```
-
-```r
-2*pbinom(2, 10, 0.5)
-```
-
-```
-## [1] 0.1094
-```
-
-```r
-binom.test(2, 10, 0.5)
-```
-
-```
-## 
-## 	Exact binomial test
-## 
-## data:  2 and 10
-## number of successes = 2, number of trials = 10, p-value = 0.1094
-## alternative hypothesis: true probability of success is not equal to 0.5
-## 95 percent confidence interval:
-##  0.02521 0.55610
-## sample estimates:
-## probability of success 
-##                    0.2
-```
-
-```r
-binom.test(2, 10, 0.5, alternative="less")
-```
-
-```
-## 
-## 	Exact binomial test
-## 
-## data:  2 and 10
-## number of successes = 2, number of trials = 10, p-value = 0.05469
-## alternative hypothesis: true probability of success is less than 0.5
-## 95 percent confidence interval:
-##  0.0000 0.5069
-## sample estimates:
-## probability of success 
-##                    0.2
+##    
+##     PL PMG
+##   F 24  36
+##   M 34  17
 ```
 
 ---
-
-====================================================================================
-
-
-Testing a hypothesis - two "independent" proportions - are two proportions the same?
-
 
 lewitt.success <- c(9,4)
 lewitt.failure <- c(3, 9)
 lewitt.total <- lewitt.success + lewitt.failure
 
-*	Different methods...
-	-	Test of proportions
 
-	prop.test(lewitt.success, lewitt.total)
-			
-	
 	
 	-	Fisher exact test - imagine a 2x2 table and the cells are a, b, c, d going from left to right and top-down
 	-	p = [(a+b)!(c+d)!(a+c)!(b+d)!] / [a!b!c!d!]

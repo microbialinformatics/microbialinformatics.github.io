@@ -80,8 +80,9 @@
   </hgroup>
   <article data-timings="">
     <ul>
-<li>How to generate tabular data</li>
+<li>Describe the different types of hypotheses</li>
 <li>How to test associations between tabular data</li>
+<li>How to generate tabular data</li>
 </ul>
 
   </article>
@@ -89,172 +90,6 @@
 </slide>
 
 <slide class="" id="slide-4" style="background:;">
-  <article data-timings="">
-    <pre><code class="r">opts_chunk$get()
-</code></pre>
-
-<pre><code>## $eval
-## [1] TRUE
-## 
-## $echo
-## [1] TRUE
-## 
-## $results
-## [1] &quot;markup&quot;
-## 
-## $tidy
-## [1] FALSE
-## 
-## $tidy.opts
-## NULL
-## 
-## $collapse
-## [1] FALSE
-## 
-## $prompt
-## [1] FALSE
-## 
-## $comment
-## [1] &quot;##&quot;
-## 
-## $highlight
-## [1] TRUE
-## 
-## $strip.white
-## [1] TRUE
-## 
-## $size
-## [1] &quot;normalsize&quot;
-## 
-## $background
-## [1] &quot;#F7F7F7&quot;
-## 
-## $cache
-## [1] TRUE
-## 
-## $cache.path
-## [1] &quot;.cache/&quot;
-## 
-## $cache.vars
-## NULL
-## 
-## $cache.lazy
-## [1] TRUE
-## 
-## $dependson
-## NULL
-## 
-## $autodep
-## [1] FALSE
-## 
-## $fig.keep
-## [1] &quot;high&quot;
-## 
-## $fig.show
-## [1] &quot;asis&quot;
-## 
-## $fig.align
-## [1] &quot;default&quot;
-## 
-## $fig.path
-## [1] &quot;assets/fig/&quot;
-## 
-## $dev
-## [1] &quot;png&quot;
-## 
-## $dev.args
-## NULL
-## 
-## $dpi
-## [1] 72
-## 
-## $fig.ext
-## NULL
-## 
-## $fig.width
-## [1] 7
-## 
-## $fig.height
-## [1] 7
-## 
-## $fig.env
-## [1] &quot;figure&quot;
-## 
-## $fig.cap
-## NULL
-## 
-## $fig.scap
-## NULL
-## 
-## $fig.lp
-## [1] &quot;fig:&quot;
-## 
-## $fig.subcap
-## NULL
-## 
-## $fig.pos
-## [1] &quot;&quot;
-## 
-## $out.width
-## NULL
-## 
-## $out.height
-## NULL
-## 
-## $out.extra
-## NULL
-## 
-## $fig.retina
-## [1] 1
-## 
-## $external
-## [1] TRUE
-## 
-## $sanitize
-## [1] FALSE
-## 
-## $interval
-## [1] 1
-## 
-## $aniopts
-## [1] &quot;controls,loop&quot;
-## 
-## $warning
-## [1] TRUE
-## 
-## $error
-## [1] TRUE
-## 
-## $message
-## [1] TRUE
-## 
-## $render
-## NULL
-## 
-## $ref.label
-## NULL
-## 
-## $child
-## NULL
-## 
-## $engine
-## [1] &quot;R&quot;
-## 
-## $split
-## [1] FALSE
-## 
-## $include
-## [1] TRUE
-## 
-## $purl
-## [1] TRUE
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Let&#39;s get some data to work with...</h2>
   </hgroup>
@@ -268,9 +103,151 @@ metadata &lt;- metadata[,-1]
   <!-- Presenter Notes -->
 </slide>
 
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Testing a hypothesis</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  What is a hypothesis?
+
+<ul>
+<li>Testable</li>
+<li>Falsifiable</li>
+<li>Leads to predictions</li>
+<li>Cannot prove a hypothesis is true!</li>
+</ul></li>
+<li>What&#39;s are null and alternative hypotheses? 
+
+<ul>
+<li>Null hypothesis is the hypothesis you are trying to reject</li>
+<li>Cannot prove a null hypothesis true, can only reject</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
 <slide class="" id="slide-6" style="background:;">
   <hgroup>
-    <h2>The table command</h2>
+    <h2>Remember: everything is probabilistic</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Errors
+
+<ul>
+<li>Type I: Falsely rejecting a null hypothesis</li>
+<li>Type II: Falsely supporting a null hypothesis</li>
+</ul></li>
+<li>P-value
+
+<ul>
+<li>The probability that you would see something as extreme or more so if the null hypothesis is true (Type I)</li>
+<li>Generally willing to accept a Type I error of 0.05</li>
+</ul></li>
+<li>Power
+
+<ul>
+<li>The ability to reject a null hypothesis if false (Type II)</li>
+<li>Generally desire a power of 0.80</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Two types of tests</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Single tailed
+
+<ul>
+<li>Probability that the difference is greater than expected</li>
+<li>Example: Are there more males than females?</li>
+</ul></li>
+<li>Two-tailed:
+
+<ul>
+<li>Probability that the difference is greater or less than expected</li>
+<li>Example: Is there a difference in the number of males and females?</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Testing</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  How would we know whether we had a even sampling of M &amp; F in the previous example?
+
+<ul>
+<li>  How to test?</li>
+<li>  Binomial distribution</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">pbinom(2, 10, 0.5)
+</code></pre>
+
+<pre><code>## [1] 0.05469
+</code></pre>
+
+<pre><code class="r">2*pbinom(2, 10, 0.5)
+</code></pre>
+
+<pre><code>## [1] 0.1094
+</code></pre>
+
+<pre><code class="r">binom.test(2, 10, 0.5)
+</code></pre>
+
+<pre><code>## 
+##  Exact binomial test
+## 
+## data:  2 and 10
+## number of successes = 2, number of trials = 10, p-value = 0.1094
+## alternative hypothesis: true probability of success is not equal to 0.5
+## 95 percent confidence interval:
+##  0.02521 0.55610
+## sample estimates:
+## probability of success 
+##                    0.2
+</code></pre>
+
+<pre><code class="r">binom.test(2, 10, 0.5, alternative=&quot;less&quot;)
+</code></pre>
+
+<pre><code>## 
+##  Exact binomial test
+## 
+## data:  2 and 10
+## number of successes = 2, number of trials = 10, p-value = 0.05469
+## alternative hypothesis: true probability of success is less than 0.5
+## 95 percent confidence interval:
+##  0.0000 0.5069
+## sample estimates:
+## probability of success 
+##                    0.2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>An aside: the table commands</h2>
   </hgroup>
   <article data-timings="">
     <ul>
@@ -344,7 +321,7 @@ metadata &lt;- metadata[,-1]
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-7" style="background:;">
+<slide class="" id="slide-10" style="background:;">
   <hgroup>
     <h2>Generating marginal sums</h2>
   </hgroup>
@@ -376,7 +353,7 @@ margin.table(sex.sp)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-8" style="background:;">
+<slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>Generating relative abundance tables</h2>
   </hgroup>
@@ -412,142 +389,18 @@ margin.table(sex.sp)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-9" style="background:;">
-  <hgroup>
-    <h2>Testing a hypothesis</h2>
-  </hgroup>
-  <article data-timings="">
-    <ul>
-<li>  What is a hypothesis?
-
-<ul>
-<li>Testable</li>
-<li>Falsifiable</li>
-<li>Leads to predictions</li>
-<li>Cannot prove a hypothesis is true!</li>
-</ul></li>
-<li>What&#39;s are null and alternative hypotheses? 
-
-<ul>
-<li>Null hypothesis is the hypothesis you are trying to reject</li>
-<li>Cannot prove a null hypothesis true, can only reject</li>
-</ul></li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-10" style="background:;">
-  <hgroup>
-    <h2>Remember: everything is probabilistic</h2>
-  </hgroup>
-  <article data-timings="">
-    <ul>
-<li>Errors
-
-<ul>
-<li>Type I: Falsely rejecting a null hypothesis</li>
-<li>Type II: Falsely supporting a null hypothesis</li>
-</ul></li>
-<li>P-value
-
-<ul>
-<li>The probability that you would see something as extreme or more so if the null hypothesis is true (Type I)</li>
-<li>Generally willing to accept a Type I error of 0.05</li>
-</ul></li>
-<li>Power
-
-<ul>
-<li>The ability to reject a null hypothesis if false (Type II)</li>
-<li>Generally desire a power of 0.80</li>
-</ul></li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-11" style="background:;">
-  <hgroup>
-    <h2>Two types of tests</h2>
-  </hgroup>
-  <article data-timings="">
-    <ul>
-<li>  Single tailed
-
-<ul>
-<li>Probability that the difference is greater than expected</li>
-<li>Example: Are there more males than females?</li>
-</ul></li>
-<li>Two-tailed:
-
-<ul>
-<li>Probability that the difference is greater or less than expected</li>
-<li>Example: Is there a difference in the number of males and females?</li>
-</ul></li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
 <slide class="" id="slide-12" style="background:;">
   <hgroup>
-    <h2>Testing</h2>
+    <h2>Is there a difference in the sex-species ratio?</h2>
   </hgroup>
   <article data-timings="">
-    <ul>
-<li>  How would we know whether we had a even sampling of M &amp; F in the previous example?
-
-<ul>
-<li>  How to test?</li>
-<li>  Binomial distribution</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">pbinom(2, 10, 0.5)
+    <pre><code class="r">sex.sp
 </code></pre>
 
-<pre><code>## [1] 0.05469
-</code></pre>
-
-<pre><code class="r">2*pbinom(2, 10, 0.5)
-</code></pre>
-
-<pre><code>## [1] 0.1094
-</code></pre>
-
-<pre><code class="r">binom.test(2, 10, 0.5)
-</code></pre>
-
-<pre><code>## 
-##  Exact binomial test
-## 
-## data:  2 and 10
-## number of successes = 2, number of trials = 10, p-value = 0.1094
-## alternative hypothesis: true probability of success is not equal to 0.5
-## 95 percent confidence interval:
-##  0.02521 0.55610
-## sample estimates:
-## probability of success 
-##                    0.2
-</code></pre>
-
-<pre><code class="r">binom.test(2, 10, 0.5, alternative=&quot;less&quot;)
-</code></pre>
-
-<pre><code>## 
-##  Exact binomial test
-## 
-## data:  2 and 10
-## number of successes = 2, number of trials = 10, p-value = 0.05469
-## alternative hypothesis: true probability of success is less than 0.5
-## 95 percent confidence interval:
-##  0.0000 0.5069
-## sample estimates:
-## probability of success 
-##                    0.2
+<pre><code>##    
+##     PL PMG
+##   F 24  36
+##   M 34  17
 </code></pre>
 
   </article>
@@ -555,34 +408,18 @@ margin.table(sex.sp)
 </slide>
 
 <slide class="" id="slide-13" style="background:;">
-  <hgroup>
-    <h1></h1>
-  </hgroup>
   <article data-timings="">
-    <p>Testing a hypothesis - two &quot;independent&quot; proportions - are two proportions the same?</p>
-
-<p>lewitt.success &lt;- c(9,4)
+    <p>lewitt.success &lt;- c(9,4)
 lewitt.failure &lt;- c(3, 9)
 lewitt.total &lt;- lewitt.success + lewitt.failure</p>
 
-<ul>
-<li><p>Different methods...</p>
+<pre><code>-   Fisher exact test - imagine a 2x2 table and the cells are a, b, c, d going from left to right and top-down
+-   p = [(a+b)!(c+d)!(a+c)!(b+d)!] / [a!b!c!d!]
+-   Odds ratio: [p1 / (1-p1)] / [p2 / (1-p2)]
+-   requires a matrix
 
-<ul>
-<li>  Test of proportions</li>
-</ul>
-
-<p>prop.test(lewitt.success, lewitt.total)</p>
-
-<ul>
-<li>  Fisher exact test - imagine a 2x2 table and the cells are a, b, c, d going from left to right and top-down</li>
-<li>  p = [(a+b)!(c+d)!(a+c)!(b+d)!] / [a!b!c!d!]</li>
-<li>  Odds ratio: [p1 / (1-p1)] / [p2 / (1-p2)]</li>
-<li>  requires a matrix</li>
-</ul>
-
-<p>lewitt.matrix &lt;- matrix(c(lewitt.success, lewitt.failure), nrow=2)</p></li>
-</ul>
+lewitt.matrix &lt;- matrix(c(lewitt.success, lewitt.failure), nrow=2)
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
@@ -622,55 +459,55 @@ lewitt.total &lt;- lewitt.success + lewitt.failure</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title=''>
+        data-slide=4 title='Let&#39;s get some data to work with...'>
          4
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Let&#39;s get some data to work with...'>
+        data-slide=5 title='Testing a hypothesis'>
          5
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='The table command'>
+        data-slide=6 title='Remember: everything is probabilistic'>
          6
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='Generating marginal sums'>
+        data-slide=7 title='Two types of tests'>
          7
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Generating relative abundance tables'>
+        data-slide=8 title='Testing'>
          8
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Testing a hypothesis'>
+        data-slide=9 title='An aside: the table commands'>
          9
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Remember: everything is probabilistic'>
+        data-slide=10 title='Generating marginal sums'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Two types of tests'>
+        data-slide=11 title='Generating relative abundance tables'>
          11
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Testing'>
+        data-slide=12 title='Is there a difference in the sex-species ratio?'>
          12
       </a>
     </li>
