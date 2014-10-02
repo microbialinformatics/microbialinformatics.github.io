@@ -34,6 +34,7 @@ opts_chunk$set(eval = FALSE)
 opts_chunk$set(tidy = TRUE)
 opts_chunk$set(cache = FALSE)
 par(mar=c(4,5,0.25, 0.25))
+
 ```
 
 ---

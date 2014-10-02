@@ -84,54 +84,9 @@ knit        : slidify::knit2slides
 
 ```r
 pbinom(2, 10, 0.5)
-```
-
-```
-## [1] 0.05469
-```
-
-```r
-2*pbinom(2, 10, 0.5)
-```
-
-```
-## [1] 0.1094
-```
-
-```r
+2 * pbinom(2, 10, 0.5)
 binom.test(2, 10, 0.5)
-```
-
-```
-## 
-## 	Exact binomial test
-## 
-## data:  2 and 10
-## number of successes = 2, number of trials = 10, p-value = 0.1094
-## alternative hypothesis: true probability of success is not equal to 0.5
-## 95 percent confidence interval:
-##  0.02521 0.55610
-## sample estimates:
-## probability of success 
-##                    0.2
-```
-
-```r
-binom.test(2, 10, 0.5, alternative="less")
-```
-
-```
-## 
-## 	Exact binomial test
-## 
-## data:  2 and 10
-## number of successes = 2, number of trials = 10, p-value = 0.05469
-## alternative hypothesis: true probability of success is less than 0.5
-## 95 percent confidence interval:
-##  0.0000 0.5069
-## sample estimates:
-## probability of success 
-##                    0.2
+binom.test(2, 10, 0.5, alternative = "less")
 ```
 
 ---
@@ -140,9 +95,9 @@ binom.test(2, 10, 0.5, alternative="less")
 
 
 ```r
-metadata <- read.table(file="wild.metadata.txt", header=T)
+metadata <- read.table(file = "wild.metadata.txt", header = T)
 rownames(metadata) <- metadata$Group
-metadata <- metadata[,-1]
+metadata <- metadata[, -1]
 ```
 
 ---
@@ -154,71 +109,8 @@ metadata <- metadata[,-1]
 
 ```r
 table(metadata$Sex)
-```
-
-```
-## 
-##  F  M 
-## 60 51
-```
-
-```r
 table(metadata$Sex, metadata$SP)
-```
-
-```
-##    
-##     PL PMG
-##   F 24  36
-##   M 34  17
-```
-
-```r
 table(metadata$Sex, metadata$SP, metadata$Repro)
-```
-
-```
-## , ,  = A
-## 
-##    
-##     PL PMG
-##   F  0   0
-##   M  3   0
-## 
-## , ,  = ABD
-## 
-##    
-##     PL PMG
-##   F  0   0
-##   M  7   1
-## 
-## , ,  = N
-## 
-##    
-##     PL PMG
-##   F  1   2
-##   M  0   0
-## 
-## , ,  = NE
-## 
-##    
-##     PL PMG
-##   F 12  15
-##   M  0   0
-## 
-## , ,  = NT
-## 
-##    
-##     PL PMG
-##   F 11  19
-##   M  0   0
-## 
-## , ,  = SCR
-## 
-##    
-##     PL PMG
-##   F  0   0
-##   M 24  16
 ```
 
 ---
@@ -240,35 +132,8 @@ margin.table(sex.sp, 2)
 
 ```r
 prop.table(sex.sp)
-```
-
-```
-##    
-##         PL    PMG
-##   F 0.2162 0.3243
-##   M 0.3063 0.1532
-```
-
-```r
 prop.table(sex.sp, 1)
-```
-
-```
-##    
-##         PL    PMG
-##   F 0.4000 0.6000
-##   M 0.6667 0.3333
-```
-
-```r
 prop.table(sex.sp, 2)
-```
-
-```
-##    
-##         PL    PMG
-##   F 0.4138 0.6792
-##   M 0.5862 0.3208
 ```
 
 ---
@@ -342,12 +207,12 @@ binom.test(sex.sums)
 
 ```r
 frac.male <- sex.sums["M"]/sum(sex.sums)
-frac.female <- 1-frac.male
-frac.sex <- c(F=frac.female, M=frac.male)
+frac.female <- 1 - frac.male
+frac.sex <- c(F = frac.female, M = frac.male)
 
 frac.pl <- species.sums["PL"]/sum(species.sums)
-frac.pmg <- 1-frac.pl
-frac.species <- c(PL=frac.pl, PMG=frac.pmg)
+frac.pmg <- 1 - frac.pl
+frac.species <- c(PL = frac.pl, PMG = frac.pmg)
 
 expected <- frac.sex %*% t(frac.species)
 expected <- expected * sum(sex.sp)
@@ -387,10 +252,11 @@ $$\chi^2 =\sum \frac{(O_{ij}-E_{ij})^2}{E_{ij}}$$
 
 
 ```r
-chi.sq <- sum((expected-sex.sp)^2/expected)
-df <- (nrow(sex.sp)-1)*(ncol(sex.sp)-1)
-plot(seq(0,20,0.05), dchisq(seq(0,20,0.05), df=df), type="l", xlab="ChiSquared Statistic", ylab="Probability with 1 degree of freedom")
-arrows(x0=chi.sq, x1=chi.sq, y0=0.4, y1=0.05, lwd=2, col="red")
+chi.sq <- sum((expected - sex.sp)^2/expected)
+df <- (nrow(sex.sp) - 1) * (ncol(sex.sp) - 1)
+plot(seq(0, 20, 0.05), dchisq(seq(0, 20, 0.05), df = df), type = "l", xlab = "ChiSquared Statistic", 
+    ylab = "Probability with 1 degree of freedom")
+arrows(x0 = chi.sq, x1 = chi.sq, y0 = 0.4, y1 = 0.05, lwd = 2, col = "red")
 ```
 
 <img src="assets/fig/unnamed-chunk-10.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
