@@ -1,0 +1,292 @@
+--- 
+title       : Microbial Informatics
+subtitle    : Lecture 11
+date        : October 3, 2014
+author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
+job         : Department of Microbiology & Immunology
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : mathjax       # {mathjax, quiz, bootstrap}
+mode        : standalone    # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+
+--- 
+
+## Announcements
+* Homework 3 is out
+* For the next two Fridays, the first hour of class will be a lecture
+* Read ***Introduction to Statistics with R*** (Chapter 9: Power analysis and Chapter 7: ANOVA and Kruskal Wallis)
+
+--- 
+
+## Review
+* Discrete distribtuions: Binomial distribution
+* ChiSquared test to determine independence of two or more distributions
+
+
+```{r, eval=TRUE, echo=FALSE}
+library(knitr)
+opts_chunk$set(hide = TRUE)
+opts_chunk$set(eval = FALSE)
+opts_chunk$set(tidy = TRUE)
+opts_chunk$set(cache = FALSE)
+par(mar=c(4,5,0.25, 0.25))
+```
+
+---
+
+## Learning objectives
+* Best practices for representing continuous data
+* Understand how to test statistical hypotheses using continuous data
+
+
+---
+
+## Motivation
+* Are the heights of men and women significantly different?
+* Do conventional mice eat more chow than germ free mice?
+* Is the abundance of bug X higher in agricultural soils than it is in forest soils?
+
+---
+
+## Thinking about weights...
+
+```{r weights, eval=TRUE, echo=FALSE, fig.align="center"}
+metadata <- read.table(file="wild.metadata.txt", header=T, row.names=1)
+pl.weights <- metadata[metadata$SP == "PL", "Weight"]
+pl.hist <- hist(pl.weights, breaks=5:30, plot=FALSE)
+plot(pl.hist$mids-0.1, pl.hist$density, type="l", xlim=c(5,31), col="blue", lwd=3, xlab="Weight", ylab="Density")
+
+pmg.weights <- metadata[metadata$Sex == "F", "Weight"]
+pmg.hist <- hist(pmg.weights, breaks=5:30, plot=FALSE)
+points(pmg.hist$mids+0.1, pmg.hist$density, type="l", xlim=c(0,31), col="red", lwd=3)
+
+points(x=median(pl.weights), y=0, pch=18, cex=2, col="blue")
+points(x=median(pmg.weights), y=0, pch=18, cex=2, col="red")
+legend(x=25, y=0.10, legend=c("PL", "PMG"), lty=1, lwd=5, col=c("blue", "red"))
+```
+
+---
+
+## Back to basics...
+
+*   Mean: a measure of the central tendency of a distribution
+
+$$\bar x=\frac{\sum x_i}{n}$$
+
+
+*   Standard deviation: the amount of variation in the data
+
+$$SD = \sqrt{\frac{\sum(x_i-\bar x)^2}{n-1}}$$
+
+---
+
+## Back to basics...
+
+*   Standard error: measures the precision with which you know the mean
+
+$$SE = \frac{SD}{\sqrt{n}}$$
+
+*	Confidience intervals
+
+$$\mbox{Upper 95% limit} = \bar x + (SE \times 1.96)$$
+$$\mbox{Lower 95% limit} = \bar x - (SE \times 1.96)$$
+
+---
+
+## Data visualization
+
+When you plot data with "error bars" you must indicate...
+
+  * ...the number of individuals being represented
+  * ...whether the bars represent the standard error or confidence interval
+
+---
+
+## How do we know if they differ in weight?
+
+*	The mean weight of the PL mice (N=`r length(pl.weights)`) was `r mean(pl.weights)` and the mean weight of the PMG mice (N=`r length(pmg.weights)`) was `r mean(pmg.weights)`. The standard deviations were `r sd(pl.weights)` and `r sd(pmg.weights)`, respectively.
+
+```{r, eval=TRUE, echo=TRUE}
+pmg.se <- sd(pmg.weights)/sqrt(length(pmg.weights))
+pmg.ci <- mean(pmg.weights) + pmg.se * c(-1.95,1.95)
+pmg.ci
+
+pl.se <- sd(pl.weights)/sqrt(length(pl.weights))
+pl.ci <-  mean(pl.weights) + pl.se * c(-1.95,1.95)
+pl.ci
+```
+
+---
+
+## A more direct way of calculating signifcance: Two-sample *t* test
+
+$$t=\frac{\bar x_2 - \bar x_1}{\sqrt{SE_1^2+SE_2^2}}$$
+
+* Evaluating for our data we get *t*=`r t<-(mean(pl.weights)-mean(pmg.weights))/sqrt(pl.se^2+pmg.se^2);t`
+* If the null hypothesis is true (PL and PMG come from a distribution with the same mean), then we test under a *t* distribution with n1+n2-2 degrees of freedom. In our case we use `r df<-length(pl.weights)+length(pmg.weights)-2; df` degres of freedom. Using the `pt` function and a two-tailed test we get a P-value of `r 2*pt(t, df)`.
+
+---
+
+## Using the built-in R function
+
+```{r, eval=TRUE, echo=TRUE}
+t.test(pl.weights, pmg.weights)
+```
+
+No.
+
+---
+
+## Are the PL mice heavier than the PMG mice?
+
+```{r, eval=TRUE, echo=TRUE}
+t.test(pl.weights, pmg.weights, alternative="greater")
+```
+
+No.
+
+---
+
+## Are the PL mice lighter than the PMG mice?
+
+```{r, eval=TRUE, echo=TRUE}
+t.test(pl.weights, pmg.weights, alternative="less")
+```
+
+No.
+
+---
+
+## Prior knowledge
+
+* We've read that a study of PL mice in Ohio showed they had an average weight of 15 g. Assume that they have the same standard deviation, could our our observed weights have been drawn from the same distribution?
+
+$$t=\frac{\bar x - x_o}{SE}$$
+
+* We can test against a *t* distribution with n-1 degrees of freedom
+
+```{r echo=FALSE, eval=TRUE, show='hide'}
+t <- (mean(pl.weights)-15)/pl.se
+p <- 2*(1-pt(t, length(pl.weights-1)))
+```
+
+* For this example, we get a *t* of `r t` and a P-value of `r p` 
+
+---
+
+## Using the built-in R function
+
+```{r, echo=TRUE, eval=TRUE}
+t.test(pl.weights, mu=15)
+```
+
+---
+
+## Paired observations
+
+> * Suppose we sampled the pH of lakes in the spring and fall and wanted to know if there was a signficant change in the pH of the lakes
+> * We could do it by treating the spring pH values as one variable and the fall pH values as another variable
+> * However the problem with this approach is that the observations are not independent of each other - we were interested in the ***change*** in pH
+> * Method: calculate the difference in pH for each lake and see whether that distrubion has a mean of zero
+> * This is the "paired t-test"
+
+---
+
+## Example
+
+```{r eval=TRUE, echo=TRUE, fig.height=6, fig.align='center'}
+first <- pl.weights[1:40]
+second <- pmg.weights[1:40]
+diff <- first-second
+hist(diff, main="")
+```
+
+---
+
+## The test:
+
+$$t=\frac{\bar x}{SE}$$
+
+```{r, eval=TRUE, echo=TRUE}
+diff.mean <- mean(diff)
+diff.se <- sd(diff)/sqrt(length(diff))
+t <- diff.mean / diff.se
+df <- length(diff) - 1
+p <- 2 * pt(t, df)
+```
+
+We get a P-value of `r p`, which indicates the mice had a significant change in weight over the two time points
+
+---
+
+## R style...
+
+```{r eval=TRUE, echo=TRUE}
+t.test(first, second, paired=TRUE)
+```
+
+---
+
+## Assumptions required to perform a *t*-test
+1. Data follow a normal distribution
+2. Observations are independent
+
+---
+
+## Are our data normally distributed?
+
+```{r, echo=FALSE, eval=TRUE, fig.align='center'}
+plot(pl.hist$mids, pl.hist$density, type="l", xlim=c(5,31), col="blue", lwd=3, xlab="Weight", ylab="Density")
+points(5:31, dnorm(5:31, mean(pl.weights), sd(pl.weights)), lwd=3, col="red", type="l")
+```
+
+* Meh, not really
+
+---
+
+## Parametric vs. non-parametric
+* Parametric tests (e.g. *t*-test) assume that the data are well behaved and follow nice distributions
+* If they meet this assumption, it becomes easy to calculate test statistics and P-values
+* If they don't and you use the test anyway, you can get bad results.
+* The alternative is to use non-parametric tests, which don't assume a distribution
+
+
+---
+
+## The non-parametric *t*-test: Wilcox test
+
+* Rank based: Order your observations from two treatment groups and count number of switches between groups.
+* If the number of switches is greater than you'd expect by chance, it is significant
+* Syntax for `wilcox.test` is virutally identical to that of `t.test`
+* In figures and text, present the median and interquartile range (25-75%tile)
+
+---
+
+## Two sample test
+
+```{r, eval=TRUE, echo=TRUE}
+wilcox.test(pl.weights, pmg.weights)
+```
+
+---
+
+## Single-sample test
+
+```{r eval=TRUE, echo=TRUE}
+wilcox.test(pl.weights, mu=15)
+```
+
+---
+
+## Paired test
+
+```{r eval=TRUE, echo=TRUE}
+wilcox.test(first, second, paired=TRUE)
+```
+
+
+--- .segue .dark
+
+## Questions?
