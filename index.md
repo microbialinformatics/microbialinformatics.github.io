@@ -59,7 +59,7 @@ Class	|	Date	|	Topic	|	Reading
 	|	9/26	|	[Computer lab: Plotting, randomness, tabular data](https://github.com/microbialinformatics/assignment03) 	|	
 9	|	9/30	|	[Randomness (23 slides)](slides/Lecture09)	|	ISwR 3 and 4
 10  |   10/2    |   [Tests on tabular data (24 slides)](slides/Lecture10)  |  ISwr 8
-11	|	10/3	|	T- and Wilcoxon tests	|	ISwR 5
+11	|	10/3	|	[T- and Wilcoxon tests (28 slides)](slides/Lecture11)	|	ISwR 5
 	|	10/3	|	Computer lab	|	
 12	|	10/7	|	Power analysis	|	ISwR 9
 13	|	10/9	|	ANOVA and Kruskal-Wallis	|	ISwR 7
