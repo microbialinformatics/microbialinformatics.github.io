@@ -1,7 +1,7 @@
 --- 
 title       : Microbial Informatics
-subtitle    : Lecture 11
-date        : October 3, 2014
+subtitle    : Lecture 12
+date        : October 7, 2014
 author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
 job         : Department of Microbiology & Immunology
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -68,8 +68,8 @@ points(sim2.h$mids, sim2.h$density, type = "l", col = "blue", lwd = 2)
 ---
 
 <img src="assets/fig/population.png" title="plot of chunk population" alt="plot of chunk population" style="display: block; margin: auto;" />
-* Sample 1: Mean=16.7137; SE=0.5034
-* Sample 2: Mean=17.2834; SE=0.4292
+* Sample 1: Mean=16.8791; SE=0.4681
+* Sample 2: Mean=16.8259; SE=0.4241
 * Are these samples significantly different from each other?
 
 ---
