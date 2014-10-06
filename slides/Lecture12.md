@@ -15,8 +15,9 @@ knit        : slidify::knit2slides
 
 ## Announcements
 * Homework 3 is out
-* For the next two Fridays, the first hour of class will be a lecture
-* Read ***Introduction to Statistics with R*** (Chapter 9: Power analysis and Chapter 7: ANOVA and Kruskal Wallis)
+* Have posted some guide lines to follow for Project 1
+* For this Friday, the first hour of class will be a lecture
+* Read ***Introduction to Statistics with R*** (Chapter 7: ANOVA and Kruskal Wallis)
 
 --- 
 
@@ -67,8 +68,8 @@ points(sim2.h$mids, sim2.h$density, type = "l", col = "blue", lwd = 2)
 ---
 
 <img src="assets/fig/population.png" title="plot of chunk population" alt="plot of chunk population" style="display: block; margin: auto;" />
-* Sample 1: Mean=16.5686; SE=0.4298
-* Sample 2: Mean=16.9563; SE=0.4709
+* Sample 1: Mean=16.7137; SE=0.5034
+* Sample 2: Mean=17.2834; SE=0.4292
 * Are these samples significantly different from each other?
 
 ---

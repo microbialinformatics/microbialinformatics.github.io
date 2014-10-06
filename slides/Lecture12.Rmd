@@ -15,8 +15,9 @@ knit        : slidify::knit2slides
 
 ## Announcements
 * Homework 3 is out
-* For the next two Fridays, the first hour of class will be a lecture
-* Read ***Introduction to Statistics with R*** (Chapter 9: Power analysis and Chapter 7: ANOVA and Kruskal Wallis)
+* Have posted some guide lines to follow for Project 1
+* For this Friday, the first hour of class will be a lecture
+* Read ***Introduction to Statistics with R*** (Chapter 7: ANOVA and Kruskal Wallis)
 
 --- 
 
