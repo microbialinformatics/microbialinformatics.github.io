@@ -254,7 +254,7 @@ $$\alpha_{A} = \alpha_{B} = \alpha_{C} = 0$$
 
 ---
 
-#	So you get back a small p-value, what does that mean?
+##	So you get back a small p-value, what does that mean?
 
 *	Tests of comparisons
   * Planned comparisons <- orthoganal comparisons, a priori hypotheses
