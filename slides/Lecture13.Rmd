@@ -1,0 +1,357 @@
+--- 
+title       : Microbial Informatics
+subtitle    : Lecture 13
+date        : October 9, 2014
+author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
+job         : Department of Microbiology & Immunology
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : mathjax       # {mathjax, quiz, bootstrap}
+mode        : standalone    # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+
+--- 
+
+## Announcements
+* Homework 3 is out
+* Have posted some guide lines to follow for Project 1
+* For this Friday, the first hour of class will be a lecture
+* Read ***Introduction to Statistics with R*** (Chapter 6: Regression and correlation)
+* Start programming discussion next Thursday!
+
+```{r eval=TRUE, echo=FALSE}
+
+library(knitr)
+opts_chunk$set(hide = TRUE)
+opts_chunk$set(eval = FALSE)
+opts_chunk$set(tidy = TRUE)
+opts_chunk$set(cache = FALSE)
+par(mar=c(4,5,0.25, 0.25))
+
+```
+
+---
+
+## Review
+* **Type I Error ($\alpha$):** Pr(detecting difference between groups) when they are drawn from the same distribution
+* **Type II Error ($\beta$):** Pr(not detecting difference between groups) when they are drawn from different distributions
+* Power ($1-\beta$) is dependent on:
+  * Effect size
+  * Number of individuals
+  * Variation in data
+  * $\alpha$
+  * Statistical test
+
+---
+
+## Learning objectives
+* How to compare more than two levels of a treatment
+* How to comapre two treatments, each with multiple levels
+* How about when the data are not normally distrubted?
+
+---
+
+## Motivation  
+> * Does the relative abundance of *F. nucleatum* vary between healthy people and those with adenomas or carcinoms?
+> * Is there a difference in the weights of male and female mice when we account for their species?
+
+---
+
+## Motivation  
+> * Does the relative abundance of *F. nucleatum* vary between healthy people and those with adenomas or carcinoms?
+>   * **One-way ANOVA:**	You have multiple groups or levels of a treatment and you want to know whether one of them is different
+> * Is there a difference in the weights of male and female mice when we account for their species?
+>   * **Mutliple-way ANOVA:**	You have multiple treatments with multiple groups / levels and you want to know whether one of them is different
+> * These are really a type of regression, a topic we'll be covering over the course of the next few weeks
+
+---
+
+## Let's do an experiment...
+
+* Imagine we go out and count the number of L. acidophilus CFUs/gram of feces from three groups of people (N=20) where each group is eating a different commercial yogurt
+
+```{r obs.data, echo=FALSE, fig.align='center', strip.white=TRUE, fig.height=6}
+set.seed(1)
+a <- rnorm(30, 6, 1)
+b <- rnorm(30, 8, 1)
+c <- rnorm(30, 6, 1)
+
+stripchart(at=1, a, vertical=T, method="jitter", xlim=c(0,4), pch=19, ylim=c(0,max(a,b,c)), ylab="L. acidophilus (log CFUs/g)")
+stripchart(at=2, b, vertical=T, method="jitter", pch=19, add=T)
+stripchart(at=3, c, vertical=T, method="jitter", pch=19, add=T)
+
+a.mean <- mean(a)
+b.mean <- mean(b)
+c.mean <- mean(c)
+
+points(x=c(0.75, 1.25), y=c(a.mean, a.mean), type="l", lwd=3)
+points(x=c(1.75, 2.25), y=c(b.mean, b.mean), type="l", lwd=3)
+points(x=c(2.75, 3.25), y=c(c.mean, c.mean), type="l", lwd=3)
+
+axis(1, at=seq(1:3), label=c("A", "B", "C"))
+
+```
+
+---
+
+## Let's assume they all come from the same population
+
+```{r, echo=FALSE, fig.align='center'}
+h <- hist(c(a,b,c), breaks=20, plot=F)
+plot(h$mids, h$density, type="h", xlab="L. acidophilus (log CFUs/g)", ylab="Density")
+```
+
+---
+
+## Do they follow a normal distribution?
+
+* Mean ($\mu$): `r mu<-mean(c(a,b,c)); mu`
+* Standard deviation ($\sigma$): `r sigma <- sd(c(a,b,c)); sigma`
+
+```{r, echo=FALSE, fig.align='center', strip.white=TRUE, fig.height=6}
+plot(h$mids, h$density, type="h", xlab="L. acidophilus (log CFUs/g)", ylab="Density")
+z <- seq(min(h$mids)-1, max(h$mids)+1, 0.25)
+points(dnorm(z, mu, sigma)~z, type="l", lwd=3, col="red")
+
+
+```
+
+---
+
+## Lets generate a model to explain the variation we see
+
+* We can create a model to explain the observed data:
+
+$$x_{ij}=\mu + \alpha_{i}+ \epsilon_{ij}$$  
+
+> * $x_{ij}$ is the *jth* observed value in group *i*
+> * $\mu$ is the mean of all observed values (`r mu`)
+> * $\alpha_{i}$ is the effect size for group *i*
+> * $\epsilon_{ij}$ is the error associated with the observed value
+> * What do you think the null hypothesis is?
+
+---
+
+## Lets generate a model to explain the variation we see
+
+* The null hypothesis is that the effect sizes are all zero:
+
+$$\alpha_{i} = 0$$
+
+$$\alpha_{A} = \alpha_{B} = \alpha_{C} = 0$$
+
+* If any of the $\alpha$ values are not zero, then the null hypothesis should be rejected
+
+---
+
+## How do we fit the model?
+
+* We want to partition the variation we see in the data...
+
+$$x_{ij} = \bar{\bar x} + (\bar x_i - \bar{\bar x}) + (x_{ij} - \bar x_i)$$
+
+* This says that the value we observed in treatment *i* is the sum of the overall mean across all data plus the ***variation*** due to the treatment plus the ***variation*** due to random noise.
+
+---
+
+## How do we fit the model?
+
+* The total variation in the data, the Sum Squared Difference is:
+
+$$SSD_{total} = \sum(x_{ij} - \bar x)^2$$
+
+* The question posed by the model then is can we parition this total variation into factors we can explain, such as the three treatment groups
+  *	Variation between treatments
+  *	Unexplained variation / variation within treatments
+*	Which source of variation is bigger? (what does that mean?)
+
+---
+
+## How do we fit the model?
+
+$$x_{ij} = \bar{\bar x} + (\bar x_i - \bar{\bar x}) + (x_{ij} - \bar x_i)$$
+
+* The terms in parentheses can be collapsed into sums of variation:
+
+$$SSD_{between} = \sum n_i (\bar x_i - \bar{\bar x})^2$$
+$$SSD_{within} = \sum \sum (x_{ij} - \bar x_i)^2$$
+$$SSD_{total} = \sum \sum (x_ij - \bar{\bar x})^2$$
+
+
+---
+
+## Mean squared error
+
+* The $SSD_{between}$ and $SSD_{within}$ will both explain some fraction of the total variance, but we need to normalize that variance for the degrees of freedom
+  * $df_{total}$: N-1
+  * $df_{between}$: K-1
+  * $df_{within}$: N-K
+* This gives us the following mean square error terms:
+$$MS_{between} = SSD_{between} / (K-1)$$
+$$MS_{within} = SSD_{within} / (N-K)$$
+
+---
+
+## How to test the significance of the differences in MS values:
+
+$$F=MS_{between}/MS_{within}$$
+
+* *F* > 1 indicate there is more variation between groups than within groups
+* *F* <= 1 indicate there is as much variation or more within groups than between groups
+* Can test significance of *F* using the F distribution (i.e. `pf`) with $df_{between}$ and $df_{within}$ degrees of freedom looking for values above the 95th percentile for significance
+
+---
+
+## Let's run the numbers
+
+```{r}
+x.doublebar <- mean(c(a, b, c))
+x.bar <- apply(cbind(a,b,c), 2, mean)
+n.i <- apply(cbind(a,b,c), 2, length)
+
+ssd.between <- sum(n.i*(x.bar-x.doublebar)^2)
+ssd.within <- sum((rbind(a,b,c)-x.bar)^2)
+ssd.total <- sum((c(a,b,c)-x.doublebar)^2)
+df.between <- 3-1
+df.within <- length(c(a,b,c))-3
+ms.between <- ssd.between / df.between
+ms.within <- ssd.within / df.within
+F <- ms.between / ms.within
+P <- 1-pf(F, df.between, df.within)
+```
+
+We get an F statistic of `r F` with `r df.between` and `r df.within` degrees of freedom and a P-value of `r P`.
+
+---
+
+## An easier way?
+
+* R has many many options for performing model fits with all sorts of complexities. We first need to get our data into a single vector with another vector to annotate which group each datum belongs to:
+
+```{r}
+groups <- c(rep("A", length(a)), rep("B", length(b)), rep("C", length(c)))
+data <- c(a, b, c)
+```
+
+---
+
+## An easier way?
+
+* We can then model the data using the `lm` command (think: linear model):
+
+```{r}
+anova(lm(data~groups))
+```
+
+* Earlier we had an F statistic of `r F` with `r df.between` and `r df.within` degrees of freedom and a P-value of `r P`.
+
+---
+
+## Recall our null hypothesis?
+
+$$\alpha_{A} = \alpha_{B} = \alpha_{C} = 0$$
+
+---
+
+#	So you get back a small p-value, what does that mean?
+
+*	Tests of comparisons
+  * Planned comparisons <- orthoganal comparisons, a priori hypotheses
+  * Unplanned comparisons <- tukey's hsd, post hoc analyses
+  * All possible comparisons <- what's wrong with this approach?
+* Strategy:
+  * Do all possible T-tests between levels of your treatment
+  * Correct alpha for multiple comparisons (e.g. Bonferroni)
+
+---
+
+##  So which $\alpha$ is significantly different?
+
+```{r}
+pairwise.t.test(data, groups)
+```
+
+* A and B are significantly different from C, but not each other.
+
+---
+
+```{r, eval=TRUE, echo=FALSE, fig.align='center', fig.width=8, fig.height=8}
+
+stripchart(at=1, a, vertical=T, method="jitter", xlim=c(0,4), pch=19, ylim=c(0,max(a,b,c)), ylab="L. acidophilus (log CFUs/g)")
+stripchart(at=2, b, vertical=T, method="jitter", pch=19, add=T)
+stripchart(at=3, c, vertical=T, method="jitter", pch=19, add=T)
+
+points(x=c(0.75, 1.25), y=c(a.mean, a.mean), type="l", lwd=3)
+points(x=c(1.75, 2.25), y=c(b.mean, b.mean), type="l", lwd=3)
+points(x=c(2.75, 3.25), y=c(c.mean, c.mean), type="l", lwd=3)
+
+axis(1, at=seq(1:3), label=c("A", "B", "C"))
+text(x=1, y=2, label="a", cex=1.5, font=2)
+text(x=2, y=2, label="b", cex=1.5, font=2)
+text(x=3, y=2, label="a", cex=1.5, font=2)
+
+```
+
+---
+
+## Non-parametric test: Kruskal-Wallis Rank Sum Test
+
+```{r}
+kruskal.test(x=data, g=factor(groups))
+```
+
+---
+
+## Two-way ANOVA
+
+* Model with replication allows you to look at interactions
+
+$$x_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk}$$
+
+* Model without replication prevents you from looking at interactions
+
+$$x_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ij}$$
+
+* Calculations get tricky if you have an unbalanced design
+* Results get tricky if interaction term is significant
+
+---
+
+## An example: Without the interaction term
+
+```{r}
+metadata <- read.table(file="wild.metadata.txt", header=T, row.names=1)
+anova(lm(metadata$Weight~metadata$SP+metadata$Sex))
+```
+
+---
+
+## An example: With the interaction term
+
+```{r}
+anova(lm(metadata$Weight~metadata$SP*metadata$Sex))
+```
+
+---
+
+## Power
+
+```{r, tidy=TRUE}
+between <- var(c(a.mean, b.mean, c.mean))
+within <- mean(c(var(a), var(b), var(c)))
+power.anova.test(groups=3, n=30, between.var=between, within.var=within, sig.level=0.05)
+```
+
+---
+
+## Power
+
+```{r, tidy=TRUE}
+between <- var(c(6.0, 6.0, 6.5))
+power.anova.test(groups=3, n=NULL, between.var=between, within.var=within, power=0.80, sig.level=0.05)
+```
+
+--- .segue .dark
+
+## Questions?
