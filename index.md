@@ -64,29 +64,31 @@ Class	|	Date	|	Topic	|	Reading
 	|	10/3	|	Computer lab	|
 12	|	10/7	|	[Power analysis (27 slides)](slides/Lecture12)	|	ISwR 9
 13	|	10/9	|	[ANOVA and Kruskal-Wallis (30 slides)](slides/Lecture13)	|	ISwR 7
-14	|	10/10	|	Regression and correlation	|	ISwR 6
+14	|	10/10	|	[Regression and correlation (31 slides)](slides/Lecture14)	|	ISwR 6
 	|	10/10	|	Computer lab	|
 	|	10/14	|	Fall Study Period (no class)	|
-	|	10/16	|	Introduction to programming	|	TAoRP 1
+15	|	10/16	|	Introduction to programming	|	TAoRP 1
+16  |   10/17   |   Data structures: vectors and matrices	|	TAoRP 2, 3
 	|	10/17	|	Computer lab	|
-	|	10/23	|	Data structures: vectors and matrices	|	TAoRP 2, 3
+	|	10/21	|	Pat traveling | 
+17  |   10/23   |   Data structures: lists and data frames	|	TAoRP 4, 5
 	|	10/24	|	Computer lab	|
-	|	10/28	|	Data structures: lists and data frames	|	TAoRP 4, 5
-	|	10/30	|	Data structures: tables and factors	|	TAoRP 6
+18	|	10/28	|	Data structures: tables and factors	|	TAoRP 6
+19	|	10/30	|	Control statements	|	TAoRP 7
 	|	10/31	|	Computer lab	|
-	|	11/4	|	Control statements	|	TAoRP 7
-	|	11/6	|	Input and output	|	TAoRP 10
+20	|	11/4	|	Input and output	|	TAoRP 10
+21	|	11/6	|	String manipulation I	|	TAoRP 11
 	|	11/7	|	Computer lab	|
-	|	11/11	|	String manipulation I	|	TAoRP 11
-	|	11/13	|	String manipulation II	|	TAoRP 11
+22	|	11/11	|	String manipulation II	|	TAoRP 11
+23	|	11/13	|	Variables and functions	|
 	|	11/14	|	Computer lab	|
-	|	11/18	|	Variables and functions	|
-	|	11/20	|	Optimization	|
+24	|	11/18	|	Optimization	|
+25	|	11/20	|	Testing and debugging	|	TAoRP 13
 	|	11/21	|	Computer lab	|
-	|	11/25	|	Testing and debugging	|	TAoRP 13
+26	|	11/25	|	Creating a package	|
 	|	11/27	|	Thanksgiving (no class)	|
 	|	11/28	|	Thanksgiving (no class)	|
-	|	12/2	|	Creating a package	|
-	|	12/4	|	Graphics	|	TAoRP 12
-	|	12/5	|	Computer lab	|
-40	|	12/9	|	Graphics	|	TAoRP 12
+27	|	12/2	|	Graphics	|	TAoRP 12
+28	|	12/4	|	Graphics	|	TAoRP 12
+29	|	12/5	|	Computer lab	|
+30	|	12/9	|	
