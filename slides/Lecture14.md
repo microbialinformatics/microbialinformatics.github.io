@@ -22,16 +22,7 @@ knit        : slidify::knit2slides
 
 
 
-```{r eval=TRUE, echo=FALSE}
 
-library(knitr)
-opts_chunk$set(tidy = TRUE)
-
-opts_chunk$set(hide = TRUE)
-opts_chunk$set(eval = FALSE)
-opts_chunk$set(cache = FALSE)
-par(mar=c(4,5,0.25, 0.25))
-```
 
 ---
 
@@ -55,17 +46,7 @@ par(mar=c(4,5,0.25, 0.25))
 
 ---
 
-```{r, echo=FALSE, fig.align='center'}
-set.seed(1)
-mm <- function(S, vmax, Km){
-	Vo <- vmax * S / (Km + S)
-	return(Vo)
-}
-
-S <- seq(10,200,10)
-dPdt <- mm(S, vmax=0.8, Km=50) + rnorm(length(S), 0,0.025)
-plot(dPdt~S, lwd=3, col="blue", pch=19, xlab="[Substrate] (mg/ml)", ylab="Rate of Product Change (1/min)")
-```
+<img src="assets/fig/unnamed-chunk-2.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" />
 
 ---
 
@@ -91,11 +72,7 @@ $$\frac{1}{V_o} = \frac{K_m}{V_{max}}(\frac{1}{[S]}) + \frac{1}{V_{max}}$$
 ---
 
 ## How do we fit this plot?
-```{r, fig.align='center', echo=FALSE}
-invS <- 1/S
-invV <- 1/dPdt
-plot(invS, invV, lwd=3, col="blue", pch=19, xlab="1/[Substrate] (ml/mg)", ylab="1/Vo (min)")
-```
+<img src="assets/fig/unnamed-chunk-3.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" style="display: block; margin: auto;" />
 
 ---
 
@@ -136,7 +113,8 @@ $$\hat{\alpha} = \bar y - \hat{\beta}\bar x$$
 
 ## Let's do some calculations...
 
-```{r reg.calc, eval=TRUE}
+
+```r
 xbar <- mean(invS)
 ybar <- mean(invV)
 
@@ -148,10 +126,14 @@ alpha <- ybar - beta * xbar
 
 ## Our fit
 
-```{r, fig.align='center', tidy=TRUE, fig.height=6.5}
-plot(invS, invV, lwd=3, col="blue", pch=19, xlab="1/[Substrate] (ml/mg)", ylab="1/Vo (min)")
-abline(b=beta, a=alpha, lwd=3)
+
+```r
+plot(invS, invV, lwd = 3, col = "blue", pch = 19, xlab = "1/[Substrate] (ml/mg)", 
+    ylab = "1/Vo (min)")
+abline(b = beta, a = alpha, lwd = 3)
 ```
+
+<img src="assets/fig/unnamed-chunk-4.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" />
 
 ---
 
@@ -159,17 +141,28 @@ abline(b=beta, a=alpha, lwd=3)
 
 $$\frac{1}{V_o} = \frac{K_m}{V_{max}}(\frac{1}{[S]}) + \frac{1}{V_{max}}$$
 
-$$\hat{\alpha} = \frac{1}{V_{max}} = `r alpha`$$
-$$\hat{\beta} = \frac{K_m}{V_{max}} = `r beta`$$
+$$\hat{\alpha} = \frac{1}{V_{max}} = 1.1252$$
+$$\hat{\beta} = \frac{K_m}{V_{max}} = 71.2447$$
 
-So we get a Vmax of `r lin.vmax<-1/alpha; round(lin.vmax, digits=2)` and a Km of `r lin.Km <- beta*lin.vmax; round(lin.Km, 2)`
+So we get a Vmax of 0.89 and a Km of 63.32
 
 ---
 
 ## How to do this with built in R function?
 
-```{r, eval=TRUE}
+
+```r
 lm(invV~invS)
+```
+
+```
+## 
+## Call:
+## lm(formula = invV ~ invS)
+## 
+## Coefficients:
+## (Intercept)         invS  
+##        1.13        71.24
 ```
 
 ---
@@ -188,7 +181,8 @@ with n-2 degrees of freedom
 
 ## How to do this with built in R function?
 
-```{r, eval=FALSE, size=8}
+
+```r
 summary(lm(invV~invS))
 ```
 
@@ -196,18 +190,33 @@ summary(lm(invV~invS))
 
 ## How to do this with built in R function?
 
-```{r, echo=FALSE, eval=TRUE, size=8}
-summary(lm(invV~invS))
+
+```
+## 
+## Call:
+## lm(formula = invV ~ invS)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.3986 -0.0555  0.0255  0.0765  0.2485 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   1.1252     0.0477    23.6  5.5e-15 ***
+## invS         71.2447     1.6892    42.2  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.165 on 18 degrees of freedom
+## Multiple R-squared:  0.99,	Adjusted R-squared:  0.989 
+## F-statistic: 1.78e+03 on 1 and 18 DF,  p-value: <2e-16
 ```
 
 ---
 
 ## Our fit
 
-```{r, fig.align='center', tidy=TRUE, fig.height=6.5, echo=FALSE}
-plot(invS, invV, lwd=3, col="blue", pch=19, xlab="1/[Substrate] (ml/mg)", ylab="1/Vo (min)")
-abline(b=beta, a=alpha, lwd=3)
-```
+<img src="assets/fig/unnamed-chunk-8.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
 
 What do you notice about the fit?
 
@@ -222,33 +231,55 @@ What do you notice about the fit?
 
 ## A better fit (Chapter 16)...
 
-```{r}
+
+```r
 mm <- function(S, vmax, Km){
 	Vo <- vmax * S / (Km + S)
 	return(Vo)
 }
 
 nonlinear.fit <- nls(dPdt ~ mm(S, v, k), start=c(v=1, k=60))
-
 ```
 
 ---
 
 ## A better fit (Chapter 16)...
 
-```{r}
+
+```r
 summary(nonlinear.fit)
 ```
 
+```
+## 
+## Formula: dPdt ~ mm(S, v, k)
+## 
+## Parameters:
+##   Estimate Std. Error t value Pr(>|t|)    
+## v   0.8122     0.0242    33.6  < 2e-16 ***
+## k  50.7066     4.6200    11.0  2.1e-09 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.0232 on 18 degrees of freedom
+## 
+## Number of iterations to convergence: 3 
+## Achieved convergence tolerance: 5.56e-06
+```
+
 ---
 
 ## A better fit (Chapter 16)...
 
-```{r, fig.align='center', tidy=TRUE, fig.height=6.5, echo=TRUE, strip.white=TRUE}
-plot(S, dPdt, lwd=3, col="blue", pch=19, xlab="1/[Substrate] (ml/mg)", ylab="1/Vo (min)")
-lines(S, mm(S, vmax=lin.vmax, Km=lin.Km), col="red", lwd=2)
-points(S, predict(nonlinear.fit), type="l", lwd=2)
+
+```r
+plot(S, dPdt, lwd = 3, col = "blue", pch = 19, xlab = "1/[Substrate] (ml/mg)", 
+    ylab = "1/Vo (min)")
+lines(S, mm(S, vmax = lin.vmax, Km = lin.Km), col = "red", lwd = 2)
+points(S, predict(nonlinear.fit), type = "l", lwd = 2)
 ```
+
+<img src="assets/fig/unnamed-chunk-11.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
 
 ---
 
@@ -273,11 +304,16 @@ Wikipedia
 
 $$r=\frac{(x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum(x_i-\bar x)^2\sum(y_i-\bar y)^2}}$$
 
-```{r}
+
+```r
 Sbar <- mean(S)
 dPdtbar <- mean(dPdt)
 r <- sum((S-Sbar)*(dPdt-dPdtbar))/sqrt(sum((S-Sbar)^2)*sum((dPdt-dPdtbar)^2))
 r
+```
+
+```
+## [1] 0.915
 ```
 
 ---
@@ -285,12 +321,32 @@ r
 ## Parametric: Pearson correlation
 
 
-```{r}
+
+```r
 cor(S, dPdt, method="pearson")
 ```
 
-```{r}
+```
+## [1] 0.915
+```
+
+
+```r
 cor.test(S, dPdt, method="pearson")
+```
+
+```
+## 
+## 	Pearson's product-moment correlation
+## 
+## data:  S and dPdt
+## t = 9.62, df = 18, p-value = 1.615e-08
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.7939 0.9663
+## sample estimates:
+##   cor 
+## 0.915
 ```
 
 ---
@@ -298,12 +354,30 @@ cor.test(S, dPdt, method="pearson")
 ## Non-parametric: Spearman correlation
 
 
-```{r}
+
+```r
 cor(S, dPdt, method="spearman")
 ```
 
-```{r}
+```
+## [1] 0.9789
+```
+
+
+```r
 cor.test(S, dPdt, method="spearman")
+```
+
+```
+## 
+## 	Spearman's rank correlation rho
+## 
+## data:  S and dPdt
+## S = 28, p-value = 6.521e-06
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##    rho 
+## 0.9789
 ```
 
 
