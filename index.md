@@ -67,10 +67,10 @@ Class	|	Date	|	Topic	|	Reading
 14	|	10/10	|	[Regression and correlation (31 slides)](slides/Lecture14)	|	ISwR 6
 	|	10/10	|	Computer lab	|
 	|	10/14	|	Fall Study Period (no class)	|
-15	|	10/16	|	Introduction to programming	|	TAoRP 1
+15	|	10/16	|	[Introduction to programming (30 slides)](slides/Lectur15)	|	TAoRP 1
 16  |   10/17   |   Data structures: vectors and matrices	|	TAoRP 2, 3
 	|	10/17	|	Computer lab	|
-	|	10/21	|	Pat traveling | 
+	|	10/21	|	Pat traveling |
 17  |   10/23   |   Data structures: lists and data frames	|	TAoRP 4, 5
 	|	10/24	|	Computer lab	|
 18	|	10/28	|	Data structures: tables and factors	|	TAoRP 6
@@ -91,4 +91,4 @@ Class	|	Date	|	Topic	|	Reading
 27	|	12/2	|	Graphics	|	TAoRP 12
 28	|	12/4	|	Graphics	|	TAoRP 12
 29	|	12/5	|	Computer lab	|
-30	|	12/9	|	
+30	|	12/9	| No class - work on projects | 
