@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 15</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Project 1 is due on the 24th</li>
+<li>The first hour of tomorrow&#39;s class will be a lecture</li>
+<li>No class on Tuesday (stud section)</li>
+<li>Read <strong><em>The Art of R Programming</em></strong> (Chapters 2 and 3)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Motivation</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Imagine you need to calculate dilutions for a 96-well plate so that you have 10 ng / ul DNA solutions.
+
+<ul>
+<li>  Is it best to do each calculation on a calculator?</li>
+<li>  What might go wrong?</li>
+<li>  Most of you would likely use an Excel spreadsheet with a lot of copying and pasting of equations</li>
+<li>  Now what if one of your labmates would like to do the same calculations?</li>
+</ul></li>
+<li>What are the tedious, error prone activities you do in the lab?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Possible areas where you and your lab might find a program useful...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Generating a graph - automation</li>
+<li>  Processing data from 96 well plates
+
+<ul>
+<li>  ELISAs</li>
+<li>  growth curves</li>
+</ul></li>
+<li>  Primer design</li>
+<li>  Assessing DNA sequence quality</li>
+<li>  Non-standard statistical analysis</li>
+<li>  Simulations</li>
+<li>  Simple tasks but with a ton of data (determine the GC content of a genome)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Programming in science is important for several reasons...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Calculations can be complicated/difficult and easy to screw up</li>
+<li>  Program encapsulate functionality that can be easily repeated and transferred</li>
+<li>  With proper documentation it is easy for others to see what format the data need to be in and understand what is going on.  Think of the t.test function...</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Going forward</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  The remainder of the semester will address more advanced concepts that are necessary for programming within R and that can be easily transferred to other programming languages.</li>
+<li>Each of these concepts has parallels in other languages.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Programming with R</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  R is a high level programming language
+
+<ul>
+<li>  To sum a vector of numbers you can just use the &quot;sum&quot; command</li>
+<li>  In other languages you&#39;d have to use a for loop</li>
+<li>  This is good and bad.  Good because it&#39;s easier to program, bad because it can make the same code slower in R than the other languages</li>
+</ul></li>
+<li>  The two most significant tools you can make use of, regardless of the programming language, are pseudocode and comments.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Pseudocode</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>informal description of how a program or component of a program will function.  It is designed for human to read, not the computer</li>
+<li>  It is a good practice to first write the pseudocode and then the R syntax</li>
+<li>  Think of it as you would an outline for a manuscript you are writing</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Comments</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>In R, a comment is indicated with a # sign</li>
+<li>  Never too many comments, difficult to remember what you meant in your code a month later or for someone else to read your mind</li>
+<li>  Helpful to indicate what is going on at each step, indicate inputs, outputs, defaults</li>
+<li>  Can put #&#39;s at the beginning of each line in your pseudocode and then fill in the actual code</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>An exercise</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Imagine you have a bacterial genome and you want to find all of the open reading frames (ORFs).  What might the pseudocode look like?</p>
+
+<ol class = "build incremental">
+<li>   Get a list of all of the start and stop codons in all frames</li>
+<li>   Determine which frame each codon belongs to</li>
+<li>   For every start codon determine the length of the putative gene</li>
+<li>   Apply some minimum length criteria</li>
+<li>   Select the putative ORFs that are long and non-overlapping</li>
+<li>   Output: ORF coordinates, DNA sequence, translated protein sequence</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Translating pseudocode</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  You can then take each of these steps and make the pseudocode more specific (indenting is helpful)...</li>
+<li> Get a list of all of the start and stop codons in all six frames.</li>
+</ul>
+
+<pre><code>for position in the genome
+    codon = that base plus the next two bases
+    if codon == &quot;ATG&quot; then save that position as a start codon
+    if codon == &quot;TAG&quot;, &quot;TAA&quot;, or &quot;TGA&quot; then save that position as a stop codon
+
+return list of start and stop codon positions
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>There are many ways that you could do this</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  For example, you could find all the start/stop codons in the +1 frame, +2, etc. instead of finding the frame after you find the start stop codons</li>
+<li>  Choice is a matter of...
+
+<ul>
+<li>  style</li>
+<li>  complexity</li>
+<li>  speed </li>
+<li>  memory requirement</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>As you plan your pseudocode, you might start to realize that you have some choices</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Alternate start codons?</li>
+<li>  Minimum ORF length</li>
+<li>  Allow overlap in ORFs</li>
+<li>  Sequence complexity</li>
+<li>  etc...</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Functions</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  The code you&#39;ve written so far has been to put everythign in one file in a stream of consciousness format</li>
+<li>  Problems with this approach...
+
+<ul>
+<li>  Repeated code</li>
+<li>  Bad organization</li>
+<li>  Difficult to debug</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Functions</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Functions allow us to encapsulate specific tasks.</li>
+<li>  Ideally, each function only does one thing (e.g. sum, mean, etc)</li>
+<li>  Advantage being that if a new algorithm came up to calcualte the mean then you would just change that section of code instead of that code throughout the manuscript</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Basic syntax</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>myFunction &lt;- function(arguements){
+    # insert special sauce
+}
+myFunction()
+</code></pre>
+
+<ul>
+<li>The function returns the last command entered</li>
+<li>Usually want to use <code>return</code> function to be safe</li>
+</ul>
+
+<pre><code>myFunction &lt;- function(arguements){
+    # insert special sauce
+    return(output)
+}
+myFunction()
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Evolution of a function in R</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x &lt;- 1:10
+
+sum.squared &lt;- function(x){
+    squared &lt;- x^2
+    sum.sq &lt;- sum(squared)
+    return(sum.sq)
+}
+
+sum.squared(x)
+</code></pre>
+
+<pre><code>## [1] 385
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Evolution of a function in R</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">sum.squared &lt;- function(x){
+    sum.sq &lt;- sum(x^2)
+    return(sum.sq)
+}
+
+sum.squared(x)
+</code></pre>
+
+<pre><code>## [1] 385
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Evolution of a function in R</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">sum.squared &lt;- function(x){
+    return(sum(x^2))
+}
+
+sum.squared(x)
+</code></pre>
+
+<pre><code>## [1] 385
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Evolution of a function in R</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">sum.squared &lt;- function(x){
+    sum(x^2)
+}
+sum.squared(x)
+</code></pre>
+
+<pre><code>## [1] 385
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Evolution of a function in R</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">sum.squared &lt;- function(x) sum(x^2)
+sum.squared(x)
+</code></pre>
+
+<pre><code>## [1] 385
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Evolution of a function in R</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">sum(x^2)
+</code></pre>
+
+<pre><code>## [1] 385
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Evolution of a function in R</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Consider where you want to be on this continuum from a three line function to no function at all.</li>
+<li>Readability</li>
+<li>Maintainability</li>
+<li>Ability to expand features</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Output...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Either the result of the return command or the last variable that is created</li>
+<li>  Think about... this example only returns a single value.  How would you get back more complex data like the summary command does?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Default inputs:</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">sum.squared &lt;- function(x, mu=0){
+    sum((x-mu)^2)
+}
+sum.squared(x)
+</code></pre>
+
+<pre><code>## [1] 385
+</code></pre>
+
+<pre><code class="r">sum.squared(x, 3)
+</code></pre>
+
+<pre><code>## [1] 145
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Scope...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Variables only exist within the braces</li>
+</ul>
+
+<pre><code class="r">sum.squared &lt;- function(x){
+    sum.sq &lt;- sum(x^2)
+}
+sum.squared(c(1,2,3))
+</code></pre>
+
+<ul>
+<li>Where is the output???</li>
+</ul>
+
+<pre><code class="r">sum.sq
+</code></pre>
+
+<pre><code>## Error: object &#39;sum.sq&#39; not found
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>Exercise: ChiSquared distribution revisited</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  The distribution of a sum of the squares of k indepdentently sampled normal random variables, where k is the degrees of freedom</li>
+<li>Procedure to create an empirical distribution
+
+<ol>
+<li> Draw k random variables from a normal distribution with mean 0.0 and standard deviation of 1.0</li>
+<li> Square each of them</li>
+<li> Sum them</li>
+<li> Repeat many times and keep track of how many times you see each value</li>
+</ol></li>
+<li>Interested in the proportion of the distribution larger than our test statistic</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-29" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Learning objectives'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Motivation'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Possible areas where you and your lab might find a program useful...'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Programming in science is important for several reasons...'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Going forward'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Programming with R'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Pseudocode'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Comments'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='An exercise'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Translating pseudocode'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='There are many ways that you could do this'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='As you plan your pseudocode, you might start to realize that you have some choices'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Functions'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Functions'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Basic syntax'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Evolution of a function in R'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Evolution of a function in R'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Evolution of a function in R'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Evolution of a function in R'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Evolution of a function in R'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Evolution of a function in R'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Evolution of a function in R'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Output...'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Default inputs:'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Scope...'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Exercise: ChiSquared distribution revisited'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='Questions?'>
+         29
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
