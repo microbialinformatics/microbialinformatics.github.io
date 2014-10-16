@@ -1,3 +1,5 @@
+##next time add content on logistic regression - this took about 30 min to cover!
+
 --- 
 title       : Microbial Informatics
 subtitle    : Lecture 14
