@@ -1,4 +1,4 @@
---- 
+---
 title       : Microbial Informatics
 subtitle    : Lecture 16
 date        : October 17, 2014
@@ -6,17 +6,17 @@ author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
 job         : Department of Microbiology & Immunology
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow      # 
+hitheme     : tomorrow      #
 widgets     : mathjax       # {mathjax, quiz, bootstrap}
 mode        : standalone    # {selfcontained, standalone, draft}
 knit        : slidify::knit2slides
 
---- 
+---
 
 ## Announcements
 * Project 1 is due on the 24th
 * No class on Tuesday (study section)
-* Read ***The Art of R Programming*** (Chapters 2 and 3)
+* Read ***The Art of R Programming*** (Chapters 4 and 5)
 
 
 
@@ -73,7 +73,7 @@ pchisq.rand(k=2, chi.sq=10, iters=10000)
 ```
 
 or
-	
+
 
 ```r
 	x <- 1:3
@@ -90,7 +90,7 @@ x <- seq(1,3,1)
 ---
 
 ## Creating a vector
-	
+
 
 ```r
 	x <- vector(length=3)
@@ -112,7 +112,7 @@ or
 
 
 ```r
-x<- rep(c(1,2,3), 2)	
+x<- rep(c(1,2,3), 2)
 ```
 
 ---
@@ -150,8 +150,8 @@ x["e"]
 c(1,2,4) + c(6,0,9,20,22)	#how does R read this expression?  what does it equal?
 ```
 
----	
-	
+---
+
 ##	Filtering:	Extracting subsets from a vector
 
 
@@ -170,7 +170,7 @@ x[x>1]
 
 
 ```r
-ifelse(x > 1, "dog", "cat") 
+ifelse(x > 1, "dog", "cat")
 ifelse(x > 1, x, x^2)
 
 z <- seq(1:10)
@@ -178,7 +178,7 @@ ifelse(z>7, "C", ifelse(z>4, "B",ifelse(z>0, "A")))
 ```
 
 ---
-	
+
 ## Vectorization:	Applying functions to vectors that are applied elementwise
 
 
@@ -203,7 +203,7 @@ sqrt(x)	#many built in functions return vectors
 z <- matrix(c(1,2,3,4,5,6), ncol=2)		#fills by columns
 z <- matrix(c(1,2,3,4,5,6), nrow=2)		#fills by columns
 z <- matrix(c(1,2,3,4,5,6), nrow=2, byrow=T)		#fills by rows
-	
+
 length(z)		#why?
 dim(z)
 nrow(z)
