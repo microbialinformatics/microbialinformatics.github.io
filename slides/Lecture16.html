@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 16</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Project 1 is due on the 24th</li>
+<li>No class on Tuesday (study section)</li>
+<li>Read <strong><em>The Art of R Programming</em></strong> (Chapters 2 and 3)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Programs and functions encapsulate repetitive problems</li>
+<li>Using functions makes it easier to debug your code since it reduces the amount of duplicated code</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>How to design a small function from pseudocode</li>
+<li>Additional details about vectors and matrices</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Exercise: ChiSquared distribution revisited</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  The distribution of a sum of the squares of k indepdentently sampled normal random variables, where k is the degrees of freedom</li>
+<li>Procedure to create an empirical distribution
+
+<ol>
+<li> Draw k random variables from a normal distribution with mean 0.0 and standard deviation of 1.0</li>
+<li> Square each of them</li>
+<li> Sum them</li>
+<li> Repeat many times and keep track of how many times you see each value</li>
+</ol></li>
+<li>Interested in the proportion of the distribution larger than our test statistic</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>To do...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Work with a partner and make a simple function called pchisq.rand.</li>
+<li>It should take the parameters: <code>k</code>,   <code>chi.sq</code>, and <code>iters</code></li>
+<li><p>The default value for <code>iters</code> should be 1000</p></li>
+<li><p>When you do the following:</p></li>
+</ul>
+
+<pre><code class="r">pchisq.rand(k=2, chi.sq=10, iters=10000)
+</code></pre>
+
+<ul>
+<li>You should get a value near 0.2642411</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Creating a vector</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">    x &lt;- c(1,2,3)
+</code></pre>
+
+<p>or</p>
+
+<pre><code class="r">    x &lt;- 1:3
+    x &lt;- 3:1
+</code></pre>
+
+<p>or</p>
+
+<pre><code class="r">x &lt;- seq(1,3,1)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Creating a vector</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">    x &lt;- vector(length=3)
+    x[1] &lt;- 1
+    x[2] &lt;- 2
+    x[3] &lt;- 3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Creating a vector</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x&lt;- c(x, c(1,2,3))
+</code></pre>
+
+<p>or</p>
+
+<pre><code class="r">x&lt;- rep(c(1,2,3), 2)    
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Accessing values in a vector</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x[5]        #remember vector indices start at 1
+x[5,1]      #is this correct?
+v&lt;-3:4
+x[v]
+x[length(x)]
+x[-4]
+x[-length(x)]
+x[-c(1,2)]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Mapping a vector onto a vector</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">names(x) &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;)
+x[&quot;e&quot;]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Recycling: Automatic lengthening of a vector by repeating itself</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">c(1,2,4) + c(6,0,9,20,22)   #how does R read this expression?  what does it equal?
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Filtering:  Extracting subsets from a vector</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x &lt;- rep(1:3,2)
+x &gt; 1
+which(x&gt;1)
+
+subset(x, x&gt;1)
+x[x&gt;1]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Another method of using logical operators with vectors</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ifelse(x &gt; 1, &quot;dog&quot;, &quot;cat&quot;) 
+ifelse(x &gt; 1, x, x^2)
+
+z &lt;- seq(1:10)
+ifelse(z&gt;7, &quot;C&quot;, ifelse(z&gt;4, &quot;B&quot;,ifelse(z&gt;0, &quot;A&quot;)))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Vectorization:   Applying functions to vectors that are applied elementwise</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x &lt;- seq(1:3)
+y &lt;- seq(3:5)
+
+x&gt;y
+x+5
+x+y
+x^2
+sqrt(x) #many built in functions return vectors
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Matrices</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Special types of vectors with extra attibutes: number of rows and number of columns</li>
+</ul>
+
+<pre><code class="r">z &lt;- matrix(c(1,2,3,4,5,6), ncol=2)     #fills by columns
+z &lt;- matrix(c(1,2,3,4,5,6), nrow=2)     #fills by columns
+z &lt;- matrix(c(1,2,3,4,5,6), nrow=2, byrow=T)        #fills by rows
+
+length(z)       #why?
+dim(z)
+nrow(z)
+ncol(z)
+
+colnames(z) &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+rownames(z) &lt;- c(&quot;d&quot;, &quot;e&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Indexing into matrices</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">z[1,3]
+z[2,]
+z[,2:3]
+z[,-1]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Operations on matrices</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">y &lt;- matrix(c(1,2,3,4), ncol=2)
+
+y * 2
+y * y
+y %*% y
+
+apply(y, 1, sum)
+apply(y, 2, sum)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Learning objectives'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Exercise: ChiSquared distribution revisited'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='To do...'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Creating a vector'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Creating a vector'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Creating a vector'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Accessing values in a vector'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Mapping a vector onto a vector'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Recycling: Automatic lengthening of a vector by repeating itself'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Filtering:  Extracting subsets from a vector'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Another method of using logical operators with vectors'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Vectorization:   Applying functions to vectors that are applied elementwise'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Matrices'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Indexing into matrices'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Operations on matrices'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Questions?'>
+         18
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
