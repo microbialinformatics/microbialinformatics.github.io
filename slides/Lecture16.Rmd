@@ -66,10 +66,10 @@ par(mar=c(4,5,0.25, 0.25))
 * When you do the following:
 
 ```{r, echo=TRUE, eval=FALSE}
-pchisq.rand(k=2, chi.sq=10, iters=10000)
+pchisq.rand(k=4, chi.sq=2, iters=10000)
 ```
 
-* You should get a value near `r pchisq(2, 4)`
+* You should get a value near `r pchisq(2, df=4)`
 
 ---
 

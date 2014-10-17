@@ -58,7 +58,7 @@ knit        : slidify::knit2slides
 
 
 ```r
-pchisq.rand(k=2, chi.sq=10, iters=10000)
+pchisq.rand(k=4, chi.sq=2, iters=10000)
 ```
 
 * You should get a value near 0.2642411
