@@ -68,7 +68,7 @@ Class	|	Date	|	Topic	|	Reading
 	|	10/10	|	Computer lab	|
 	|	10/14	|	Fall Study Period (no class)	|
 15	|	10/16	|	[Introduction to programming (30 slides)](slides/Lecture15)	|	TAoRP 1
-16  |   10/17   |   Data structures: vectors and matrices	|	TAoRP 2, 3
+16  |   10/17   |   [Data structures: vectors and matrices (19 slides)](slides/Lecture16)	|	TAoRP 2, 3
 	|	10/17	|	Computer lab	|
 	|	10/21	|	Pat traveling |
 17  |   10/23   |   Data structures: lists and data frames	|	TAoRP 4, 5
