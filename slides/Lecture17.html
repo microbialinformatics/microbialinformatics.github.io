@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 17</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Project 1 is due today</li>
+<li>Read <strong><em>The Art of R Programming</em></strong> (Chapters 6 and 7)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>How to design a small function from pseudocode</li>
+<li>Additional details about vectors and matrices</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Lists</li>
+<li>Data frames</li>
+<li>Tables</li>
+<li>Factors</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Lists</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  a data structure that can combine different data types (eg. numeric, vectors, strings, etc)</li>
+<li>useful for returning complex data structures from functions</li>
+<li>important for organizing data: imagine creating a list for each gene in a genome - gene name, coordinates, length, function, DNA sequence, translated sequence, a reference to experiments, etc...</li>
+<li>Could have a vector of lists... or a data frame...</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Creating a list</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ps &lt;- list(name=c(&quot;Pat&quot;, &quot;Schloss&quot;), position=&quot;Associate Professor&quot;, time.at.um=5)
+ps$name
+</code></pre>
+
+<pre><code>## [1] &quot;Pat&quot;     &quot;Schloss&quot;
+</code></pre>
+
+<pre><code class="r">ps$position
+</code></pre>
+
+<pre><code>## [1] &quot;Associate Professor&quot;
+</code></pre>
+
+<pre><code class="r">ps$time.at.um
+</code></pre>
+
+<pre><code>## [1] 5
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Working with lists</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">str(ps)
+</code></pre>
+
+<pre><code>## List of 3
+##  $ name      : chr [1:2] &quot;Pat&quot; &quot;Schloss&quot;
+##  $ position  : chr &quot;Associate Professor&quot;
+##  $ time.at.um: num 5
+</code></pre>
+
+<pre><code class="r">length(ps)
+</code></pre>
+
+<pre><code>## [1] 3
+</code></pre>
+
+<pre><code class="r">names(ps)
+</code></pre>
+
+<pre><code>## [1] &quot;name&quot;       &quot;position&quot;   &quot;time.at.um&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Working with lists</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">unlist(ps)
+</code></pre>
+
+<pre><code>##                 name1                 name2              position 
+##                 &quot;Pat&quot;             &quot;Schloss&quot; &quot;Associate Professor&quot; 
+##            time.at.um 
+##                   &quot;5&quot;
+</code></pre>
+
+<pre><code class="r">is.vector(unlist(ps))
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Accessing elements of a list</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ps$position
+</code></pre>
+
+<pre><code>## [1] &quot;Associate Professor&quot;
+</code></pre>
+
+<pre><code class="r">ps[[&quot;position&quot;]]
+</code></pre>
+
+<pre><code>## [1] &quot;Associate Professor&quot;
+</code></pre>
+
+<pre><code class="r">ps[[2]]
+</code></pre>
+
+<pre><code>## [1] &quot;Associate Professor&quot;
+</code></pre>
+
+<pre><code class="r">ps[2]
+</code></pre>
+
+<pre><code>## $position
+## [1] &quot;Associate Professor&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Inserting things into a list</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ps$kids.names &lt;- c(&quot;mary&quot;, &quot;patrick&quot;, &quot;joe&quot;, &quot;john&quot;, &quot;ruth&quot;, &quot;jacob&quot;, &quot;peter&quot;)
+ps$kids[3]
+</code></pre>
+
+<pre><code>## [1] &quot;joe&quot;
+</code></pre>
+
+<pre><code class="r">ps[[4]][3]
+</code></pre>
+
+<pre><code>## [1] &quot;joe&quot;
+</code></pre>
+
+<pre><code class="r">ps$married &lt;- TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">ps
+</code></pre>
+
+<pre><code>## $name
+## [1] &quot;Pat&quot;     &quot;Schloss&quot;
+## 
+## $position
+## [1] &quot;Associate Professor&quot;
+## 
+## $time.at.um
+## [1] 5
+## 
+## $kids.names
+## [1] &quot;mary&quot;    &quot;patrick&quot; &quot;joe&quot;     &quot;john&quot;    &quot;ruth&quot;    &quot;jacob&quot;   &quot;peter&quot;  
+## 
+## $married
+## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Deleting elements from a list</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ps$position &lt;- NULL
+ps
+</code></pre>
+
+<pre><code>## $name
+## [1] &quot;Pat&quot;     &quot;Schloss&quot;
+## 
+## $time.at.um
+## [1] 5
+## 
+## $kids.names
+## [1] &quot;mary&quot;    &quot;patrick&quot; &quot;joe&quot;     &quot;john&quot;    &quot;ruth&quot;    &quot;jacob&quot;   &quot;peter&quot;  
+## 
+## $married
+## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Applying functions to a list</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data &lt;- list(x=1:10, y=100:110)
+lapply(data, median)    #returns a list
+</code></pre>
+
+<pre><code>## $x
+## [1] 5.5
+## 
+## $y
+## [1] 105
+</code></pre>
+
+<pre><code class="r">sapply(data, median)    #returns a vector
+</code></pre>
+
+<pre><code>##     x     y 
+##   5.5 105.0
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Working with function output</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x &lt;- runif(100)
+y &lt;- c(rep(&quot;red&quot;, 50), rep(&quot;blue&quot;, 50))
+
+t &lt;- t.test(x~y)
+str(t)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <article data-timings="">
+    <pre><code>## List of 9
+##  $ statistic  : Named num 0.105
+##   ..- attr(*, &quot;names&quot;)= chr &quot;t&quot;
+##  $ parameter  : Named num 97.6
+##   ..- attr(*, &quot;names&quot;)= chr &quot;df&quot;
+##  $ p.value    : num 0.916
+##  $ conf.int   : atomic [1:2] -0.107 0.119
+##   ..- attr(*, &quot;conf.level&quot;)= num 0.95
+##  $ estimate   : Named num [1:2] 0.471 0.465
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;mean in group blue&quot; &quot;mean in group red&quot;
+##  $ null.value : Named num 0
+##   ..- attr(*, &quot;names&quot;)= chr &quot;difference in means&quot;
+##  $ alternative: chr &quot;two.sided&quot;
+##  $ method     : chr &quot;Welch Two Sample t-test&quot;
+##  $ data.name  : chr &quot;x by y&quot;
+##  - attr(*, &quot;class&quot;)= chr &quot;htest&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">t$statistic
+</code></pre>
+
+<pre><code>##         t 
+## 0.4470755
+</code></pre>
+
+<pre><code class="r">t$parameter
+</code></pre>
+
+<pre><code>##       df 
+## 97.01836
+</code></pre>
+
+<pre><code class="r">t$p.value
+</code></pre>
+
+<pre><code>## [1] 0.655817
+</code></pre>
+
+<pre><code class="r">t$estimate
+</code></pre>
+
+<pre><code>## mean in group blue  mean in group red 
+##          0.4656561          0.4411594
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Data frame</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>like a matrix, but each column can have a different mode</li>
+<li>  We saw these in the first several classes when you were looking at the metadata file</li>
+<li>  A data frame is really a multidimensional list</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Creating a data frame</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">name &lt;- c(&quot;Schloss&quot;, &quot;Young&quot; , &quot;Mobley&quot;, &quot;SwansonJ&quot;)
+rank &lt;- c(&quot;Asst&quot;, &quot;Assoc&quot;, &quot;Chair&quot;, &quot;Full&quot;)
+cool &lt;- c(10, 1, 9, 8)
+directory &lt;- data.frame(name, rank, cool)
+directory
+</code></pre>
+
+<pre><code>##       name  rank cool
+## 1  Schloss  Asst   10
+## 2    Young Assoc    1
+## 3   Mobley Chair    9
+## 4 SwansonJ  Full    8
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Accessing columns of a dataframe</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">directory[,1]
+</code></pre>
+
+<pre><code>## [1] Schloss  Young    Mobley   SwansonJ
+## Levels: Mobley Schloss SwansonJ Young
+</code></pre>
+
+<pre><code class="r">directory[,&quot;name&quot;]
+</code></pre>
+
+<pre><code>## [1] Schloss  Young    Mobley   SwansonJ
+## Levels: Mobley Schloss SwansonJ Young
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Accessing rows of a dataframe</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">directory[1,]
+</code></pre>
+
+<pre><code>##      name rank cool
+## 1 Schloss Asst   10
+</code></pre>
+
+<pre><code class="r">directory[directory$name==&quot;Schloss&quot;,]
+</code></pre>
+
+<pre><code>##      name rank cool
+## 1 Schloss Asst   10
+</code></pre>
+
+<pre><code class="r">rownames(directory) &lt;- directory$name
+directory[&quot;Schloss&quot;,]
+</code></pre>
+
+<pre><code>##            name rank cool
+## Schloss Schloss Asst   10
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Factors</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Vector that can contain only predefined values and is used to store categorical data.<br></li>
+</ul>
+
+<pre><code class="r">x &lt;- factor(c(&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;))
+x
+</code></pre>
+
+<pre><code>## [1] a b b c d
+## Levels: a b c d
+</code></pre>
+
+<pre><code class="r">str(x)
+</code></pre>
+
+<pre><code>##  Factor w/ 4 levels &quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;: 1 2 2 3 4
+</code></pre>
+
+<pre><code class="r">levels(x)
+</code></pre>
+
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Oops! have to define the values a priori</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x[2] &lt;- &quot;e&quot;
+</code></pre>
+
+<pre><code>## Warning in `[&lt;-.factor`(`*tmp*`, 2, value = &quot;e&quot;): invalid factor level, NA
+## generated
+</code></pre>
+
+<pre><code class="r">x
+</code></pre>
+
+<pre><code>## [1] a    &lt;NA&gt; b    c    d   
+## Levels: a b c d
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Define the values <em>a priori</em></h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x &lt;- factor(c(&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;), levels=c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;))
+x
+</code></pre>
+
+<pre><code>## [1] a b b c d
+## Levels: a b c d e
+</code></pre>
+
+<pre><code class="r">levels(x)
+</code></pre>
+
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;
+</code></pre>
+
+<pre><code class="r">table(x)
+</code></pre>
+
+<pre><code>## x
+## a b c d e 
+## 1 2 1 1 0
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Notice a difference?</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x &lt;- factor(c(&quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;), levels=c(&quot;a&quot;, &quot;e&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;))
+x
+</code></pre>
+
+<pre><code>## [1] a b b c d
+## Levels: a e b c d
+</code></pre>
+
+<pre><code class="r">levels(x)
+</code></pre>
+
+<pre><code>## [1] &quot;a&quot; &quot;e&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;
+</code></pre>
+
+<pre><code class="r">table(x)
+</code></pre>
+
+<pre><code>## x
+## a e b c d 
+## 1 0 2 1 1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Applying functions to factors: split</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>splits a vector into groups</li>
+</ul>
+
+<pre><code class="r">set.seed(2)
+ages &lt;- sample(20:40, 20, replace=TRUE)
+gender &lt;- factor(sample(c(&quot;Female&quot;, &quot;Male&quot;), 20, replace=TRUE))
+pol &lt;- factor(sample(c(&quot;D&quot;, &quot;R&quot;, &quot;I&quot;), 20, replace=TRUE))
+split(ages, gender)
+</code></pre>
+
+<pre><code>## $Female
+##  [1] 34 23 39 39 22 37 31 31 25 24 21
+## 
+## $Male
+## [1] 23 32 29 35 23 28 37 40 29
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Applying functions to factors: cut</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>generate factors based on pre-defined bins</li>
+</ul>
+
+<pre><code class="r">range &lt;- seq(20,40,5)
+segments &lt;- cut(ages, range)    #(20,30]: 20 &lt; x &lt;= 30
+table(segments)
+</code></pre>
+
+<pre><code>## segments
+## (20,25] (25,30] (30,35] (35,40] 
+##       5       7       5       2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Applying functions to factors: cut</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li class='..'>or let cut figure out the breaks for you</li>
+</ul>
+
+<pre><code class="r">segments &lt;- cut(ages, 5)
+table(segments)
+</code></pre>
+
+<pre><code>## segments
+##   (20,23.6] (23.6,27.2] (27.2,30.8] (30.8,34.4]   (34.4,38] 
+##           1          10           2           4           3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Applying functions to factors: cut</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li class='..'>or make equally abundant groups</li>
+</ul>
+
+<pre><code class="r">range &lt;- quantile(ages)
+segments &lt;- cut(ages, range)
+table(segments)
+</code></pre>
+
+<pre><code>## segments
+##   (20,25] (25,26.5] (26.5,33]   (33,38] 
+##         5         4         7         3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Learning objectives'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Lists'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Creating a list'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Working with lists'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Working with lists'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Accessing elements of a list'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Inserting things into a list'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title=''>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Deleting elements from a list'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Applying functions to a list'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Working with function output'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title=''>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title=''>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Data frame'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Creating a data frame'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Accessing columns of a dataframe'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Accessing rows of a dataframe'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Factors'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Oops! have to define the values a priori'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Define the values <em>a priori</em>'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Notice a difference?'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Applying functions to factors: split'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Applying functions to factors: cut'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Applying functions to factors: cut'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Applying functions to factors: cut'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Questions?'>
+         28
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

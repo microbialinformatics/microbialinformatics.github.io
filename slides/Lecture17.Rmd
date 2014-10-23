@@ -1,0 +1,287 @@
+---
+title       : Microbial Informatics
+subtitle    : Lecture 17
+date        : October 23, 2014
+author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
+job         : Department of Microbiology & Immunology
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      #
+widgets     : mathjax       # {mathjax, quiz, bootstrap}
+mode        : standalone    # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+
+---
+
+## Announcements
+* Project 1 is due today
+* Read ***The Art of R Programming*** (Chapters 6 and 7)
+
+```{r eval=TRUE, echo=FALSE}
+
+library(knitr)
+opts_chunk$set(tidy = TRUE)
+
+opts_chunk$set(hide = TRUE)
+opts_chunk$set(eval = FALSE)
+opts_chunk$set(cache = FALSE)
+par(mar=c(4,5,0.25, 0.25))
+```
+
+---
+
+## Review
+* How to design a small function from pseudocode
+* Additional details about vectors and matrices
+
+---
+
+## Learning objectives
+* Lists
+* Data frames
+* Factors
+
+---
+
+## Lists
+*	a data structure that can combine different data types (eg. numeric, vectors, strings, etc)
+* useful for returning complex data structures from functions
+* important for organizing data: imagine creating a list for each gene in a genome - gene name, coordinates, length, function, DNA sequence, translated sequence, a reference to experiments, etc...
+* Could have a vector of lists... or a data frame...
+
+---
+
+## Creating a list
+
+```{r, eval=TRUE, echo=TRUE}
+ps <- list(name=c("Pat", "Schloss"), position="Associate Professor", time.at.um=5)
+ps$name
+ps$position
+ps$time.at.um
+```
+
+---
+
+## Working with lists
+
+```{r, echo=TRUE, eval=TRUE}
+str(ps)
+length(ps)
+names(ps)
+```
+
+---
+
+## Working with lists
+
+```{r, echo=TRUE, eval=TRUE}
+unlist(ps)
+is.vector(unlist(ps))
+```
+
+---
+	
+##	Accessing elements of a list
+	
+```{r, echo=TRUE, eval=TRUE}	
+ps$position
+ps[["position"]]
+ps[[2]]
+ps[2]
+```
+
+---
+	
+## Inserting things into a list
+
+```{r, echo=TRUE, eval=TRUE}
+ps$kids.names <- c("mary", "patrick", "joe", "john", "ruth", "jacob", "peter")
+ps$kids[3]
+ps[[4]][3]
+ps$married <- TRUE
+```	
+
+---
+
+```{r, eval=TRUE, echo=TRUE}
+ps
+```
+
+---
+
+## Deleting elements from a list
+
+```{r, echo=TRUE, eval=TRUE}
+ps$position <- NULL
+ps
+```
+
+---
+
+##	Applying functions to a list	
+
+```{r, echo=TRUE, eval=TRUE}
+data <- list(x=1:10, y=100:110)
+lapply(data, median)	#returns a list
+sapply(data, median)	#returns a vector
+```
+
+---	
+
+## Working with function output
+
+```{r list_struct, echo=TRUE, eval=FALSE}
+x <- runif(100)
+y <- c(rep("red", 50), rep("blue", 50))
+
+t <- t.test(x~y)
+str(t)
+```
+
+---
+
+```{r list_struct, echo=FALSE, eval=TRUE}
+```
+
+---
+
+```{r, eval=TRUE}
+t$statistic
+t$parameter
+t$p.value
+t$estimate
+```
+
+---
+
+## Data frame
+- like a matrix, but each column can have a different mode
+-	We saw these in the first several classes when you were looking at the metadata file
+-	A data frame is really a multidimensional list
+
+---
+
+## Creating a data frame
+
+```{r, echo=TRUE, eval=TRUE}
+name <- c("Schloss", "Young" , "Mobley", "SwansonJ")
+rank <- c("Asst", "Assoc", "Chair", "Full")
+cool <- c(10, 1, 9, 8)
+directory <- data.frame(name, rank, cool)
+directory
+```
+
+---
+
+## Accessing columns of a dataframe
+
+```{r, echo=TRUE, eval=TRUE}
+directory[,1]
+directory[,"name"]
+```
+
+---
+
+## Accessing rows of a dataframe
+
+```{r, echo=TRUE, eval=TRUE}
+directory[1,]
+directory[directory$name=="Schloss",]
+rownames(directory) <- directory$name
+directory["Schloss",]
+```
+
+---
+
+## Factors
+*	Vector that can contain only predefined values and is used to store categorical data.	
+
+```{r, eval=TRUE, echo=TRUE}
+x <- factor(c("a", "b", "b", "c", "d"))
+x
+str(x)
+levels(x)
+```
+
+---
+
+## Oops! have to define the values a priori
+
+```{r, echo=TRUE, eval=TRUE}
+x[2] <- "e"
+x
+```
+
+---
+
+## Define the values *a priori*
+
+```{r, eval=TRUE, echo=TRUE}
+x <- factor(c("a", "b", "b", "c", "d"), levels=c("a", "b", "c", "d", "e"))
+x
+levels(x)
+table(x)
+```
+
+---
+
+## Notice a difference?
+
+```{r, eval=TRUE, echo=TRUE}
+x <- factor(c("a", "b", "b", "c", "d"), levels=c("a", "e", "b", "c", "d"))
+x
+levels(x)
+table(x)
+```
+
+---
+	
+##	Applying functions to factors: split
+* splits a vector into groups
+
+```{r, echo=TRUE, eval=TRUE}
+set.seed(2)
+ages <- sample(20:40, 20, replace=TRUE)
+gender <- factor(sample(c("Female", "Male"), 20, replace=TRUE))
+pol <- factor(sample(c("D", "R", "I"), 20, replace=TRUE))
+split(ages, gender)
+```
+
+---
+
+##	Applying functions to factors: cut
+
+* generate factors based on pre-defined bins
+	
+```{r, echo=TRUE, eval=TRUE}
+range <- seq(20,40,5)
+segments <- cut(ages, range)	#(20,30]: 20 < x <= 30
+table(segments)
+```
+
+---
+
+##	Applying functions to factors: cut
+
+* ... or let cut figure out the breaks for you
+
+```{r, echo=TRUE, eval=TRUE}
+segments <- cut(ages, 5)
+table(segments)
+```
+
+---
+
+##	Applying functions to factors: cut
+
+* ... or make equally abundant groups
+
+```{r, echo=TRUE, eval=TRUE}
+range <- quantile(ages)
+segments <- cut(ages, range)
+table(segments)
+```
+
+--- .segue .dark
+
+## Questions?
