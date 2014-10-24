@@ -30,7 +30,7 @@ The course is offered in the fall of even years.
 ----
 
 ### Assignments
-The following links go to github repositories that have the homework assignments:
+The following links go to github repositories that have the homework assignments. Homeworks account for 50% of the grade:
 
 * [Assignment 01](https://github.com/microbialinformatics/assignment01): Exploring github and markdown (Due 9/12/2014)
 * [Assignment 02](https://github.com/microbialinformatics/assignment02): Manipulating data structures in R (Due 9/26/2014)
@@ -41,7 +41,7 @@ The following links go to github repositories that have the homework assignments
 ----
 
 ### Projects
-The following links go to github repositories that have the two projects for the course:
+The following links go to github repositories that have the two projects for the course. Each project accounts for 25% of the grade:
 
 * [Project 01](https://github.com/microbialinformatics/project1): Data analysis (Due 10/24/2014)
 
