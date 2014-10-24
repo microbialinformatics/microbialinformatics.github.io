@@ -43,7 +43,7 @@ The following links go to github repositories that have the homework assignments
 ### Projects
 The following links go to github repositories that have the two projects for the course:
 
-* [Assignment 01](https://github.com/microbialinformatics/assignment01): Exploring github and markdown (Due 9/12/2014)
+* [Project 01](https://github.com/microbialinformatics/project01): Data analysis (Due 10/24/2014)
 
 ----
 
