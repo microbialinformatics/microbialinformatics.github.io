@@ -16,7 +16,7 @@ knit        : slidify::knit2slides
 ## Announcements
 * Homework is due Friday
 * We will not be meeting on Friday
-* Read ***The Art of R Programming*** (Chapters 6 and 7)
+* Read ***The Art of R Programming*** (Chapter 7)
 
 
 
