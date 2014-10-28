@@ -81,8 +81,8 @@ Class	|	Date	|	Topic	|	Reading
 	|	10/21	|	Pat traveling |
 17  |   10/23   |   [Data structures: lists, data frames, and factors (29 slides)](slides/Lecture17)	|	TAoRP 4, 5, 6
 	|	10/24	|	Computer lab	|
-18	|	10/28	|	Control statements	|	TAoRP 7
-19	|	10/30	| Loops
+18	|	10/28	|	[Control statements (28 slides)](slides/Lecture18)	|	TAoRP 7
+19	|	10/30	|   Vectorizing | TAoRP 7
 	|	10/31	|	Computer lab	|
 20	|	11/4	|	Input and output	|	TAoRP 10
 21	|	11/6	|	String manipulation I	|	TAoRP 11
