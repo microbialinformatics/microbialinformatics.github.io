@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 18</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Homework is due Friday</li>
+<li>We will not be meeting on Friday</li>
+<li>Read <strong><em>The Art of R Programming</em></strong> (Chapters 6 and 7)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Lists</li>
+<li>Data frames</li>
+<li>Factors</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Understand how to direct flow through a program using loops and conditionals</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Control statements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Much of what we&#39;ve been doing so far follows a very linear path.  &quot;Do this,
+then that, and then do this.&quot;  In more complicated programs, you will want<br>
+the program to have some intelligence and make decisions.  That is where
+control statements come in to play.</li>
+<li>  Today we&#39;ll discuss two forms of control statements:
+
+<ul>
+<li>loops</li>
+<li>conditionals</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Loops</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  Recall that many things can be vectorized within R.  So while you could 
+write a loop to calcualte the square root of every number between 1 and 100,
+it&#39;s far more efficient to create a vector and run sqrt on the vector.</li>
+<li>There are a set of &quot;apply&quot; functions that we&#39;ll cover later that largely allow
+us to eliminate the need for explicit loops<br></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2><code>for</code> loops over a range of variables...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">for(i in 1:10){
+#   do something clever
+}
+</code></pre>
+
+<ul>
+<li>This is essentially saying we&#39;ll do something with i=1, then repeat it with i=2, ... i=10.  Then we&#39;ll stop.</li>
+<li><em>i</em> is called an index varaible and can be a number or string.  the numbers need not be sequential think of indexing over different start codon positions in a genome or indexing over all possible codons</li>
+<li>Recall that <code>1:10</code> is a vector</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2><code>for</code> loops over a vector...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x &lt;- seq(2,100,2)
+for(i in x){
+#   do something clever...
+}
+</code></pre>
+
+<p>or</p>
+
+<pre><code class="r">x &lt;- c(&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;)
+for(i in x){
+#   do something clever...
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>What if you want to count down?</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">for(i in 10:1){
+    i
+}
+print(&quot;blast off!&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;blast off!&quot;
+</code></pre>
+
+<p>Hmmm. What went wrong?</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>What if you want to count down?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Within a loop (or any function) you have to explicitly tell R to output the value of a variable</p>
+
+<pre><code class="r">for(i in 10:1){
+    print(i)
+}
+print(&quot;blast off!&quot;)
+</code></pre>
+
+<pre><code>## [1] 10
+## [1] 9
+## [1] 8
+## [1] 7
+## [1] 6
+## [1] 5
+## [1] 4
+## [1] 3
+## [1] 2
+## [1] 1
+## [1] &quot;blast off!&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>What if we want to save each step to a vector?</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">for(i in 1:10){
+    squares[i] &lt;- i^2
+}
+</code></pre>
+
+<pre><code>## Error in squares[i] &lt;- i^2: object &#39;squares&#39; not found
+</code></pre>
+
+<pre><code class="r">squares
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;squares&#39; not found
+</code></pre>
+
+<p>What&#39;s wrong?</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>What if we want to save each step to a vector?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Have to create vector before starting loop:</p>
+
+<pre><code class="r">squares &lt;- vector()
+for(i in 1:10){
+    squares[i] &lt;- i^2
+}
+squares
+</code></pre>
+
+<pre><code>##  [1]   1   4   9  16  25  36  49  64  81 100
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>A better practice</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Have to create vector before starting loop:</p>
+
+<pre><code class="r">squares &lt;- rep(NA, 10)
+#squares &lt;- rep(0, 10)
+for(i in 1:9){
+    squares[i] &lt;- i^2
+}
+squares
+</code></pre>
+
+<pre><code>##  [1]  1  4  9 16 25 36 49 64 81 NA
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Can you spot the difference?</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">    x&lt;-c(5,12,13)
+    for(i in x) {   print(x^2)  }
+    for(i in x) {   print(i^2)  }
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Can you spot the difference?</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">    x&lt;-c(5,12,13)
+    for(i in x) {   print(x^2)  }
+</code></pre>
+
+<pre><code>## [1]  25 144 169
+## [1]  25 144 169
+## [1]  25 144 169
+</code></pre>
+
+<pre><code class="r">    for(i in x) {   print(i^2)  }
+</code></pre>
+
+<pre><code>## [1] 25
+## [1] 144
+## [1] 169
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2><code>while</code> loops...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">i&lt;-1
+while(i &lt;= 10){
+    print(i)
+}
+</code></pre>
+
+<p>Notice anything wrong with this statement?</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2><code>while</code> loops</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>You have to modify the index within the loop because <code>i</code> will always be less than or equal to 10:</p>
+
+<pre><code class="r">i&lt;-1
+while(i &lt;= 10){
+    i&lt;-i+3
+    print(i)
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2><code>break</code>-ing while loops</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The <code>break</code> command breaks you out of the current loop</li>
+<li>Can be used with <code>for</code> and <code>repeat</code> loops</li>
+</ul>
+
+<pre><code class="r">x&lt;-0;
+while(TRUE){
+  x&lt;-rnorm(1);
+  print(x)
+  if(x&lt;0){  break   }
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2><code>repeat</code> loops...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x&lt;-0;
+repeat {
+  x&lt;-rnorm(1);
+  print(x)
+  if(x&lt;0){  break   }
+}
+</code></pre>
+
+<pre><code>## [1] 1.258434
+## [1] 0.1496421
+## [1] -0.6827691
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2><code>next</code>...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>the next command allows us to skip the remainder of the iteration and return
+to the top of the loop block...</li>
+</ul>
+
+<div style='float:left;width:48%;' class='left'>
+  <pre><code class="r">counter &lt;- 0
+while(counter &lt; 10){
+    x&lt;-rnorm(1);
+    if(x&lt;0){    next    }
+    print(x)
+    counter &lt;- counter+1
+}
+</code></pre>
+
+</div>
+<div style='float:right;width:48%;'>
+  <pre><code>## [1] 0.3141362
+## [1] 0.4966642
+## [1] 0.9285402
+## [1] 2.262056
+## [1] 0.3757543
+## [1] 1.150501
+## [1] 0.09672476
+## [1] 1.104058
+## [1] 1.085318
+## [1] 0.5036225
+</code></pre>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Why should you avoid loops?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  R objects are immutable / unchangeable.</li>
+<li>To assign a value to a variable, R operations reassign values to given objects</li>
+<li>To do this they have to come up with new space in RAM to store information</li>
+<li>  Recall the following...</li>
+</ul>
+
+<pre><code class="r">    squared[i] &lt;- i^2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Looking under the hood...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  The <code>i^2</code> clearly costs some unit of time, but look at the &quot;squared[i] &lt;-&quot; part.</li>
+<li>Each cycle through the loop is doing this</li>
+</ul>
+
+<pre><code class="r">    squared &lt;- &quot;[&lt;-&quot;(squared,i,value=i^2)
+</code></pre>
+
+<ul>
+<li>The <code>&lt;-</code> part is a function!</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>In this statement...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  A copy of <code>squared</code> is being made, element <code>i</code> is changed to <code>i^2</code>
+and the resulting vector is reassigned to <code>squared</code>.  The end result is to
+re-assign the entire vector because you changed one value.</li>
+<li>When you vectorize an operation you are really removing a number of these steps. Consider this:</li>
+</ul>
+
+<pre><code class="r">squared &lt;- (1:10)^2
+</code></pre>
+
+<ul>
+<li>There is only one assignment operation</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Conditionals</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  We&#39;ve already seen conditionals throughout the course when we filtered the <code>metadata</code> table</li>
+<li>Sometimes we&#39;d like to have a program bifurcate at a given step based on user input or the behavior of the data.</li>
+<li>For example, if a start and stop codon are less than 300 bp apart, then we&#39;ll ignore it. Otherwise, let&#39;s translate it to amino acids</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2><code>ifelse</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Familiar with <code>ifelse</code> from Excel? It&#39;s the same in R...</li>
+</ul>
+
+<pre><code class="r">ifelse(LOGICALTEST, Do this if TRUE, Do this if FALSE)
+</code></pre>
+
+<ul>
+<li>An example:</li>
+</ul>
+
+<pre><code class="r">x &lt;- seq(1, 100, 5)
+ifelse(x&gt;40, &quot;old&quot;, &quot;young&quot;)
+</code></pre>
+
+<pre><code>##  [1] &quot;young&quot; &quot;young&quot; &quot;young&quot; &quot;young&quot; &quot;young&quot; &quot;young&quot; &quot;young&quot; &quot;young&quot;
+##  [9] &quot;old&quot;   &quot;old&quot;   &quot;old&quot;   &quot;old&quot;   &quot;old&quot;   &quot;old&quot;   &quot;old&quot;   &quot;old&quot;  
+## [17] &quot;old&quot;   &quot;old&quot;   &quot;old&quot;   &quot;old&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Building longer and longer ifelse statements can be tedious...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">x &lt;- seq(1, 100, 5)
+ifelse(x&lt;10, &quot;kid&quot;, ifelse(x&lt;20, &quot;adolscent&quot;, &quot;adult&quot;))
+</code></pre>
+
+<pre><code>##  [1] &quot;kid&quot;       &quot;kid&quot;       &quot;adolscent&quot; &quot;adolscent&quot; &quot;adult&quot;    
+##  [6] &quot;adult&quot;     &quot;adult&quot;     &quot;adult&quot;     &quot;adult&quot;     &quot;adult&quot;    
+## [11] &quot;adult&quot;     &quot;adult&quot;     &quot;adult&quot;     &quot;adult&quot;     &quot;adult&quot;    
+## [16] &quot;adult&quot;     &quot;adult&quot;     &quot;adult&quot;     &quot;adult&quot;     &quot;adult&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Alternatively: <code>if... else if...else</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">for(age in x){
+        if(age &lt; 10){       #age has to be an atomic varaible
+            print(&quot;kid&quot;)
+        } else if(age&lt;20) {
+            print(&quot;adolescent&quot;)
+        } else {
+            print(&quot;ancient&quot;)
+        }
+    }
+</code></pre>
+
+<pre><code>## [1] &quot;kid&quot;
+## [1] &quot;kid&quot;
+## [1] &quot;adolescent&quot;
+## [1] &quot;adolescent&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+## [1] &quot;ancient&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Learning objectives'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Control statements'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Loops'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='<code>for</code> loops over a range of variables...'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='<code>for</code> loops over a vector...'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='What if you want to count down?'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='What if you want to count down?'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='What if we want to save each step to a vector?'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='What if we want to save each step to a vector?'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='A better practice'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Can you spot the difference?'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Can you spot the difference?'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='<code>while</code> loops...'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='<code>while</code> loops'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='<code>break</code>-ing while loops'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='<code>repeat</code> loops...'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='<code>next</code>...'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Why should you avoid loops?'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Looking under the hood...'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='In this statement...'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Conditionals'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='<code>ifelse</code>'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Building longer and longer ifelse statements can be tedious...'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Alternatively: <code>if... else if...else</code>'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Questions?'>
+         27
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
