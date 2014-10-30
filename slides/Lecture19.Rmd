@@ -1,0 +1,275 @@
+---
+title       : Microbial Informatics
+subtitle    : Lecture 19
+date        : October 30, 2014
+author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
+job         : Department of Microbiology & Immunology
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      #
+widgets     : mathjax       # {mathjax, quiz, bootstrap}
+mode        : standalone    # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+
+---
+
+## Announcements
+* Homework is due Friday
+ - Note: for histogram problem, you should have the word names on the x-axis and their frequency in the y-axis (`hist` will not work...)
+* We will not be meeting on Friday
+
+```{r eval=TRUE, echo=FALSE}
+
+library(knitr)
+opts_chunk$set(tidy = TRUE)
+
+opts_chunk$set(hide = TRUE)
+opts_chunk$set(eval = FALSE)
+opts_chunk$set(cache = FALSE)
+par(mar=c(4,5,0.25, 0.25))
+```
+
+---
+
+## Review
+* Loops: `for`, `while`, `repeat` loops
+* Loops are slow in R beacuase variables are copied, destroyed, and recreated each time a vector is modified
+* Conditionals: `ifelse` and `if...else if...else`
+
+---
+
+## Learning objectives
+
+* Be able to vectorize loops in R and see the improved speed
+* Understand when to use Various flavors of apply
+  - `apply`
+  - `lapply`
+  - `sapply`
+  - `mapply`
+  - `vapply`
+  - `replicate`
+
+---
+
+## Simple vectorization
+
+```{r, echo=TRUE, eval=TRUE, results='hold'}
+z <- sum(1:10)
+
+my.sum <- function(x){
+	sum <- 0
+	for(i in x){
+		sum <- sum+i
+	}
+  return(sum)	
+}
+
+my.z <- my.sum(1:10)
+
+z == my.z
+```
+
+---
+
+## `apply`
+
+* As we've seen before if we have a **matrix**, we can't easily perform functions on the rows...
+
+```{r, eval=TRUE, echo=TRUE}
+my.matrix <- matrix(runif(100), nrow=25, ncol=4)
+mean(my.matrix)
+```
+
+* How do we get out the mean for each column?
+
+---
+
+## `apply`
+
+* For the columns...
+```{r, eval=TRUE, echo=TRUE}
+apply(my.matrix, 2, sum)
+```
+
+* For the rows...
+```{r, eval=TRUE, echo=TRUE}
+apply(my.matrix, 1, sum)
+```
+
+---
+
+## Something more complex...
+
+* What if we want the sum of each column where each value is raised to some arbitrary power?
+
+```{r}
+power <- function(x, pow=2){
+	value <- sum(x^pow)
+	return(value)
+}
+```
+
+* We could just loop across the columns and apply our `power` function:
+
+```{r}
+sum.pow <- rep(0, ncol(my.matrix))
+for(c in 1:ncol(my.matrix)){
+	sum.pow[c] <- power(my.matrix[,c], 3)
+}
+sum.pow
+```
+
+---
+
+## Let's try the apply function...
+
+```{r}
+apply(my.matrix, 2, power)
+```
+
+* and a user defined power (`pow=3`)?
+
+```{r, results='hold'}
+apply(my.matrix, 2, power, pow=3)
+```
+
+---
+
+## What's going on?
+
+* “Returns a vector or array or list of values obtained by applying a function to margins of an array or matrix.”
+* `apply` extracts the rows/columns, converts them to a vector
+* The function is applied
+* Output generated
+* Again, the benefit is seen with larger datasets and more complex functions
+* Remember that `apply` uses a matrix as input
+
+---
+
+## What if you want to use a list as your input?
+
+```{r}
+my.list <- list(popA = runif(20), popB = runif(40), popC = runif(25))
+my.list
+```
+
+---
+
+## Now I want to apply my `power` function to the elements in the list
+
+```{r}
+power(my.list)
+```
+
+* Ooops!
+
+---
+
+## `lapply` 
+
+* “`lapply` returns a list of the same length as X, each element of which is the result of applying FUN to the corresponding element of X.”
+* Give list (or vector) and `lapply` will perform the function over the elements within the list.
+
+```{r}
+lapply(my.list, power)
+```
+
+* Note that it returns a list.
+
+---
+
+## `sapply` 
+
+* "`sapply` is a user-friendly version of lapply by default returning a vector or matrix if appropriate"
+* If your output has the same length you can use the `sapply` option and you will get a vector as output
+
+```{r}
+sapply(my.list, power)
+```
+
+* Remember that you can give it a vector as well
+
+---
+
+## `vapply` 
+
+* “`vapply` is similar to sapply, but has a pre-specified type of return value, so it can be safer (and sometimes faster) to use.”
+* The syntax is a bit different: `vapply(X, FUN, FUN.VALUE, ...)` where `FUN.VALUE` is a vector with the name of the output from the function and its initial value
+
+```{r}
+vapply(my.list, power, c(value=0))
+```
+
+---
+
+## `mapply`
+
+* What if you have two vectors that you want to feed to a function?
+* Say I want to raise each value to the power of it's position in the vector
+* "`mapply` is a multivariate version of sapply. mapply applies FUN to the first elements of each (…) argument, the second elements, the third elements, and so on"
+
+```{r}
+my.vector <- runif(10)
+my.powers <- 1:10
+mapply(power, x=my.vector, pow=my.powers)
+```
+
+* Note that the function goes first and then the two vectors
+
+---
+
+## `replicate`
+
+* Already saw this with the X^2 distribution homework problem...
+
+```{r}
+chi.sq <- function(k){
+	rand.chisq <- sum(rnorm(k)^2)
+	return(rand.chisq)
+}
+
+values <- replicate(1000, chi.sq(k=3))
+head(values)
+```
+
+* Note that you need an actual function call for the second replicate arguement.
+
+---
+
+## Here's a problem...
+
+* We have a table of relative abundances...
+
+```{r}
+relabund <- matrix(rep(runif(20000)), ncol=20, nrow=100)
+relabund[5,] <- c(runif(10,0,0.4), runif(10, 0.3,0.7))
+colnames(relabund) <- c(paste0("Lean", 1:10), paste0("Obese", 1:10))
+rownames(relabund) <- paste0("Species", 1:100)
+treatments <- c(rep("lean", 10), rep("obese", 10))
+
+head(relabund)
+```
+
+---
+
+## Here's a problem...
+
+* Perform a wilcoxon test on each Species differentiating between lean and obese individuals
+
+```{r, echo=FALSE}
+test <- function(x, design){
+	p <- wilcox.test(x~design)$p.value
+	return(p)
+}
+
+p.values <- apply(relabund, 1, test, design=treatments)
+padj.values <- p.adjust(p.values)
+```
+* Write R code, without the use of `for` loops that produces the following output:
+  * `r rownames(relabund)[padj.values<0.05]` was significantly different between the two groups
+  * In this statement, the "`r rownames(relabund)[padj.values<0.05]`" should be produced by r code
+  * Be sure to correct for multiple comparisons!
+
+--- .segue .dark
+
+## Questions?

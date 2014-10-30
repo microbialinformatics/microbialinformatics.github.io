@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 19</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Homework is due Friday
+
+<ul>
+<li>Note: for histogram problem, you should have the word names on the x-axis and their frequency in the y-axis (<code>hist</code> will not work...)</li>
+</ul></li>
+<li>We will not be meeting on Friday</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Loops: <code>for</code>, <code>while</code>, <code>repeat</code> loops</li>
+<li>Loops are slow in R beacuase variables are copied, destroyed, and recreated each time a vector is modified</li>
+<li>Conditionals: <code>ifelse</code> and <code>if...else if...else</code></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Be able to vectorize loops in R and see the improved speed</li>
+<li>Understand when to use Various flavors of apply
+
+<ul>
+<li><code>apply</code></li>
+<li><code>lapply</code></li>
+<li><code>sapply</code></li>
+<li><code>mapply</code></li>
+<li><code>vapply</code></li>
+<li><code>replicate</code></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Simple vectorization</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">z &lt;- sum(1:10)
+
+my.sum &lt;- function(x){
+    sum &lt;- 0
+    for(i in x){
+        sum &lt;- sum+i
+    }
+  return(sum)   
+}
+
+my.z &lt;- my.sum(1:10)
+
+z == my.z
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2><code>apply</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>As we&#39;ve seen before if we have a <strong>matrix</strong>, we can&#39;t easily perform functions on the rows...</li>
+</ul>
+
+<pre><code class="r">my.matrix &lt;- matrix(runif(100), nrow=25, ncol=4)
+mean(my.matrix)
+</code></pre>
+
+<pre><code>## [1] 0.4569663
+</code></pre>
+
+<ul>
+<li>How do we get out the mean for each column?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2><code>apply</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>For the columns...</li>
+</ul>
+
+<pre><code class="r">apply(my.matrix, 2, sum)
+</code></pre>
+
+<pre><code>## [1] 11.03565 12.39229 10.82431 11.44439
+</code></pre>
+
+<ul>
+<li>For the rows...</li>
+</ul>
+
+<pre><code class="r">apply(my.matrix, 1, sum)
+</code></pre>
+
+<pre><code>##  [1] 2.6943111 2.0101876 2.9360609 1.2017400 2.0563487 1.8594455 1.0698792
+##  [8] 2.2443721 1.7925920 1.5564715 2.3986392 0.6921058 0.9243032 2.4423091
+## [15] 2.1361687 2.2463989 1.2584018 1.1983626 1.9852243 2.2287206 2.0006690
+## [22] 2.3374191 1.6519987 1.3962797 1.3782208
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Something more complex...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>What if we want the sum of each column where each value is raised to some arbitrary power?</li>
+</ul>
+
+<pre><code class="r">power &lt;- function(x, pow=2){
+    value &lt;- sum(x^pow)
+    return(value)
+}
+</code></pre>
+
+<ul>
+<li>We could just loop across the columns and apply our <code>power</code> function:</li>
+</ul>
+
+<pre><code class="r">sum.pow &lt;- rep(0, ncol(my.matrix))
+for(c in 1:ncol(my.matrix)){
+    sum.pow[c] &lt;- power(my.matrix[,c], 3)
+}
+sum.pow
+</code></pre>
+
+<pre><code>## [1] 6.165161 5.160410 5.221504 5.517061
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s try the apply function...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">apply(my.matrix, 2, power)
+</code></pre>
+
+<pre><code>## [1] 7.636707 7.586525 7.010534 7.436073
+</code></pre>
+
+<ul>
+<li>and a user defined power (<code>pow=3</code>)?</li>
+</ul>
+
+<pre><code class="r">apply(my.matrix, 2, power, pow=3)
+</code></pre>
+
+<pre><code>## [1] 6.165161 5.160410 5.221504 5.517061
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>What&#39;s going on?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>“Returns a vector or array or list of values obtained by applying a function to margins of an array or matrix.”</li>
+<li><code>apply</code> extracts the rows/columns, converts them to a vector</li>
+<li>The function is applied</li>
+<li>Output generated</li>
+<li>Again, the benefit is seen with larger datasets and more complex functions</li>
+<li>Remember that <code>apply</code> uses a matrix as input</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>What if you want to use a list as your input?</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">my.list &lt;- list(popA = runif(20), popB = runif(40), popC = runif(25))
+my.list
+</code></pre>
+
+<pre><code>## $popA
+##  [1] 0.789888926 0.732228612 0.593445162 0.458747080 0.294085842
+##  [6] 0.107231901 0.629430934 0.178869322 0.314758766 0.782433687
+## [11] 0.310015731 0.423296753 0.230681855 0.808566388 0.126439277
+## [16] 0.006074851 0.049667654 0.576524630 0.404983133 0.595498108
+## 
+## $popB
+##  [1] 0.65757852 0.88621404 0.65655682 0.49551514 0.26531379 0.71324740
+##  [7] 0.98365988 0.26544527 0.88064996 0.05184048 0.71307293 0.15256234
+## [13] 0.39815559 0.43867842 0.63324371 0.63029916 0.50362772 0.64338183
+## [19] 0.92875425 0.73931652 0.19609726 0.13118313 0.82240801 0.27533289
+## [25] 0.09853017 0.07492592 0.82060901 0.15400064 0.70062609 0.09482273
+## [31] 0.18038604 0.10514004 0.65993975 0.07324145 0.22970452 0.88344762
+## [37] 0.97923670 0.48778723 0.44308235 0.32717377
+## 
+## $popC
+##  [1] 0.28673732 0.90222068 0.42826622 0.73754070 0.86552149 0.90414823
+##  [7] 0.75340600 0.40306787 0.05688030 0.21527692 0.83641013 0.26666650
+## [13] 0.20038611 0.30979278 0.98551179 0.19881024 0.39904960 0.17845245
+## [19] 0.27976597 0.39437142 0.09518894 0.51354819 0.73536761 0.53127758
+## [25] 0.06071723
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Now I want to apply my <code>power</code> function to the elements in the list</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">power(my.list)
+</code></pre>
+
+<pre><code>## Error in x^pow: non-numeric argument to binary operator
+</code></pre>
+
+<ul>
+<li>Ooops!</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2><code>lapply</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>“<code>lapply</code> returns a list of the same length as X, each element of which is the result of applying FUN to the corresponding element of X.”</li>
+<li>Give list (or vector) and <code>lapply</code> will perform the function over the elements within the list.</li>
+</ul>
+
+<pre><code class="r">lapply(my.list, power)
+</code></pre>
+
+<pre><code>## $popA
+## [1] 4.811932
+## 
+## $popB
+## [1] 12.88558
+## 
+## $popC
+## [1] 7.411836
+</code></pre>
+
+<ul>
+<li>Note that it returns a list.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2><code>sapply</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>&quot;<code>sapply</code> is a user-friendly version of lapply by default returning a vector or matrix if appropriate&quot;</li>
+<li>If your output has the same length you can use the <code>sapply</code> option and you will get a vector as output</li>
+</ul>
+
+<pre><code class="r">sapply(my.list, power)
+</code></pre>
+
+<pre><code>##      popA      popB      popC 
+##  4.811932 12.885584  7.411836
+</code></pre>
+
+<ul>
+<li>Remember that you can give it a vector as well</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2><code>vapply</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>“<code>vapply</code> is similar to sapply, but has a pre-specified type of return value, so it can be safer (and sometimes faster) to use.”</li>
+<li>The syntax is a bit different: <code>vapply(X, FUN, FUN.VALUE, ...)</code> where <code>FUN.VALUE</code> is a vector with the name of the output from the function and its initial value</li>
+</ul>
+
+<pre><code class="r">vapply(my.list, power, c(value=0))
+</code></pre>
+
+<pre><code>##      popA      popB      popC 
+##  4.811932 12.885584  7.411836
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2><code>mapply</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>What if you have two vectors that you want to feed to a function?</li>
+<li>Say I want to raise each value to the power of it&#39;s position in the vector</li>
+<li>&quot;<code>mapply</code> is a multivariate version of sapply. mapply applies FUN to the first elements of each (…) argument, the second elements, the third elements, and so on&quot;</li>
+</ul>
+
+<pre><code class="r">my.vector &lt;- runif(10)
+my.powers &lt;- 1:10
+mapply(power, x=my.vector, pow=my.powers)
+</code></pre>
+
+<pre><code>##  [1] 4.171556e-01 7.897012e-01 4.681264e-01 6.333021e-01 8.812617e-01
+##  [6] 1.022080e-04 1.656555e-04 3.573678e-07 4.372390e-03 5.555364e-04
+</code></pre>
+
+<ul>
+<li>Note that the function goes first and then the two vectors</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2><code>replicate</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Already saw this with the X<sup>2</sup> distribution homework problem...</li>
+</ul>
+
+<pre><code class="r">chi.sq &lt;- function(k){
+    rand.chisq &lt;- sum(rnorm(k)^2)
+    return(rand.chisq)
+}
+
+values &lt;- replicate(1000, chi.sq(k=3))
+head(values)
+</code></pre>
+
+<pre><code>## [1] 4.465741 4.659456 2.113572 4.509903 4.487471 2.440302
+</code></pre>
+
+<ul>
+<li>Note that you need an actual function call for the second replicate arguement.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Here&#39;s a problem...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>We have a table of relative abundances...</li>
+</ul>
+
+<pre><code class="r">relabund &lt;- matrix(rep(runif(20000)), ncol=20, nrow=100)
+relabund[5,] &lt;- c(runif(10,0,0.4), runif(10, 0.3,0.7))
+colnames(relabund) &lt;- c(paste0(&quot;Lean&quot;, 1:10), paste0(&quot;Obese&quot;, 1:10))
+rownames(relabund) &lt;- paste0(&quot;Species&quot;, 1:100)
+treatments &lt;- c(rep(&quot;lean&quot;, 10), rep(&quot;obese&quot;, 10))
+
+head(relabund)
+</code></pre>
+
+<pre><code>##               Lean1     Lean2     Lean3     Lean4      Lean5      Lean6
+## Species1 0.45992030 0.1428930 0.4322384 0.3729109 0.05659417 0.06476572
+## Species2 0.03645101 0.5725126 0.9252554 0.6107523 0.11545734 0.11449512
+## Species3 0.77170892 0.6552959 0.8607983 0.4644144 0.33418951 0.44612894
+## Species4 0.75570539 0.7634057 0.1559501 0.5506424 0.69429557 0.84163000
+## Species5 0.32899703 0.3241863 0.1874539 0.2455034 0.25689773 0.36368362
+## Species6 0.47711036 0.5511257 0.6855532 0.5031633 0.06045581 0.39569183
+##              Lean7     Lean8     Lean9    Lean10     Obese1    Obese2
+## Species1 0.6779481 0.5738132 0.8175298 0.8428322 0.65944885 0.4919339
+## Species2 0.1648704 0.7982613 0.2866036 0.7992521 0.04250725 0.6212290
+## Species3 0.8140707 0.3656166 0.1883101 0.7702504 0.30776358 0.1351630
+## Species4 0.5965393 0.3391652 0.8025482 0.2769966 0.49466093 0.2824831
+## Species5 0.1236927 0.3888515 0.3009191 0.1555885 0.39248920 0.4272460
+## Species6 0.1396910 0.2977878 0.7089633 0.7007966 0.94012800 0.6098367
+##              Obese3    Obese4    Obese5    Obese6     Obese7     Obese8
+## Species1 0.42922560 0.7522052 0.2156365 0.7145572 0.81468404 0.17986371
+## Species2 0.03288946 0.3474433 0.4942115 0.8332294 0.55526575 0.04792325
+## Species3 0.39247333 0.5468630 0.2921891 0.5850028 0.68829769 0.22548501
+## Species4 0.74335846 0.9107194 0.6471540 0.6923879 0.47329088 0.28037523
+## Species5 0.34735529 0.6330881 0.3266993 0.5208572 0.65454003 0.57744110
+## Species6 0.94926348 0.1203434 0.8804260 0.1353925 0.03820587 0.60905916
+##              Obese9   Obese10
+## Species1 0.58361216 0.3560410
+## Species2 0.60881250 0.9367382
+## Species3 0.27749078 0.5503687
+## Species4 0.09470825 0.8734746
+## Species5 0.60896504 0.5688232
+## Species6 0.35554762 0.6061802
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Here&#39;s a problem...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Perform a wilcoxon test on each Species differentiating between lean and obese individuals</p></li>
+<li><p>Write R code, without the use of <code>for</code> loops that produces the following output:</p>
+
+<ul>
+<li>Species5 was significantly different between the two groups</li>
+<li>In this statement, the &quot;Species5&quot; should be produced by r code</li>
+<li>Be sure to correct for multiple comparisons!</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Learning objectives'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Simple vectorization'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='<code>apply</code>'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='<code>apply</code>'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Something more complex...'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Let&#39;s try the apply function...'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='What&#39;s going on?'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='What if you want to use a list as your input?'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Now I want to apply my <code>power</code> function to the elements in the list'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='<code>lapply</code>'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='<code>sapply</code>'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='<code>vapply</code>'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='<code>mapply</code>'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='<code>replicate</code>'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Here&#39;s a problem...'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Here&#39;s a problem...'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Questions?'>
+         19
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
