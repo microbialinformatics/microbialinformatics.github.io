@@ -36,6 +36,7 @@ The following links go to github repositories that have the homework assignments
 * [Assignment 02](https://github.com/microbialinformatics/assignment02): Manipulating data structures in R (Due 9/26/2014)
 * [Assignment 03](https://github.com/microbialinformatics/assignment03): Plotting, randomness, and tabular data (Due 10/10/2014)
 * [Assignment 04](https://github.com/microbialinformatics/assignment04): Programming, functions, and data structures (Due 10/31/2014)
+* [Assignment 05](https://github.com/microbialinformatics/assignment05): Functions, simulation, reproducible research, collaboration (Due 11/22/2014)
 
 
 ----
