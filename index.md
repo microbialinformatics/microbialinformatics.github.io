@@ -85,7 +85,7 @@ Class	|	Date	|	Topic	|	Reading
 18	|	10/28	|	[Control statements (28 slides)](slides/Lecture18)	|	TAoRP 7
 19	|	10/30	|   [Vectorizing (20 slides)](slides/Lecture19) | TAoRP 7
 	|	10/31	|	Computer lab [no class]	|
-20	|	11/4	|	Input and output	|	TAoRP 10
+20	|	11/4	|	[Input and output (27 slides)](slides/Lecture20)	|	TAoRP 10
 21	|	11/6	|	String manipulation I	|	TAoRP 11
 	|	11/7	|	Computer lab	|
 22	|	11/11	|	String manipulation II	|	TAoRP 11
