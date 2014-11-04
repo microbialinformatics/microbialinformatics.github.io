@@ -1,0 +1,354 @@
+---
+title       : Microbial Informatics
+subtitle    : Lecture 20
+date        : November 4, 2014
+author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
+job         : Department of Microbiology & Immunology
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      #
+widgets     : mathjax       # {mathjax, quiz, bootstrap}
+mode        : standalone    # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+
+---
+
+## Announcements
+* A new homework has been posted and is due on November 22nd
+  * work with a partner
+  * no more than one explicit loop
+* Will have lab period on Friday
+
+```{r eval=TRUE, echo=FALSE}
+
+library(knitr)
+opts_chunk$set(tidy = TRUE)
+
+opts_chunk$set(hide = TRUE)
+opts_chunk$set(eval = FALSE)
+opts_chunk$set(cache = FALSE)
+par(mar=c(4,5,0.25, 0.25))
+```
+
+---
+
+## Review
+* Loops are slow in R beacuase variables are copied, destroyed, and recreated each time a vector is modified
+* the apply and replicate suite of commands allow you to minimize your use of explicit loops
+
+---
+
+## Here's a problem...
+
+* We have a table of relative abundances...
+
+```{r}
+relabund <- matrix(rep(runif(20000)), ncol=20, nrow=100)
+relabund[5,] <- c(runif(10,0,0.4), runif(10, 0.3,0.7))
+colnames(relabund) <- c(paste0("Lean", 1:10), paste0("Obese", 1:10))
+rownames(relabund) <- paste0("Species", 1:100)
+treatments <- c(rep("lean", 10), rep("obese", 10))
+
+head(relabund)
+```
+
+---
+
+## Here's a problem...
+
+* Perform a wilcoxon test on each Species differentiating between lean and obese individuals
+
+```{r, echo=FALSE}
+test <- function(x, design){
+	p <- wilcox.test(x~design)$p.value
+	return(p)
+}
+
+p.values <- apply(relabund, 1, test, design=treatments)
+padj.values <- p.adjust(p.values)
+```
+* Write R code, without the use of `for` loops that produces the following output:
+  * `r rownames(relabund)[padj.values<0.05]` was significantly different between the two groups
+  * In this statement, the "`r rownames(relabund)[padj.values<0.05]`" should be produced by r code
+  * Be sure to correct for multiple comparisons!
+
+---
+
+## Here's a problem...
+
+* Perform a wilcoxon test on each Species differentiating between lean and obese individuals
+
+```{r, echo=TRUE}
+test <- function(x, design){
+	p <- wilcox.test(x~design)$p.value
+	return(p)
+}
+
+p.values <- apply(relabund, 1, test, design=treatments)
+padj.values <- p.adjust(p.values)
+```
+
+---
+
+## Here's a problem...
+* Write R code, without the use of `for` loops that produces the following output:
+  * ``r rownames(relabund)[padj.values<0.05]`` was significantly different between the two groups
+  * `rownames(relabund)[padj.values<0.05]` was significantly different between the two groups
+  * In this statement, the "``r rownames(relabund)[padj.values<0.05]``" should be produced by r code
+  * In this statement, the "`rownames(relabund)[padj.values<0.05]`" should be produced by r code
+* Be sure to correct for multiple comparisons!
+
+
+---
+
+## Learning objectives
+
+* Understand how to get data in and out of R
+
+
+---
+
+## Integrating with other software
+
+* **Problem:** We typically have large datasets and need a way to get that
+information into the program.  Similarly, we generally have large
+amounts of output that we can't just send to the screen.
+			
+* **Solution:**	We have seen a number of functions already for reading in data and
+			in the very first homework you had a function to write out a table.
+			R has a number of solutions to do both
+
+---
+
+## `readline`: read a single line from the screen
+
+```
+	> readline()
+	ab de fg
+	[1] "ab de fg"
+	
+	> readline("enter your name: ")
+	Pat Schloss
+	 
+	> name <- readline("enter your name: ")
+	Pat Schloss
+	> name
+	[1] "Pat Schloss"
+```
+
+---
+
+## `scan`: reads in a vector from a file or keyboard
+
+* Imagine a file that contains:
+
+```
+	123
+	2 4 5
+	53
+```
+
+```{r}
+scan("file1.txt")
+```	
+	
+* Note that it reads it in as a numeric vector
+
+
+---
+	
+## `scan`: reads in a vector from a file or keyboard
+
+* Now imagine a file that contains:
+
+```
+	123
+	abcd
+	2 4 5
+	54
+```
+
+```{r}
+scan("file2.txt")
+```
+
+---
+
+## Try again...
+
+```{r}
+scan("file2.txt", what="")
+```
+
+* the default is to assume everything is a number
+
+---
+
+## Delimeters
+
+* scan reads things into a vector assuming that any white space separates
+	the vector values
+	
+```{r}
+scan("file2.txt", what="", sep="\n")
+```	
+
+---
+
+## Getting data from the keyboard
+
+```
+	> scan("")	#will read from the keyboard
+	
+	>scan("")
+	1:  12 5 2 3
+	5:  23 24
+	6:
+	Read 6 items
+	[1] 12  5  2  3 23 24
+```
+
+* Note that to stop reading data in you give it a blank line
+
+
+---
+
+## `read.table`
+* Reading in a table, every row has to have the same number of columns
+*	Imagine a file that contains:
+
+```
+name	age sex
+pat		36	M
+john	22	M
+susan	55	F
+```
+
+```{r}
+read.table("table.txt", header=TRUE)
+```
+
+---
+
+## `read.table`
+* We'd like to get row names for our table
+
+```{r}
+read.table("table.txt", header=TRUE, row.names=1)
+```
+
+*	note that these commands would not have worked with the scan function since it is a mixture of text and numbers
+* numerous other options for read.table including skipping rows, different delimeters, etc.
+
+---
+
+## You can read from the internet
+
+```{r, tidy=TRUE}
+data <- read.csv("http://archive.ics.uci.edu/ml/machine-learning-databases/echocardiogram/echocardiogram.data", header=F)
+head(data)
+```
+
+* Note that `read.csv` is a special version of `read.table` for reading data talbe sthat are separated by commas 
+
+---
+
+##	Reading in lines of files
+
+```{r, results='hold'}
+c <- file("file2.txt", open="r")
+readLines(c, n=1)
+readLines(c, n=1)
+readLines(c, n=1)
+readLines(c, n=1)
+readLines(c, n=1)
+```	
+
+---
+
+## Be sure to `close` the file when you're done!
+
+```{r, eval=FALSE}
+close(c)
+```
+
+---
+	
+## `print`
+
+* Writes to the screen
+
+```{r}
+x <- 1:3
+print(x^2)
+```
+
+* This is useful for outputting data from within functions if you are trying to debug your code
+
+---
+
+## `cat`
+
+* Write to the screen, must provide your own newline character
+
+```{r}
+cat(x, "abc", x^2)
+cat(x, "abc", x^2, "\n")
+```
+
+* Not all implementations of R include a newline character with the cat function, so including the `\n` is useful to just to be safe
+
+---
+
+## `write.table`: structured writing to a file
+
+```{r}
+head(data)
+colnames(data) <- LETTERS[1:ncol(data)]
+rownames(data) <- 1:nrow(data)
+write.table(file="ecg.data", data)
+```
+
+---
+
+## File output:
+
+```{r engine='bash'}
+head ecg.data
+```
+
+* Again, many options for altering how the output looks
+
+---
+
+## Unstructured writing to a file
+
+* `cat`:
+```{r}	
+	cat("abc\n", file="u")
+	cat("def\n", file="u", append=T)
+```
+
+* `write`:
+```{r}
+	write(x, file="filename", sep= " ")
+	write(x, file="filename", append=T, sep= "\t")
+	write(x, "")
+```
+
+* Note that the `append=T` prevents the file from being written over
+
+---
+
+##	Basic file operations
+
+* `file.info("data")`:	tells file size, creation time, etc
+* `dir()`:	gives the directory contents for the specified dir
+* `list.files()`:	same as dir()
+* `file.exists()`:	tells whether a file exists, duh.
+* `getwd()`:	tells you where you are in the file tree
+* `setwd()`:	allows you to change the current directory
+
+--- .segue .dark
+
+## Questions?

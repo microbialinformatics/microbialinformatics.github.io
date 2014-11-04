@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 20</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>A new homework has been posted and is due on November 22nd
+
+<ul>
+<li>work with a partner</li>
+<li>no more than one explicit loop</li>
+</ul></li>
+<li>Will have lab period on Friday</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Loops are slow in R beacuase variables are copied, destroyed, and recreated each time a vector is modified</li>
+<li>the apply and replicate suite of commands allow you to minimize your use of explicit loops</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Here&#39;s a problem...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>We have a table of relative abundances...</li>
+</ul>
+
+<pre><code class="r">relabund &lt;- matrix(rep(runif(20000)), ncol=20, nrow=100)
+relabund[5,] &lt;- c(runif(10,0,0.4), runif(10, 0.3,0.7))
+colnames(relabund) &lt;- c(paste0(&quot;Lean&quot;, 1:10), paste0(&quot;Obese&quot;, 1:10))
+rownames(relabund) &lt;- paste0(&quot;Species&quot;, 1:100)
+treatments &lt;- c(rep(&quot;lean&quot;, 10), rep(&quot;obese&quot;, 10))
+
+head(relabund)
+</code></pre>
+
+<pre><code>##              Lean1      Lean2      Lean3      Lean4     Lean5     Lean6
+## Species1 0.7320719 0.61367991 0.44710369 0.93737694 0.1545328 0.7581348
+## Species2 0.1587366 0.29431957 0.18656555 0.40873243 0.1751768 0.9519493
+## Species3 0.7459371 0.14643946 0.37502507 0.83650445 0.2839269 0.3636480
+## Species4 0.2116673 0.03895666 0.66441798 0.09118599 0.2525140 0.8759450
+## Species5 0.2533841 0.09087869 0.04734376 0.01431301 0.2551368 0.2670180
+## Species6 0.7963445 0.57078249 0.90997548 0.38780057 0.8780423 0.2803217
+##               Lean7      Lean8      Lean9     Lean10     Obese1    Obese2
+## Species1 0.48390810 0.09841650 0.37743814 0.84738340 0.68320363 0.3305247
+## Species2 0.10043277 0.05339326 0.64165944 0.39090620 0.61785717 0.2844650
+## Species3 0.02560588 0.63525609 0.02907226 0.08486640 0.03923239 0.8935477
+## Species4 0.69394501 0.74943690 0.42591778 0.53587751 0.87731287 0.1407579
+## Species5 0.12074160 0.12838108 0.08421323 0.08451048 0.67639246 0.3258745
+## Species6 0.72716501 0.82467974 0.69858696 0.77484355 0.47065886 0.5433217
+##             Obese3     Obese4     Obese5    Obese6    Obese7    Obese8
+## Species1 0.7718421 0.02277831 0.89896404 0.2127805 0.1474924 0.8126880
+## Species2 0.6259197 0.43031531 0.88595164 0.4238480 0.3491638 0.7818655
+## Species3 0.7366177 0.16466986 0.38247831 0.3801840 0.9368757 0.5069368
+## Species4 0.9165949 0.99351859 0.25953107 0.4532728 0.9596510 0.4002479
+## Species5 0.6271704 0.34291623 0.57269919 0.5209073 0.6038838 0.6461251
+## Species6 0.8557418 0.04982476 0.02552185 0.8431182 0.5089379 0.3121548
+##             Obese9    Obese10
+## Species1 0.5373861 0.02844547
+## Species2 0.3988145 0.45445103
+## Species3 0.4414108 0.49137888
+## Species4 0.1843113 0.76326338
+## Species5 0.3180390 0.52756064
+## Species6 0.8503138 0.22655002
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Here&#39;s a problem...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Perform a wilcoxon test on each Species differentiating between lean and obese individuals</p></li>
+<li><p>Write R code, without the use of <code>for</code> loops that produces the following output:</p>
+
+<ul>
+<li>Species5 was significantly different between the two groups</li>
+<li>In this statement, the &quot;Species5&quot; should be produced by r code</li>
+<li>Be sure to correct for multiple comparisons!</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Here&#39;s a problem...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Perform a wilcoxon test on each Species differentiating between lean and obese individuals</li>
+</ul>
+
+<pre><code class="r">test &lt;- function(x, design){
+    p &lt;- wilcox.test(x~design)$p.value
+    return(p)
+}
+
+p.values &lt;- apply(relabund, 1, test, design=treatments)
+padj.values &lt;- p.adjust(p.values)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Here&#39;s a problem...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Write R code, without the use of <code>for</code> loops that produces the following output:
+
+<ul>
+<li><code>Species5</code> was significantly different between the two groups</li>
+<li><code>rownames(relabund)[padj.values&lt;0.05]</code> was significantly different between the two groups</li>
+<li>In this statement, the &quot;<code>Species5</code>&quot; should be produced by r code</li>
+<li>In this statement, the &quot;<code>rownames(relabund)[padj.values&lt;0.05]</code>&quot; should be produced by r code</li>
+</ul></li>
+<li>Be sure to correct for multiple comparisons!</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Understand how to get data in and out of R</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Integrating with other software</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p><strong>Problem:</strong> We typically have large datasets and need a way to get that
+information into the program.  Similarly, we generally have large
+amounts of output that we can&#39;t just send to the screen.</p></li>
+<li><p><strong>Solution:</strong> We have seen a number of functions already for reading in data and
+        in the very first homework you had a function to write out a table.
+        R has a number of solutions to do both</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2><code>readline</code>: read a single line from the screen</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>    &gt; readline()
+    ab de fg
+    [1] &quot;ab de fg&quot;
+
+    &gt; readline(&quot;enter your name: &quot;)
+    Pat Schloss
+
+    &gt; name &lt;- readline(&quot;enter your name: &quot;)
+    Pat Schloss
+    &gt; name
+    [1] &quot;Pat Schloss&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2><code>scan</code>: reads in a vector from a file or keyboard</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Imagine a file that contains:</li>
+</ul>
+
+<pre><code>    123
+    2 4 5
+    53
+</code></pre>
+
+<pre><code class="r">scan(&quot;file1.txt&quot;)
+</code></pre>
+
+<pre><code>## [1] 123   2   4   5  53
+</code></pre>
+
+<ul>
+<li>Note that it reads it in as a numeric vector</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2><code>scan</code>: reads in a vector from a file or keyboard</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Now imagine a file that contains:</li>
+</ul>
+
+<pre><code>    123
+    abcd
+    2 4 5
+    54
+</code></pre>
+
+<pre><code class="r">scan(&quot;file2.txt&quot;)
+</code></pre>
+
+<pre><code>## Error in scan(file, what, nmax, sep, dec, quote, skip, nlines, na.strings, : scan() expected &#39;a real&#39;, got &#39;abcd&#39;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Try again...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">scan(&quot;file2.txt&quot;, what=&quot;&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;123&quot;  &quot;abcd&quot; &quot;2&quot;    &quot;4&quot;    &quot;5&quot;    &quot;54&quot;
+</code></pre>
+
+<ul>
+<li>the default is to assume everything is a number</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Delimeters</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>scan reads things into a vector assuming that any white space separates
+the vector values</li>
+</ul>
+
+<pre><code class="r">scan(&quot;file2.txt&quot;, what=&quot;&quot;, sep=&quot;\n&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;123&quot;   &quot;abcd&quot;  &quot;2 4 5&quot; &quot;54&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Getting data from the keyboard</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>    &gt; scan(&quot;&quot;)  #will read from the keyboard
+
+    &gt;scan(&quot;&quot;)
+    1:  12 5 2 3
+    5:  23 24
+    6:
+    Read 6 items
+    [1] 12  5  2  3 23 24
+</code></pre>
+
+<ul>
+<li>Note that to stop reading data in you give it a blank line</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2><code>read.table</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Reading in a table, every row has to have the same number of columns</li>
+<li>  Imagine a file that contains:</li>
+</ul>
+
+<pre><code>name    age sex
+pat     36  M
+john    22  M
+susan   55  F
+</code></pre>
+
+<pre><code class="r">read.table(&quot;table.txt&quot;, header=TRUE)
+</code></pre>
+
+<pre><code>##    name age sex
+## 1   pat  36   M
+## 2  john  22   M
+## 3 susan  55   F
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2><code>read.table</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>We&#39;d like to get row names for our table</li>
+</ul>
+
+<pre><code class="r">read.table(&quot;table.txt&quot;, header=TRUE, row.names=1)
+</code></pre>
+
+<pre><code>##       age sex
+## pat    36   M
+## john   22   M
+## susan  55   F
+</code></pre>
+
+<ul>
+<li>  note that these commands would not have worked with the scan function since it is a mixture of text and numbers</li>
+<li>numerous other options for read.table including skipping rows, different delimeters, etc.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>You can read from the internet</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">data &lt;- read.csv(&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/echocardiogram/echocardiogram.data&quot;, 
+    header = F)
+head(data)
+</code></pre>
+
+<pre><code>##   V1 V2 V3 V4    V5     V6    V7 V8    V9   V10  V11 V12 V13
+## 1 11  0 71  0 0.260      9 4.600 14     1     1 name   1   0
+## 2 19  0 72  0 0.380      6 4.100 14 1.700 0.588 name   1   0
+## 3 16  0 55  0 0.260      4 3.420 14     1     1 name   1   0
+## 4 57  0 60  0 0.253 12.062 4.603 16 1.450 0.788 name   1   0
+## 5 19  1 57  0 0.160     22 5.750 18 2.250 0.571 name   1   0
+## 6 26  0 68  0 0.260      5 4.310 12     1 0.857 name   1   0
+</code></pre>
+
+<ul>
+<li>Note that <code>read.csv</code> is a special version of <code>read.table</code> for reading data talbe sthat are separated by commas </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Reading in lines of files</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">c &lt;- file(&quot;file2.txt&quot;, open=&quot;r&quot;)
+readLines(c, n=1)
+readLines(c, n=1)
+readLines(c, n=1)
+readLines(c, n=1)
+readLines(c, n=1)
+</code></pre>
+
+<pre><code>## [1] &quot;123&quot;
+## [1] &quot;abcd&quot;
+## [1] &quot;2 4 5&quot;
+## [1] &quot;54&quot;
+## character(0)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Be sure to <code>close</code> the file when you&#39;re done!</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">close(c)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2><code>print</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Writes to the screen</li>
+</ul>
+
+<pre><code class="r">x &lt;- 1:3
+print(x^2)
+</code></pre>
+
+<pre><code>## [1] 1 4 9
+</code></pre>
+
+<ul>
+<li>This is useful for outputting data from within functions if you are trying to debug your code</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2><code>cat</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Write to the screen, must provide your own newline character</li>
+</ul>
+
+<pre><code class="r">cat(x, &quot;abc&quot;, x^2)
+</code></pre>
+
+<pre><code>## 1 2 3 abc 1 4 9
+</code></pre>
+
+<pre><code class="r">cat(x, &quot;abc&quot;, x^2, &quot;\n&quot;)
+</code></pre>
+
+<pre><code>## 1 2 3 abc 1 4 9
+</code></pre>
+
+<ul>
+<li>Not all implementations of R include a newline character with the cat function, so including the <code>\n</code> is useful to just to be safe</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2><code>write.table</code>: structured writing to a file</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">head(data)
+</code></pre>
+
+<pre><code>##   V1 V2 V3 V4    V5     V6    V7 V8    V9   V10  V11 V12 V13
+## 1 11  0 71  0 0.260      9 4.600 14     1     1 name   1   0
+## 2 19  0 72  0 0.380      6 4.100 14 1.700 0.588 name   1   0
+## 3 16  0 55  0 0.260      4 3.420 14     1     1 name   1   0
+## 4 57  0 60  0 0.253 12.062 4.603 16 1.450 0.788 name   1   0
+## 5 19  1 57  0 0.160     22 5.750 18 2.250 0.571 name   1   0
+## 6 26  0 68  0 0.260      5 4.310 12     1 0.857 name   1   0
+</code></pre>
+
+<pre><code class="r">colnames(data) &lt;- LETTERS[1:ncol(data)]
+rownames(data) &lt;- 1:nrow(data)
+write.table(file=&quot;ecg.data&quot;, data)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>File output:</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="bash">head ecg.data
+</code></pre>
+
+<pre><code>## &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot;
+## &quot;1&quot; &quot;11&quot; &quot;0&quot; &quot;71&quot; 0 &quot;0.260&quot; &quot;9&quot; &quot;4.600&quot; &quot;14&quot; &quot;1&quot; &quot;1&quot; &quot;name&quot; &quot;1&quot; &quot;0&quot;
+## &quot;2&quot; &quot;19&quot; &quot;0&quot; &quot;72&quot; 0 &quot;0.380&quot; &quot;6&quot; &quot;4.100&quot; &quot;14&quot; &quot;1.700&quot; &quot;0.588&quot; &quot;name&quot; &quot;1&quot; &quot;0&quot;
+## &quot;3&quot; &quot;16&quot; &quot;0&quot; &quot;55&quot; 0 &quot;0.260&quot; &quot;4&quot; &quot;3.420&quot; &quot;14&quot; &quot;1&quot; &quot;1&quot; &quot;name&quot; &quot;1&quot; &quot;0&quot;
+## &quot;4&quot; &quot;57&quot; &quot;0&quot; &quot;60&quot; 0 &quot;0.253&quot; &quot;12.062&quot; &quot;4.603&quot; &quot;16&quot; &quot;1.450&quot; &quot;0.788&quot; &quot;name&quot; &quot;1&quot; &quot;0&quot;
+## &quot;5&quot; &quot;19&quot; &quot;1&quot; &quot;57&quot; 0 &quot;0.160&quot; &quot;22&quot; &quot;5.750&quot; &quot;18&quot; &quot;2.250&quot; &quot;0.571&quot; &quot;name&quot; &quot;1&quot; &quot;0&quot;
+## &quot;6&quot; &quot;26&quot; &quot;0&quot; &quot;68&quot; 0 &quot;0.260&quot; &quot;5&quot; &quot;4.310&quot; &quot;12&quot; &quot;1&quot; &quot;0.857&quot; &quot;name&quot; &quot;1&quot; &quot;0&quot;
+## &quot;7&quot; &quot;13&quot; &quot;0&quot; &quot;62&quot; 0 &quot;0.230&quot; &quot;31&quot; &quot;5.430&quot; &quot;22.5&quot; &quot;1.875&quot; &quot;0.857&quot; &quot;name&quot; &quot;1&quot; &quot;0&quot;
+## &quot;8&quot; &quot;50&quot; &quot;0&quot; &quot;60&quot; 0 &quot;0.330&quot; &quot;8&quot; &quot;5.250&quot; &quot;14&quot; &quot;1&quot; &quot;1&quot; &quot;name&quot; &quot;1&quot; &quot;0&quot;
+## &quot;9&quot; &quot;19&quot; &quot;0&quot; &quot;46&quot; 0 &quot;0.340&quot; &quot;0&quot; &quot;5.090&quot; &quot;16&quot; &quot;1.140&quot; &quot;1.003&quot; &quot;name&quot; &quot;1&quot; &quot;0&quot;
+</code></pre>
+
+<ul>
+<li>Again, many options for altering how the output looks</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Unstructured writing to a file</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><code>cat</code>:</li>
+</ul>
+
+<pre><code class="r">    cat(&quot;abc\n&quot;, file=&quot;u&quot;)
+    cat(&quot;def\n&quot;, file=&quot;u&quot;, append=T)
+</code></pre>
+
+<ul>
+<li><code>write</code>:</li>
+</ul>
+
+<pre><code class="r">    write(x, file=&quot;filename&quot;, sep= &quot; &quot;)
+    write(x, file=&quot;filename&quot;, append=T, sep= &quot;\t&quot;)
+    write(x, &quot;&quot;)
+</code></pre>
+
+<pre><code>## 1 2 3
+</code></pre>
+
+<ul>
+<li>Note that the <code>append=T</code> prevents the file from being written over</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Basic file operations</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><code>file.info(&quot;data&quot;)</code>:  tells file size, creation time, etc</li>
+<li><code>dir()</code>:  gives the directory contents for the specified dir</li>
+<li><code>list.files()</code>:   same as dir()</li>
+<li><code>file.exists()</code>:  tells whether a file exists, duh.</li>
+<li><code>getwd()</code>:    tells you where you are in the file tree</li>
+<li><code>setwd()</code>:    allows you to change the current directory</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Here&#39;s a problem...'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Here&#39;s a problem...'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Here&#39;s a problem...'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Here&#39;s a problem...'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Learning objectives'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Integrating with other software'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='<code>readline</code>: read a single line from the screen'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='<code>scan</code>: reads in a vector from a file or keyboard'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='<code>scan</code>: reads in a vector from a file or keyboard'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Try again...'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Delimeters'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Getting data from the keyboard'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='<code>read.table</code>'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='<code>read.table</code>'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='You can read from the internet'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Reading in lines of files'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Be sure to <code>close</code> the file when you&#39;re done!'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='<code>print</code>'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='<code>cat</code>'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='<code>write.table</code>: structured writing to a file'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='File output:'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Unstructured writing to a file'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Basic file operations'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Questions?'>
+         26
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
