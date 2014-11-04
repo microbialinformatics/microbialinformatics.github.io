@@ -18,6 +18,7 @@ knit        : slidify::knit2slides
   * work with a partner
   * no more than one explicit loop
 * Will have lab period on Friday
+* Read Chapters 10 and 11 in TAoRP
 
 ```{r eval=TRUE, echo=FALSE}
 
