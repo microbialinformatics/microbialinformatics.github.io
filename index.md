@@ -86,7 +86,7 @@ Class	|	Date	|	Topic	|	Reading
 19	|	10/30	|   [Vectorizing (20 slides)](slides/Lecture19) | TAoRP 7
 	|	10/31	|	Computer lab [no class]	|
 20	|	11/4	|	[Input and output (27 slides)](slides/Lecture20)	|	TAoRP 10
-21	|	11/6	|	String manipulation I	|	TAoRP 11
+21	|	11/6	|	[String manipulation I (26 slides)](slides/Lecture21)	|	TAoRP 11
 	|	11/7	|	Computer lab	|
 22	|	11/11	|	String manipulation II	|	TAoRP 11
 23	|	11/13	|	Variables and functions	|
