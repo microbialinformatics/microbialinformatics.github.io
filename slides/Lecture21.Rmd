@@ -1,0 +1,289 @@
+---
+title       : Microbial Informatics
+subtitle    : Lecture 20
+date        : November 4, 2014
+author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
+job         : Department of Microbiology & Immunology
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      #
+widgets     : mathjax       # {mathjax, quiz, bootstrap}
+mode        : standalone    # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+
+---
+
+## Announcements
+* A new homework has been posted and is due on November 22nd
+  * work with a partner
+  * no more than one explicit loop
+* Will have lab period on Friday
+* Read Chapters 11 in TAoRP for background material on what is discussed today and Tuesday
+
+```{r eval=TRUE, echo=FALSE}
+
+library(knitr)
+
+opts_chunk$set(tidy = TRUE)
+opts_chunk$set(hide = TRUE)
+opts_chunk$set(eval = FALSE)
+opts_chunk$set(cache = FALSE)
+par(mar=c(4,5,0.25, 0.25))
+```
+
+---
+
+## Review
+* There are high level functions for getting structured data in and out of R - `write.table`, `read.table`
+* There are low level functions for input and output that don't require defined data structure - `write`, `scan`, `readLines`
+
+---
+
+## Learning objectives
+
+* Understand how to work with and manipulate character variables
+
+
+---
+
+## Remember...
+
+Strings are atomic variables made up of characters, numbers, punctuation, etc.
+You can form a string by puttting information between `"` and `"`.
+
+```{r}
+name <- "pat"
+name
+```
+
+---
+
+## What would happen if we did...
+
+```{r, eval=FALSE}
+name[1] 
+```
+
+---
+
+## What would happen if we did...
+
+```{r}
+name[1] 
+```
+
+* Note that `name` is a vector and so `name[1]` will return the first element of that vector, not the first character of the vector.
+
+---
+
+## But how do we get the first character?
+
+* Get substrings with the `substr` command
+
+```{r, eval=FALSE}
+substr(x, start, stop)
+```
+
+* `x` is the string of interest
+* `start` is the position within the string where you want the substring to start
+* `stop` is the position within the string where you want the substring to end
+
+---
+
+## For example...
+
+```{r}
+substr(name, 3, 3)
+substr(name, 2, 3)
+substr(name, 1, 1)
+substr(name, 2, 4)
+```
+
+---
+
+## What if we have a vector of names?
+
+```{r}
+names <- c("pat", "sarah", "john", "emily", "mary", "susan")
+substr(names, 1,2)
+```
+
+---
+
+## What do we need to know to return the last two characters of each person's name?
+
+---
+
+## What do we need to know to return the last two characters of each person's name?
+
+* To get the length of each person's name use the `nchar` command:
+
+```{r}
+name.length <- nchar(names)
+substr(names, name.length-2, name.length)
+```
+
+* Oops! What happened? How do we fix it?
+
+---
+
+## What do we need to know to return the last two characters of each person's name?
+
+* To get the length of each person's name use the `nchar` command:
+
+```{r}
+name.length <- nchar(names)
+substr(names, name.length-1, name.length)
+```
+
+* This is what is called a "fence post" error
+
+---
+
+## Say we have the following names...
+
+```{r}
+names <- c("Pat Schloss", "Mary O'Riordan", "Vince Young", "Kathy Spindler", "Harry Mobley", "Oveta Fuller", "Adam Lauring")
+```
+
+* I'd like to generate a vector of first and last names so I can re write the names in alphabetical "Last, First" format.
+
+---
+
+## We need to split the names using the `strsplit` function
+
+```{r, eval=FALSE}
+strsplit(x, split)
+```
+
+* `x` is the string
+* `split` is the delimeter to split on
+* The output is a list
+
+---
+
+## Let's try it out
+
+```{r}
+split.names <- strsplit(names, " ")
+split.names
+```
+
+---
+
+## Where else could we use `strsplit`?
+
+* Dates
+
+```{r}
+strsplit("11/8/2012", split="/")
+```
+
+* DNA sequences
+
+```{r}
+strsplit("ATGCATCTGA", split="")
+```
+
+---
+
+## Say we want to reformat our date to be separated by `-`'s
+
+* We can use the `paste` function to stitch the vector together
+* `paste(x, y, sep=" ", collapse=NULL)`
+* `x` and `y` are two vectors - need only supply one
+* `sep` is the character to use to paste the two vectors to each other
+* `collapse` is the character to use to merge the elements of the final vector
+
+---
+
+## Try it out with dates
+
+```{r}
+date <- unlist(strsplit("11/8/2012", split="/"))
+date
+paste(date, collapse="-")
+paste("Today is", date, sep=":", collapse="-")
+paste("Today is", paste(date, collapse="-"), sep=": ")
+```
+
+---
+
+## Perhaps you want to paste strings together without using a separator
+
+```{r}
+paste("Today is", paste(date, collapse="-"), sep=": ")
+paste("Today is: ", paste(date, collapse="-"), sep="")
+paste0("Today is: ", paste(date, collapse="-"))
+```
+
+---
+
+## Let's return to the list of names
+
+* Given a list of names in `First Last` format, can you convert them to `Last, First` format and then alphabetize them?
+* Your input should be the `names` vector
+* Your output should look like:
+
+```{r, last.first, echo=FALSE}
+last.first <- function(name){
+	split.names <- unlist(strsplit(name, " "))
+	l.f <- paste(split.names[2], split.names[1], sep=", ")
+	return(l.f)
+}
+convert.names <- sapply(names, last.first)
+sort(convert.names)
+```
+
+---
+
+## Let's return to the list of names
+
+```{r last.first, echo=TRUE, eval=TRUE}
+```
+
+---
+
+## Formatting text output with `sprintf`
+
+```{r}
+i <- 8
+sprintf("the square of %d is %d", i, i^2)
+sprintf("the square root of %d is %6.2f", i, sqrt(i))
+sprintf("%d times 1e6 is %.3e", i, i * 1e6)
+```
+
+---
+
+## Things to notice
+
+* `%s` reserves the place for an string
+* `%d` reserves the place for an integer
+* `%f` reserves the place for an decimal number
+* `%e` reserves the place for an number in scientific notation
+* For `%f` and `%e` the format is `%m.n`. `n` indicates the number of values to the right of the decimal place to include and `m` indicates the total number of spaces to allot the string
+* The output is a string
+* Of course, you can do all of this in the text block of a knitr document
+
+---
+
+## Another useful way to format output to text
+
+```{r, eval=FALSE}
+format(x, trim = FALSE, digits = NULL, nsmall = 0L,
+       justify = c("left", "right", "centre", "none"),
+       width = NULL, na.encode = TRUE, scientific = NA,
+       big.mark = "",   big.interval = 3L,
+       small.mark = "", small.interval = 5L,
+       decimal.mark = ".", zero.print = NULL,
+       drop0trailing = FALSE, ...)`
+```
+
+* `x` is a number
+* `trim` is whether to right justify numbers to a common width
+* `digits` is the maximum number of significant digits
+* `nsmall` is the minimum number of digits to the right of the decimal 
+
+--- .segue .dark
+
+## Questions?

@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 20</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>A new homework has been posted and is due on November 22nd
+
+<ul>
+<li>work with a partner</li>
+<li>no more than one explicit loop</li>
+</ul></li>
+<li>Will have lab period on Friday</li>
+<li>Read Chapters 11 in TAoRP for background material on what is discussed today and Tuesday</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>There are high level functions for getting structured data in and out of R - <code>write.table</code>, <code>read.table</code></li>
+<li>There are low level functions for input and output that don&#39;t require defined data structure - <code>write</code>, <code>scan</code>, <code>readLines</code></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Understand how to work with and manipulate character variables</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Remember...</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Strings are atomic variables made up of characters, numbers, punctuation, etc.
+You can form a string by puttting information between <code>&quot;</code> and <code>&quot;</code>.</p>
+
+<pre><code class="r">name &lt;- &quot;pat&quot;
+name
+</code></pre>
+
+<pre><code>## [1] &quot;pat&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>What would happen if we did...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">name[1] 
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>What would happen if we did...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">name[1] 
+</code></pre>
+
+<pre><code>## [1] &quot;pat&quot;
+</code></pre>
+
+<ul>
+<li>Note that <code>name</code> is a vector and so <code>name[1]</code> will return the first element of that vector, not the first character of the vector.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>But how do we get the first character?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Get substrings with the <code>substr</code> command</li>
+</ul>
+
+<pre><code class="r">substr(x, start, stop)
+</code></pre>
+
+<ul>
+<li><code>x</code> is the string of interest</li>
+<li><code>start</code> is the position within the string where you want the substring to start</li>
+<li><code>stop</code> is the position within the string where you want the substring to end</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>For example...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">substr(name, 3, 3)
+</code></pre>
+
+<pre><code>## [1] &quot;t&quot;
+</code></pre>
+
+<pre><code class="r">substr(name, 2, 3)
+</code></pre>
+
+<pre><code>## [1] &quot;at&quot;
+</code></pre>
+
+<pre><code class="r">substr(name, 1, 1)
+</code></pre>
+
+<pre><code>## [1] &quot;p&quot;
+</code></pre>
+
+<pre><code class="r">substr(name, 2, 4)
+</code></pre>
+
+<pre><code>## [1] &quot;at&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>What if we have a vector of names?</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">names &lt;- c(&quot;pat&quot;, &quot;sarah&quot;, &quot;john&quot;, &quot;emily&quot;, &quot;mary&quot;, &quot;susan&quot;)
+substr(names, 1,2)
+</code></pre>
+
+<pre><code>## [1] &quot;pa&quot; &quot;sa&quot; &quot;jo&quot; &quot;em&quot; &quot;ma&quot; &quot;su&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>What do we need to know to return the last two characters of each person&#39;s name?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>What do we need to know to return the last two characters of each person&#39;s name?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>To get the length of each person&#39;s name use the <code>nchar</code> command:</li>
+</ul>
+
+<pre><code class="r">name.length &lt;- nchar(names)
+substr(names, name.length-2, name.length)
+</code></pre>
+
+<pre><code>## [1] &quot;pat&quot; &quot;rah&quot; &quot;ohn&quot; &quot;ily&quot; &quot;ary&quot; &quot;san&quot;
+</code></pre>
+
+<ul>
+<li>Oops! What happened? How do we fix it?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>What do we need to know to return the last two characters of each person&#39;s name?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>To get the length of each person&#39;s name use the <code>nchar</code> command:</li>
+</ul>
+
+<pre><code class="r">name.length &lt;- nchar(names)
+substr(names, name.length-1, name.length)
+</code></pre>
+
+<pre><code>## [1] &quot;at&quot; &quot;ah&quot; &quot;hn&quot; &quot;ly&quot; &quot;ry&quot; &quot;an&quot;
+</code></pre>
+
+<ul>
+<li>This is what is called a &quot;fence post&quot; error</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Say we have the following names...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">names &lt;- c(&quot;Pat Schloss&quot;, &quot;Mary O&#39;Riordan&quot;, &quot;Vince Young&quot;, &quot;Kathy Spindler&quot;, &quot;Harry Mobley&quot;, &quot;Oveta Fuller&quot;, &quot;Adam Lauring&quot;)
+</code></pre>
+
+<ul>
+<li>I&#39;d like to generate a vector of first and last names so I can re write the names in alphabetical &quot;Last, First&quot; format.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>We need to split the names using the <code>strsplit</code> function</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">strsplit(x, split)
+</code></pre>
+
+<ul>
+<li><code>x</code> is the string</li>
+<li><code>split</code> is the delimeter to split on</li>
+<li>The output is a list</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s try it out</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">split.names &lt;- strsplit(names, &quot; &quot;)
+split.names
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] &quot;Pat&quot;     &quot;Schloss&quot;
+## 
+## [[2]]
+## [1] &quot;Mary&quot;      &quot;O&#39;Riordan&quot;
+## 
+## [[3]]
+## [1] &quot;Vince&quot; &quot;Young&quot;
+## 
+## [[4]]
+## [1] &quot;Kathy&quot;    &quot;Spindler&quot;
+## 
+## [[5]]
+## [1] &quot;Harry&quot;  &quot;Mobley&quot;
+## 
+## [[6]]
+## [1] &quot;Oveta&quot;  &quot;Fuller&quot;
+## 
+## [[7]]
+## [1] &quot;Adam&quot;    &quot;Lauring&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Where else could we use <code>strsplit</code>?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Dates</li>
+</ul>
+
+<pre><code class="r">strsplit(&quot;11/8/2012&quot;, split=&quot;/&quot;)
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] &quot;11&quot;   &quot;8&quot;    &quot;2012&quot;
+</code></pre>
+
+<ul>
+<li>DNA sequences</li>
+</ul>
+
+<pre><code class="r">strsplit(&quot;ATGCATCTGA&quot;, split=&quot;&quot;)
+</code></pre>
+
+<pre><code>## [[1]]
+##  [1] &quot;A&quot; &quot;T&quot; &quot;G&quot; &quot;C&quot; &quot;A&quot; &quot;T&quot; &quot;C&quot; &quot;T&quot; &quot;G&quot; &quot;A&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Say we want to reformat our date to be separated by <code>-</code>&#39;s</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>We can use the <code>paste</code> function to stitch the vector together</li>
+<li><code>paste(x, y, sep=&quot; &quot;, collapse=NULL)</code></li>
+<li><code>x</code> and <code>y</code> are two vectors - need only supply one</li>
+<li><code>sep</code> is the character to use to paste the two vectors to each other</li>
+<li><code>collapse</code> is the character to use to merge the elements of the final vector</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Try it out with dates</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">date &lt;- unlist(strsplit(&quot;11/8/2012&quot;, split=&quot;/&quot;))
+date
+</code></pre>
+
+<pre><code>## [1] &quot;11&quot;   &quot;8&quot;    &quot;2012&quot;
+</code></pre>
+
+<pre><code class="r">paste(date, collapse=&quot;-&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;11-8-2012&quot;
+</code></pre>
+
+<pre><code class="r">paste(&quot;Today is&quot;, date, sep=&quot;:&quot;, collapse=&quot;-&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;Today is:11-Today is:8-Today is:2012&quot;
+</code></pre>
+
+<pre><code class="r">paste(&quot;Today is&quot;, paste(date, collapse=&quot;-&quot;), sep=&quot;: &quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;Today is: 11-8-2012&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Perhaps you want to paste strings together without using a separator</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">paste(&quot;Today is&quot;, paste(date, collapse=&quot;-&quot;), sep=&quot;: &quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;Today is: 11-8-2012&quot;
+</code></pre>
+
+<pre><code class="r">paste(&quot;Today is: &quot;, paste(date, collapse=&quot;-&quot;), sep=&quot;&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;Today is: 11-8-2012&quot;
+</code></pre>
+
+<pre><code class="r">paste0(&quot;Today is: &quot;, paste(date, collapse=&quot;-&quot;))
+</code></pre>
+
+<pre><code>## [1] &quot;Today is: 11-8-2012&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s return to the list of names</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Given a list of names in <code>First Last</code> format, can you convert them to <code>Last, First</code> format and then alphabetize them?</li>
+<li>Your input should be the <code>names</code> vector</li>
+<li>Your output should look like:</li>
+</ul>
+
+<pre><code>##      Oveta Fuller      Adam Lauring      Harry Mobley    Mary O&#39;Riordan 
+##   &quot;Fuller, Oveta&quot;   &quot;Lauring, Adam&quot;   &quot;Mobley, Harry&quot; &quot;O&#39;Riordan, Mary&quot; 
+##       Pat Schloss    Kathy Spindler       Vince Young 
+##    &quot;Schloss, Pat&quot; &quot;Spindler, Kathy&quot;    &quot;Young, Vince&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s return to the list of names</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">last.first &lt;- function(name){
+    split.names &lt;- unlist(strsplit(name, &quot; &quot;))
+    l.f &lt;- paste(split.names[2], split.names[1], sep=&quot;, &quot;)
+    return(l.f)
+}
+convert.names &lt;- sapply(names, last.first)
+sort(convert.names)
+</code></pre>
+
+<pre><code>##      Oveta Fuller      Adam Lauring      Harry Mobley    Mary O&#39;Riordan 
+##   &quot;Fuller, Oveta&quot;   &quot;Lauring, Adam&quot;   &quot;Mobley, Harry&quot; &quot;O&#39;Riordan, Mary&quot; 
+##       Pat Schloss    Kathy Spindler       Vince Young 
+##    &quot;Schloss, Pat&quot; &quot;Spindler, Kathy&quot;    &quot;Young, Vince&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Formatting text output with <code>sprintf</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">i &lt;- 8
+sprintf(&quot;the square of %d is %d&quot;, i, i^2)
+</code></pre>
+
+<pre><code>## [1] &quot;the square of 8 is 64&quot;
+</code></pre>
+
+<pre><code class="r">sprintf(&quot;the square root of %d is %6.2f&quot;, i, sqrt(i))
+</code></pre>
+
+<pre><code>## [1] &quot;the square root of 8 is   2.83&quot;
+</code></pre>
+
+<pre><code class="r">sprintf(&quot;%d times 1e6 is %.3e&quot;, i, i * 1e6)
+</code></pre>
+
+<pre><code>## [1] &quot;8 times 1e6 is 8.000e+06&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Things to notice</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><code>%s</code> reserves the place for an string</li>
+<li><code>%d</code> reserves the place for an integer</li>
+<li><code>%f</code> reserves the place for an decimal number</li>
+<li><code>%e</code> reserves the place for an number in scientific notation</li>
+<li>For <code>%f</code> and <code>%e</code> the format is <code>%m.n</code>. <code>n</code> indicates the number of values to the right of the decimal place to include and <code>m</code> indicates the total number of spaces to allot the string</li>
+<li>The output is a string</li>
+<li>Of course, you can do all of this in the text block of a knitr document</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Another useful way to format output to text</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">format(x, trim = FALSE, digits = NULL, nsmall = 0L,
+       justify = c(&quot;left&quot;, &quot;right&quot;, &quot;centre&quot;, &quot;none&quot;),
+       width = NULL, na.encode = TRUE, scientific = NA,
+       big.mark = &quot;&quot;,   big.interval = 3L,
+       small.mark = &quot;&quot;, small.interval = 5L,
+       decimal.mark = &quot;.&quot;, zero.print = NULL,
+       drop0trailing = FALSE, ...)`
+</code></pre>
+
+<ul>
+<li><code>x</code> is a number</li>
+<li><code>trim</code> is whether to right justify numbers to a common width</li>
+<li><code>digits</code> is the maximum number of significant digits</li>
+<li><code>nsmall</code> is the minimum number of digits to the right of the decimal </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Learning objectives'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Remember...'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='What would happen if we did...'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='What would happen if we did...'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='But how do we get the first character?'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='For example...'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='What if we have a vector of names?'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='What do we need to know to return the last two characters of each person&#39;s name?'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='What do we need to know to return the last two characters of each person&#39;s name?'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='What do we need to know to return the last two characters of each person&#39;s name?'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Say we have the following names...'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='We need to split the names using the <code>strsplit</code> function'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Let&#39;s try it out'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Where else could we use <code>strsplit</code>?'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Say we want to reformat our date to be separated by <code>-</code>&#39;s'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Try it out with dates'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Perhaps you want to paste strings together without using a separator'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Let&#39;s return to the list of names'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Let&#39;s return to the list of names'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Formatting text output with <code>sprintf</code>'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Things to notice'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Another useful way to format output to text'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Questions?'>
+         25
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
