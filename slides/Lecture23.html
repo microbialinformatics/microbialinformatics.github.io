@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 23</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Homework is due on November 22nd
+
+<ul>
+<li>work with a partner</li>
+<li>no more than one explicit loop</li>
+</ul></li>
+<li>Will have lab period on Friday</li>
+<li>Read Chapters 11 in TAoRP for background material on what is discussed today</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>String manipulation</li>
+<li>Understand how to work with and manipulate character variables</li>
+<li>Exercise from Tuesday...</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s revisit the metadata file</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">metadata &lt;- read.table(file=&quot;wild.metadata.txt&quot;, header=T)
+head(metadata)
+</code></pre>
+
+<pre><code>##     Group Date ET Station  SP Sex Age Repro Weight Ear
+## 1  5_25m3 5_25  3    BB18  PL   M   J   ABD    7.5  13
+## 2  5_25m4 5_25  4     K19  PL   M   A   SCR   16.0  15
+## 3  5_26m1 5_26  1     A12  PL   F   A    NE   19.5  14
+## 4  5_26m9 5_26  9      M9  PL   F   A    NE   25.0  13
+## 5 5_31m11 5_31 11      F2 PMG   F   J    NT   16.0  18
+## 6  5_31m2 5_31  2     CC4  PL   M  SA   ABD   15.0  14
+</code></pre>
+
+<ul>
+<li>The <code>Date</code> column is the date that the mice were captured in <code>M_DD</code> format. Can you convert this column into &quot;Month Day, Year&quot; format? Assume the year was 2011.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>How to do it...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">metadata &lt;- read.table(file=&quot;wild.metadata.txt&quot;, header=T)
+
+fixDate &lt;- function(m_d, year=2011){
+    m.d &lt;- unlist(strsplit(x=m_d, split=&quot;_&quot;))
+    m.d &lt;- as.numeric(m.d)
+
+    month &lt;- month.name[m.d[1]]
+    day &lt;- m.d[1]
+    format.date &lt;- paste0(month, &quot; &quot;, day, &quot;, &quot;, year)
+    return(format.date)
+}
+
+date &lt;- as.character(metadata$Date)
+nice.dates &lt;- sapply(date, fixDate)
+names(nice.dates) &lt;- NULL
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <article data-timings="">
+    <pre><code>##   [1] &quot;May 5, 2011&quot;  &quot;May 5, 2011&quot;  &quot;May 5, 2011&quot;  &quot;May 5, 2011&quot; 
+##   [5] &quot;May 5, 2011&quot;  &quot;May 5, 2011&quot;  &quot;May 5, 2011&quot;  &quot;May 5, 2011&quot; 
+##   [9] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot;
+##  [13] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot;
+##  [17] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot;
+##  [21] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot;
+##  [25] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot;
+##  [29] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot;
+##  [33] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot;
+##  [37] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot;
+##  [41] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot;
+##  [45] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot;
+##  [49] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;June 6, 2011&quot;
+##  [53] &quot;June 6, 2011&quot; &quot;June 6, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+##  [57] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+##  [61] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+##  [65] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+##  [69] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+##  [73] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+##  [77] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+##  [81] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+##  [85] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+##  [89] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+##  [93] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+##  [97] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+## [101] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+## [105] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+## [109] &quot;July 7, 2011&quot; &quot;July 7, 2011&quot; &quot;July 7, 2011&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Making &quot;generic&quot; regular expressions</li>
+<li>&quot;Generic&quot; find and replace</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Motivational questions</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li><p>How would you...</p>
+
+<ul>
+<li>find a motif in an amino acid sequence?</li>
+<li>find a gene?</li>
+<li>parse a file name to see what type of file it is?</li>
+<li>list a bunch of files where you don&#39;t know its name, but they have a similar format?</li>
+</ul></li>
+<li><p>Regular expressions!</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Repeated elements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><code>+</code>   -   Matches preceeding character 1 or more times</li>
+</ul>
+
+<pre><code class="r">grep(&quot;a+&quot;, c(&quot;baa&quot;, &quot;woof&quot;))    
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<ul>
+<li><code>?</code>   -   Matches preceeding character 0 or 1 time</li>
+</ul>
+
+<pre><code class="r">grep(&quot;colou?r&quot;, c(&quot;color&quot;, &quot;colour&quot;))
+</code></pre>
+
+<pre><code>## [1] 1 2
+</code></pre>
+
+<ul>
+<li><code>*</code>   -   Matches preceeding character 0 or more times</li>
+</ul>
+
+<pre><code class="r">grep(&quot;ab*c&quot;, c(&quot;ac&quot;, &quot;abc&quot;, &quot;abbc&quot;, &quot;abbbc&quot;))
+</code></pre>
+
+<pre><code>## [1] 1 2 3 4
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>You can define the repeat length</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><code>{}</code>  -   Matches user defined number of times</li>
+</ul>
+
+<pre><code class="r">grep(&quot;ab{2}c&quot;, c(&quot;ac&quot;, &quot;abc&quot;, &quot;abbc&quot;, &quot;abbbc&quot;))
+</code></pre>
+
+<pre><code>## [1] 3
+</code></pre>
+
+<ul>
+<li><code>{,}</code> -   Matches user defined number of times (range)</li>
+</ul>
+
+<pre><code class="r">grep(&quot;ab{1,2}c&quot;, c(&quot;ac&quot;, &quot;abc&quot;, &quot;abbc&quot;, &quot;abbbc&quot;))
+</code></pre>
+
+<pre><code>## [1] 2 3
+</code></pre>
+
+<pre><code class="r">grep(&quot;ab{,2}c&quot;, c(&quot;ac&quot;, &quot;abc&quot;, &quot;abbc&quot;, &quot;abbbc&quot;))
+</code></pre>
+
+<pre><code>## [1] 1 2 3 4
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Metacharacters</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>A character with a special meaning that should not be interpreted literally</li>
+<li>Memorize these...
+
+<ul>
+<li><code>.</code> - Any character</li>
+<li><code>\\d</code> - Any number</li>
+<li><code>\\w</code> - Any alphanumeric character</li>
+<li>  <code>\\s</code>   -   Any whitespace characters (<code>&lt;space&gt;</code>, <code>\\t</code>, <code>\\n</code>)</li>
+<li><code>\\D</code> - Anything but a number</li>
+<li><code>\\W</code> - Any whitespace character</li>
+<li><code>\\S</code> - Any non-whitespace character</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2><code>.</code>  -   Any character</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">grep(&quot;A.G&quot;, c(&quot;ACG&quot;, &quot;ATG&quot;, &quot;ATTG&quot;))
+</code></pre>
+
+<pre><code>## [1] 1 2
+</code></pre>
+
+<pre><code class="r">grep(&quot;A.+G&quot;, c(&quot;ACG&quot;, &quot;ATG&quot;, &quot;ATTG&quot;))
+</code></pre>
+
+<pre><code>## [1] 1 2 3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2><code>\\d</code>    -   Any number</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">grep(&quot;\\d&quot;, c(&quot;ATG&quot;, &quot;123&quot;))
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2><code>\\w</code> -  Any alphanumeric character</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">grep(&quot;\\w&quot;, c(&quot;ATG&quot;, &quot;123&quot;))
+</code></pre>
+
+<pre><code>## [1] 1 2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2><code>\\s</code>    -   Whitespace characters</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">grep(&quot;\\s&quot;, c(&quot;A G&quot;, &quot;ATG&quot;))
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Opposites</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><code>\\D</code>   -   Any non-numeric characters</li>
+</ul>
+
+<pre><code class="r">grep(&quot;\\D&quot;, c(&quot;ATG&quot;, &quot;123&quot;))
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<ul>
+<li><code>\\W</code> -   Any non-alphanumeric characters</li>
+</ul>
+
+<pre><code class="r">grep(&quot;\\W&quot;, c(&quot;ATG&quot;, &quot;123&quot;))
+</code></pre>
+
+<pre><code>## integer(0)
+</code></pre>
+
+<ul>
+<li>  <code>\\S</code>   -   Any non-space characters</li>
+</ul>
+
+<pre><code class="r">grep(&quot;\\S&quot;, c(&quot;A G&quot;, &quot;ATG&quot;))    #why does this come up as 1,2?
+</code></pre>
+
+<pre><code>## [1] 1 2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>How to search for a quantifier?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><code>\\</code> -    When used to precede a quantifier or metacharacter, it expresses that character</li>
+</ul>
+
+<pre><code class="r">grep(&quot;\\+&quot;, c(&quot;2+2&quot;, &quot;2-2&quot;, &quot;2.2&quot;))
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">grep(&quot;\\.&quot;, c(&quot;2+2&quot;, &quot;2-2&quot;, &quot;2.2&quot;))
+</code></pre>
+
+<pre><code>## [1] 3
+</code></pre>
+
+<pre><code class="r">grep(&quot;\\(\\d{3}\\)\\d{3}-\\d{4}&quot;, &quot;(734)867-5301&quot;)
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Define your own metacharacters!</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>  <code>[]</code> -  Match any of the characters in the brackets</li>
+</ul>
+
+<pre><code class="r">grep(&quot;[ATGCU]&quot;, c(&quot;ATG&quot;, &quot;123&quot;))
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">grep(&quot;[AG2]&quot;, c(&quot;ATG&quot;, &quot;123&quot;))
+</code></pre>
+
+<pre><code>## [1] 1 2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Define your own metacharacters</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><code>[-]</code> - Match any of the characters including &amp; between them...</li>
+</ul>
+
+<pre><code class="r">grep(&quot;[a-z]&quot;,  c(&quot;ATG&quot;, &quot;123&quot;))
+</code></pre>
+
+<pre><code>## integer(0)
+</code></pre>
+
+<pre><code class="r">grep(&quot;[a-zA-Z]&quot;,  c(&quot;ATG&quot;, &quot;123&quot;))
+</code></pre>
+
+<pre><code>## [1] 1
+</code></pre>
+
+<pre><code class="r">grep(&quot;[a-zA-Z0-9]&quot;,  c(&quot;ATG&quot;, &quot;123&quot;))
+</code></pre>
+
+<pre><code>## [1] 1 2
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Be exclusive...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><code>[^]</code> -   Don&#39;t match any of the characters in the brackets...</li>
+</ul>
+
+<pre><code class="r">grep(&quot;[^AGTC]&quot;, c(&quot;ATG&quot;, &quot;123&quot;))
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">grep(&quot;[^NU]&quot;, c(&quot;ATG&quot;, &quot;AUG&quot;, &quot;ANN&quot;))
+</code></pre>
+
+<pre><code>## [1] 1 2 3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>Replacements with <code>sub</code>/<code>gsub</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Within the pattern you can use parentheses to identify sub-patterns that you 
+manipulate in the replacement</li>
+</ul>
+
+<pre><code class="r">gsub(&quot;ATG(CAG)&quot;, &quot;AAA\\1&quot;, &quot;ATGCAG&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;AAACAG&quot;
+</code></pre>
+
+<pre><code class="r">gsub(&quot;(ATG)(CAG)&quot;, &quot;\\1AAA\\2&quot;, &quot;ATGCAG&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;ATGAAACAG&quot;
+</code></pre>
+
+<pre><code class="r">gsub(&quot;(A.G)(C.G)&quot;, &quot;\\1AAA\\2&quot;, c(&quot;ATGCAG&quot;,&quot;AAGCTG&quot;))
+</code></pre>
+
+<pre><code>## [1] &quot;ATGAAACAG&quot; &quot;AAGAAACTG&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Let&#39;s go back to that example from Tuesday...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">metadata &lt;- read.table(file=&quot;wild.metadata.txt&quot;, header=T)
+
+fixDate &lt;- function(m_d, year=2011){
+    m.d &lt;- unlist(strsplit(x=m_d, split=&quot;_&quot;))
+    m.d &lt;- as.numeric(m.d)
+
+    month &lt;- month.name[m.d[1]]
+    day &lt;- m.d[1]
+    format.date &lt;- paste0(month, &quot; &quot;, day, &quot;, &quot;, year)
+    return(format.date)
+}
+
+date &lt;- as.character(metadata$Date)
+nice.dates &lt;- sapply(date, fixDate)
+names(nice.dates) &lt;- NULL
+</code></pre>
+
+<ul>
+<li>What could we do differently now?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>New and improved date converter</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">month &lt;- as.numeric(gsub(&quot;^(\\d+)_\\d+&quot;, &quot;\\1&quot;, metadata$Date))
+day &lt;- gsub(&quot;^\\d+_(\\d+)&quot;, &quot;\\1&quot;, metadata$Date)
+year &lt;- &quot;2011&quot;
+paste0(month.name[month], &quot; &quot;, day, &quot;, &quot;, year)
+</code></pre>
+
+<pre><code>##   [1] &quot;May 25, 2011&quot;  &quot;May 25, 2011&quot;  &quot;May 26, 2011&quot;  &quot;May 26, 2011&quot; 
+##   [5] &quot;May 31, 2011&quot;  &quot;May 31, 2011&quot;  &quot;May 31, 2011&quot;  &quot;May 31, 2011&quot; 
+##   [9] &quot;June 14, 2011&quot; &quot;June 14, 2011&quot; &quot;June 15, 2011&quot; &quot;June 15, 2011&quot;
+##  [13] &quot;June 15, 2011&quot; &quot;June 15, 2011&quot; &quot;June 15, 2011&quot; &quot;June 15, 2011&quot;
+##  [17] &quot;June 15, 2011&quot; &quot;June 15, 2011&quot; &quot;June 15, 2011&quot; &quot;June 15, 2011&quot;
+##  [21] &quot;June 16, 2011&quot; &quot;June 16, 2011&quot; &quot;June 16, 2011&quot; &quot;June 16, 2011&quot;
+##  [25] &quot;June 16, 2011&quot; &quot;June 16, 2011&quot; &quot;June 17, 2011&quot; &quot;June 17, 2011&quot;
+##  [29] &quot;June 17, 2011&quot; &quot;June 1, 2011&quot;  &quot;June 1, 2011&quot;  &quot;June 1, 2011&quot; 
+##  [33] &quot;June 29, 2011&quot; &quot;June 29, 2011&quot; &quot;June 29, 2011&quot; &quot;June 29, 2011&quot;
+##  [37] &quot;June 29, 2011&quot; &quot;June 29, 2011&quot; &quot;June 29, 2011&quot; &quot;June 2, 2011&quot; 
+##  [41] &quot;June 2, 2011&quot;  &quot;June 2, 2011&quot;  &quot;June 2, 2011&quot;  &quot;June 30, 2011&quot;
+##  [45] &quot;June 30, 2011&quot; &quot;June 30, 2011&quot; &quot;June 30, 2011&quot; &quot;June 30, 2011&quot;
+##  [49] &quot;June 30, 2011&quot; &quot;June 5, 2011&quot;  &quot;June 5, 2011&quot;  &quot;June 5, 2011&quot; 
+##  [53] &quot;June 5, 2011&quot;  &quot;June 5, 2011&quot;  &quot;July 13, 2011&quot; &quot;July 13, 2011&quot;
+##  [57] &quot;July 13, 2011&quot; &quot;July 13, 2011&quot; &quot;July 13, 2011&quot; &quot;July 13, 2011&quot;
+##  [61] &quot;July 13, 2011&quot; &quot;July 13, 2011&quot; &quot;July 13, 2011&quot; &quot;July 13, 2011&quot;
+##  [65] &quot;July 13, 2011&quot; &quot;July 13, 2011&quot; &quot;July 14, 2011&quot; &quot;July 14, 2011&quot;
+##  [69] &quot;July 14, 2011&quot; &quot;July 14, 2011&quot; &quot;July 14, 2011&quot; &quot;July 14, 2011&quot;
+##  [73] &quot;July 14, 2011&quot; &quot;July 14, 2011&quot; &quot;July 14, 2011&quot; &quot;July 14, 2011&quot;
+##  [77] &quot;July 14, 2011&quot; &quot;July 14, 2011&quot; &quot;July 14, 2011&quot; &quot;July 14, 2011&quot;
+##  [81] &quot;July 14, 2011&quot; &quot;July 14, 2011&quot; &quot;July 14, 2011&quot; &quot;July 14, 2011&quot;
+##  [85] &quot;July 14, 2011&quot; &quot;July 14, 2011&quot; &quot;July 14, 2011&quot; &quot;July 14, 2011&quot;
+##  [89] &quot;July 14, 2011&quot; &quot;July 2, 2011&quot;  &quot;July 2, 2011&quot;  &quot;July 2, 2011&quot; 
+##  [93] &quot;July 2, 2011&quot;  &quot;July 2, 2011&quot;  &quot;July 2, 2011&quot;  &quot;July 2, 2011&quot; 
+##  [97] &quot;July 2, 2011&quot;  &quot;July 2, 2011&quot;  &quot;July 2, 2011&quot;  &quot;July 2, 2011&quot; 
+## [101] &quot;July 2, 2011&quot;  &quot;July 3, 2011&quot;  &quot;July 3, 2011&quot;  &quot;July 3, 2011&quot; 
+## [105] &quot;July 3, 2011&quot;  &quot;July 3, 2011&quot;  &quot;July 3, 2011&quot;  &quot;July 3, 2011&quot; 
+## [109] &quot;July 3, 2011&quot;  &quot;July 3, 2011&quot;  &quot;July 3, 2011&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>How would you write a pattern to...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>find a motif in an amino acid sequence?</li>
+<li>find a gene?</li>
+<li>parse a file name to see what type of file it is?</li>
+<li>list a bunch of files where you don&#39;t know its name, but they have a similar format?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Let&#39;s revisit the metadata file'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='How to do it...'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title=''>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Learning objectives'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Motivational questions'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Repeated elements'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='You can define the repeat length'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Metacharacters'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='<code>.</code>  -   Any character'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='<code>\\d</code>    -   Any number'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='<code>\\w</code> -  Any alphanumeric character'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='<code>\\s</code>    -   Whitespace characters'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Opposites'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='How to search for a quantifier?'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Define your own metacharacters!'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Define your own metacharacters'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Be exclusive...'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Replacements with <code>sub</code>/<code>gsub</code>'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Let&#39;s go back to that example from Tuesday...'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='New and improved date converter'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='How would you write a pattern to...'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Questions?'>
+         24
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

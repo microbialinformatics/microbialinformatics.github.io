@@ -1,0 +1,305 @@
+---
+title       : Microbial Informatics
+subtitle    : Lecture 23
+date        : November 13, 2014
+author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
+job         : Department of Microbiology & Immunology
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      #
+widgets     : mathjax       # {mathjax, quiz, bootstrap}
+mode        : standalone    # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+
+---
+
+## Announcements
+* Homework is due on November 22nd
+  * work with a partner
+  * no more than one explicit loop
+* Will have lab period on Friday
+* Read Chapters 11 in TAoRP for background material on what is discussed today
+
+```{r eval=TRUE, echo=FALSE}
+
+library(knitr)
+
+opts_chunk$set(tidy = TRUE)
+opts_chunk$set(hide = TRUE)
+opts_chunk$set(eval = FALSE)
+opts_chunk$set(cache = FALSE)
+par(mar=c(4,5,0.25, 0.25))
+```
+
+---
+
+## Review
+* String manipulation
+* Understand how to work with and manipulate character variables
+* Exercise from Tuesday...
+
+---
+
+## Let's revisit the metadata file
+
+```{r}
+metadata <- read.table(file="wild.metadata.txt", header=T)
+head(metadata)
+```
+
+* The `Date` column is the date that the mice were captured in `M_DD` format. Can you convert this column into "Month Day, Year" format? Assume the year was 2011.
+
+---
+
+## How to do it...
+
+```{r fix.date.1}
+metadata <- read.table(file="wild.metadata.txt", header=T)
+
+fixDate <- function(m_d, year=2011){
+	m.d <- unlist(strsplit(x=m_d, split="_"))
+	m.d <- as.numeric(m.d)
+
+	month <- month.name[m.d[1]]
+	day <- m.d[1]
+	format.date <- paste0(month, " ", day, ", ", year)
+	return(format.date)
+}
+
+date <- as.character(metadata$Date)
+nice.dates <- sapply(date, fixDate)
+names(nice.dates) <- NULL
+```
+
+---
+
+```{r output.dates1, echo=FALSE}
+nice.dates
+```
+
+---
+
+## Learning objectives
+* Making "generic" regular expressions
+* "Generic" find and replace
+
+---
+
+## Motivational questions
+
+> * How would you...
+	* find a motif in an amino acid sequence?
+	* find a gene?
+	* parse a file name to see what type of file it is?
+	* list a bunch of files where you don't know its name, but they have a similar format?
+
+	
+> * Regular expressions!
+
+---
+
+##	Repeated elements
+
+* `+`	-	Matches preceeding character 1 or more times
+
+```{r}
+grep("a+", c("baa", "woof"))	
+```
+
+* `?`	-	Matches preceeding character 0 or 1 time
+	
+```{r}
+grep("colou?r", c("color", "colour"))
+```	
+	
+* `*`	-	Matches preceeding character 0 or more times
+
+```{r}
+grep("ab*c", c("ac", "abc", "abbc", "abbbc"))
+```
+
+---
+
+## You can define the repeat length
+
+* `{}`	-	Matches user defined number of times
+	
+```{r}
+grep("ab{2}c", c("ac", "abc", "abbc", "abbbc"))
+```
+
+* `{,}`	-	Matches user defined number of times (range)
+	
+```{r}
+grep("ab{1,2}c", c("ac", "abc", "abbc", "abbbc"))
+grep("ab{,2}c", c("ac", "abc", "abbc", "abbbc"))
+```
+
+---
+
+## Metacharacters
+
+* A character with a special meaning that should not be interpreted literally
+* Memorize these...
+	* `.` - Any character
+	* `\\d` - Any number
+	* `\\w` - Any alphanumeric character
+	*	`\\s`	-	Any whitespace characters (`<space>`, `\\t`, `\\n`)
+	* `\\D` - Anything but a number
+	* `\\W` - Any whitespace character
+	* `\\S` - Any non-whitespace character
+
+---
+
+## `.`	-	Any character
+
+```{r}
+grep("A.G", c("ACG", "ATG", "ATTG"))
+grep("A.+G", c("ACG", "ATG", "ATTG"))
+```
+
+
+---
+
+## `\\d`	-	Any number
+	
+```{r}
+grep("\\d", c("ATG", "123"))
+```
+
+---
+
+## `\\w` -	Any alphanumeric character
+
+```{r}
+grep("\\w", c("ATG", "123"))
+```
+
+---
+
+## `\\s`	-	Whitespace characters
+	
+```{r}
+grep("\\s", c("A G", "ATG"))
+```
+
+---
+
+## Opposites
+
+* ``\\D``	-	Any non-numeric characters
+	
+```{r}
+grep("\\D", c("ATG", "123"))
+```
+
+* `\\W`	-	Any non-alphanumeric characters
+	
+```{r}
+grep("\\W", c("ATG", "123"))
+```
+
+*	`\\S`	-	Any non-space characters
+
+```{r}
+grep("\\S", c("A G", "ATG"))	#why does this come up as 1,2?
+```
+
+---
+
+## How to search for a quantifier?
+
+* `\\` -	When used to precede a quantifier or metacharacter, it expresses that character
+	
+```{r}
+grep("\\+", c("2+2", "2-2", "2.2"))
+grep("\\.", c("2+2", "2-2", "2.2"))
+```
+
+```{r}
+grep("\\(\\d{3}\\)\\d{3}-\\d{4}", "(734)867-5301")
+```
+
+---
+
+## Define your own metacharacters!
+
+*	`[]` -	Match any of the characters in the brackets
+	
+```{r}
+grep("[ATGCU]", c("ATG", "123"))
+grep("[AG2]", c("ATG", "123"))
+```
+
+---
+
+## Define your own metacharacters 
+
+* `[-]` - Match any of the characters including & between them...
+	
+```{r}
+grep("[a-z]",  c("ATG", "123"))
+grep("[a-zA-Z]",  c("ATG", "123"))
+grep("[a-zA-Z0-9]",  c("ATG", "123"))
+```
+
+---
+
+## Be exclusive...
+
+* `[^]` -	Don't match any of the characters in the brackets...
+
+```{r}
+grep("[^AGTC]", c("ATG", "123"))
+grep("[^NU]", c("ATG", "AUG", "ANN"))
+```
+
+---
+
+## Replacements with `sub`/`gsub`
+	
+* Within the pattern you can use parentheses to identify sub-patterns that you 
+	manipulate in the replacement
+	
+```{r}
+gsub("ATG(CAG)", "AAA\\1", "ATGCAG")
+gsub("(ATG)(CAG)", "\\1AAA\\2", "ATGCAG")
+gsub("(A.G)(C.G)", "\\1AAA\\2", c("ATGCAG","AAGCTG"))
+```
+
+---
+
+## Let's go back to that example from Tuesday...
+
+```{r fix.date.1, eval=FALSE}
+```
+
+* What could we do differently now?
+
+---
+
+## New and improved date converter
+
+```{r fix.date.2, eval=TRUE}
+month <- as.numeric(gsub("^(\\d+)_\\d+", "\\1", metadata$Date))
+day <- gsub("^\\d+_(\\d+)", "\\1", metadata$Date)
+year <- "2011"
+paste0(month.name[month], " ", day, ", ", year)
+```
+
+---
+
+## How would you write a pattern to...
+
+* find a motif in an amino acid sequence?
+* find a gene?
+* parse a file name to see what type of file it is?
+* list a bunch of files where you don't know its name, but they have a similar format?
+
+
+
+
+--- .segue .dark
+
+## Questions?
+
