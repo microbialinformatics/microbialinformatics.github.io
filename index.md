@@ -89,7 +89,7 @@ Class	|	Date	|	Topic	|	Reading
 21	|	11/6	|	[String manipulation I (26 slides)](slides/Lecture21)	|	TAoRP 11
 	|	11/7	|	Computer lab	|
 22	|	11/11	|	[String manipulation II (22 slides)](slides/Lecture22)	|	TAoRP 11
-23	|	11/13	|	String manipulation III	| TAoRP 11
+23	|	11/13	|	[String manipulation III (25 slides)](slides/Lecture23)	| TAoRP 11
 	|	11/14	|	Computer lab	|
 24	|	11/18	|	Optimization	|
 25	|	11/20	|	Testing and debugging	|	TAoRP 13
