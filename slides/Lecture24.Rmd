@@ -107,7 +107,10 @@ point.values = c(
 
 ## Organization:
 
-* [GitHub repository](https://github.com/microbialinformatics/ruzzle_cheat)
-* Need to develop broad pseudocode, have class break into groups of 2 or 3
-* Will need to define inputs and outputs so we can work concurrently
-
+* As a group
+  * [GitHub repository](https://github.com/microbialinformatics/ruzzle_cheat)
+  * Need to develop broad pseudocode, have class break into groups of 2 or 3
+  * Will need to define inputs and outputs so we can work concurrently
+* Individually
+  * Need to define tests
+  * Need to push results to repository at the end of class
