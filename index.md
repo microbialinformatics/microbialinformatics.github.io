@@ -91,13 +91,13 @@ Class	|	Date	|	Topic	|	Reading
 22	|	11/11	|	[String manipulation II (22 slides)](slides/Lecture22)	|	TAoRP 11
 23	|	11/13	|	[String manipulation III (25 slides)](slides/Lecture23)	| TAoRP 11
 	|	11/14	|	Computer lab	|
-24	|	11/18	|	Optimization	|
-25	|	11/20	|	Testing and debugging	|	TAoRP 13
+24	|	11/18	|	[Ruzzle cheat (12 slides)](slides/Lecture24)	|
+25	|	11/20	|		|	
 	|	11/21	|	Computer lab	|
-26	|	11/25	|	Creating a package	|
+26	|	11/25	|		|
 	|	11/27	|	Thanksgiving (no class)	|
 	|	11/28	|	Thanksgiving (no class)	|
-27	|	12/2	|	Graphics	|	TAoRP 12
-28	|	12/4	|	Graphics	|	TAoRP 12
+27	|	12/2	|		|
+28	|	12/4	|		|
 29	|	12/5	|	Computer lab	|
 30	|	12/9	| No class - work on projects |
