@@ -92,7 +92,7 @@ Class	|	Date	|	Topic	|	Reading
 23	|	11/13	|	[String manipulation III (25 slides)](slides/Lecture23)	| TAoRP 11
 	|	11/14	|	Computer lab	|
 24	|	11/18	|	[Ruzzle cheat (12 slides)](slides/Lecture24)	|
-25	|	11/20	|		|
+25	|	11/20	|	Ruzzle cheat |
 	|	11/21	|	Computer lab	|
 26	|	11/25	|		|
 	|	11/27	|	Thanksgiving (no class)	|
