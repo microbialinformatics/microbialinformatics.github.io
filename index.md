@@ -94,7 +94,7 @@ Class	|	Date	|	Topic	|	Reading
 24	|	11/18	|	[Ruzzle cheat (12 slides)](slides/Lecture24)	|
 25	|	11/20	|	Ruzzle cheat |
 	|	11/21	|	Computer lab	|
-26	|	11/25	|	Ruzzle cheat (39 slides)](slides/Lecture26)	|
+26	|	11/25	|	[Ruzzle cheat (39 slides)](slides/Lecture26)	|
 	|	11/27	|	Thanksgiving (no class)	|
 	|	11/28	|	Thanksgiving (no class)	|
 27	|	12/2	|	Testing	|
