@@ -1,0 +1,518 @@
+---
+title       : Microbial Informatics
+subtitle    : Lecture 26
+date        : November 25, 2014
+author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
+job         : Department of Microbiology & Immunology
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      #
+widgets     : mathjax       # {mathjax, quiz, bootstrap}
+mode        : standalone    # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+
+---
+
+## Announcements
+* Homework is due tomorrow
+  * Remember to supply code with a knitr document
+  * Use `source` to load the code from within knitr
+  * Results should be embeded in the text so that if I use `echo=F`, so I can still see what happened
+* Final project (due 12/16/2014)
+  * Email me your idea by Tuesday
+  * Should be a program that others can use to do something useful (I have ideas if you need one)
+  * Create a public repository with documentation in README file and license
+
+```{r eval=TRUE, echo=FALSE}
+library(knitr)
+
+
+opts_chunk$set(tidy = TRUE)
+opts_chunk$set(hide = TRUE)
+opts_chunk$set(eval = FALSE)
+opts_chunk$set(cache = FALSE)
+par(mar=c(4,5,0.25, 0.25))
+```
+
+---
+
+## Review
+
+<img src="../img/ruzzle_r1.png", style="margin:0px auto;display:block" width="300">
+
+---
+
+## Overall algorithm possibilities
+
+* Brute force search for all possible words in grid and compare those to the dictionary
+* Brute force search for every word in dictionary in the grid
+* A hybrid approach where you build words off of every block and end a search string when it is no longer in the dictionary
+
+---
+
+## This was (too) hard...
+
+| Algorithm         | 	Time  | Time (with data structure population) | Requested Primary Memory  |
+|-------------------|---------|---------------------------------------|---------------------------|
+| Full Enumeration	| 2,5sec+ | 2,5sec+                               | ~6MB                      |
+| Active Dictionary	| 150ms	  | 170ms                                 | ~0MB                      |
+| Branch and Bound	| 1ms	    | 300ms                                 | ~140MB                    |
+
+* Timings for code written in C (faster than R)
+* http://miromannino.com/ruzzle-solver-algorithm/
+
+---
+
+## Some people take this way too seriously
+
+* It uses the Beta Distribution to choose good, but not too good, words (to avoid all the suspects).
+* It applies an istintive human reasoning. In this way, the final word list seems written by an human.
+* It determines the current round, to change its behavior.
+* Sometimes it draws casual words. In this way it never gets 100% of accuracy.
+* It limits the number of words (a casual limit, that varies with the current round).
+* It limits the number of points (a casual limit, that varies with the current round).
+* Dictionary is limited, only a subset of the complete one.
+
+---
+
+## Whoa.
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/F1qxtYLRcos" frameborder="0" allowfullscreen></iframe>
+
+---
+
+## How I did it
+
+* Brute force search for all possible words in grid seemed most intuitive to me
+* Neighbors will be the same regardless of the actual tiles
+* Read the matrix in as a string and then convert to a matrix
+* Start with 2 letter words and find all possible words
+* Use all 2 letter words (2-mers) to get 3 letter words (3-mers), etc.
+	* Make sure that you don't reuse letters
+	* Do up to 10 letter words (10-mers, not exhaustive!)
+	* Keep the path as you go
+* Identify overlap between all k-mers and the dictionary
+
+---
+
+## Preliminaries
+
+```{r}
+# load the dictionary
+dictionary <- scan("http://www.freescrabbledictionary.com/sowpods.txt", what="", skip=2, quiet=T)
+dictionary <- toupper(dictionary)
+
+# load the board
+# BOIA
+# RAMD
+# TEHA
+# IOCR
+
+#convet the board string to a matrix
+boardString <- "BOIARAMDTEHAIOCR"
+board <- matrix(unlist(strsplit(boardString, "")), nrow=4, byrow=T)
+```
+
+---
+
+## Precompute the neighbors
+
+```{r}
+neighbors <- list()
+neighbors[[1]]  <- c(2,5,6)
+neighbors[[2]]  <- c(1,3,5,6,7)
+neighbors[[3]]  <- c(2,4,6,7,8)
+neighbors[[4]]  <- c(3,7,8)
+neighbors[[5]]  <- c(1,2,6,9,10)
+neighbors[[6]]  <- c(1,2,3,5,7,9,10,11)
+neighbors[[7]]  <- c(2,3,4,6,8,10,11,12)
+neighbors[[8]]  <- c(3,4,7,11,12)
+neighbors[[9]]  <- c(5,6,10,13,14)
+neighbors[[10]] <- c(5,6,7,9,11,13,14,15)
+neighbors[[11]] <- c(6,7,8,10,12,14,15,16)
+neighbors[[12]] <- c(7,8,11,15,16)
+neighbors[[13]] <- c(9,10,14)
+neighbors[[14]] <- c(9,10,11,13,15)
+neighbors[[15]] <- c(10,11,12,14,16)
+neighbors[[16]] <- c(11,12,15)
+```
+
+---
+
+## Final all possible 2-mers
+
+* For each of the 16 tiles, make a path and a 2-mer for it and all of its neighbors
+* Should be 84 2-mers
+* Store paths and words as lists where the top-level entry is the length of the word (i.e. `paths[[2]]` contains the paths for the 2 letter words)
+
+---
+
+## R
+
+```{r, two}
+paths <- list()
+words <- list()
+
+this.paths <- numeric()
+this.words <- character()
+
+for(i in 1:16){
+	word <- paste(board[i], board[neighbors[[i]]], sep="") 
+	new.paths <- cbind(rep(i, length(neighbors[[i]])), neighbors[[i]])
+	this.words <- c(this.words, word)
+	this.paths <- rbind(this.paths, new.paths)
+}
+paths[[2]] <- this.paths
+words[[2]] <- this.words
+n.prev <- length(this.words)
+n.prev
+```
+
+---
+
+## The 2-mers
+
+```{r, echo=FALSE}
+words[[2]]
+```
+
+---
+
+## What do we know...
+
+* All the 2-mers and their path
+* Could now take these and extend them by getting the neigbhor of `paths[[2]][,2]`
+* Probably don't need the `for` loop, but we'll leave it for now
+* Let's try 3-mers
+
+---
+
+
+## R
+
+```{r, three}
+this.paths <- numeric()
+this.words <- character()
+
+for(i in 1:n.prev){
+	prev <- paths[[2]][i,]
+	nextChar <- neighbors[[prev[2]]]
+	goodNeighbors <- nextChar[!nextChar %in% prev]
+	n.goodneighbors <- length(goodNeighbors)
+	new.paths <- cbind(matrix(rep(prev, n.goodneighbors), nrow=n.goodneighbors, byrow=T), goodNeighbors)
+	word <- paste(words[[2]][i], board[goodNeighbors], sep="")
+	this.words <- c(this.words, word)
+	this.paths <- rbind(this.paths, new.paths)
+}
+paths[[3]] <- this.paths
+words[[3]] <- this.words
+n.prev <- length(this.words)
+n.prev
+```
+
+---
+
+## The 3-mers
+
+```{r, echo=FALSE}
+words[[3]]
+```
+
+---
+
+## Keep going with 4-mers
+
+```{r}
+this.paths <- numeric()
+this.words <- character()
+
+for(i in 1:n.prev){
+	prev <- paths[[3]][i,]
+	nextChar <- neighbors[[prev[3]]]
+	goodNeighbors <- nextChar[!nextChar %in% prev]
+	n.goodneighbors <- length(goodNeighbors)
+	new.paths <- cbind(matrix(rep(prev, n.goodneighbors), nrow=n.goodneighbors, byrow=T), goodNeighbors)
+	word <- paste(words[[3]][i], board[goodNeighbors], sep="")
+	this.words <- c(this.words, word)
+	this.paths <- rbind(this.paths, new.paths)
+}
+paths[[4]] <- this.paths
+words[[4]] <- this.words
+n.prev <- length(this.words)
+```
+
+---
+
+## The 4-mers
+
+```{r, echo=FALSE}
+words[[4]]
+```
+
+---
+
+## Could keep going, but...
+
+* We will now have a lot of repeated code
+* The only thing that changes is the number we use to index the previous k-mer length and the current k-mer length
+* That for loop is bothersome
+* Let's abstract this to make a function
+
+---
+
+```{r, getNext}
+getNext <- function(paths, words, new.length){
+	length <- new.length - 1
+	n.prev <- length(words[[length]])
+	this.paths <- numeric()
+	this.words <- character()
+	
+	for(i in 1:n.prev){
+		prev <- paths[[length]][i,]
+		nextChar <- neighbors[[prev[length]]]
+		goodNeighbors <- nextChar[!nextChar %in% prev]
+		if(length(goodNeighbors)>0){
+			n.goodneighbors <- length(goodNeighbors)
+			new.paths <- cbind(matrix(rep(prev, n.goodneighbors), nrow=n.goodneighbors, byrow=T), goodNeighbors)
+			word <- paste(words[[length]][i], board[goodNeighbors], sep="")
+			this.words <- c(this.words, word)
+			this.paths <- rbind(this.paths, new.paths)
+		}
+	}
+	return(list(path=this.paths, word=this.words))
+}
+```
+
+---
+
+## The 5-mers
+
+```{r}
+update <- getNext(paths, words, 5)
+paths[[5]] <- update$path
+words[[5]] <- update$word
+```
+```{r, echo=FALSE}
+words[[5]]
+```
+
+---
+
+## Put it together
+
+```{r}
+getKMers <- function(maxKmer=10){
+	paths <- list()
+	words <- list()
+	paths[[1]] <- matrix(1:16, ncol=1)
+	words[[1]] <- matrix(as.vector(board), ncol=1)
+
+	for(i in 2:maxKmer){
+		update <- getNext(paths, words, i)
+		paths[[i]] <- update$path
+		words[[i]] <- update$word
+	}
+	return(list(path=paths, word=words))
+}
+```
+
+---
+
+## Run it... ... slow
+
+```{r, cache=TRUE}
+start <- proc.time()
+final <- getKMers(7)
+end <- proc.time()
+end-start
+```
+
+---
+
+## This gets out of hand fast...
+
+```{r, echo=FALSE, fig.align='center'}
+plot(x=1:length(final$word),unlist(lapply(final$word, length)), xlab="K-mer size", ylab="Number of K-mers")
+```
+
+---
+
+
+
+## About those `for` loops...
+
+```{r getNext, echo=TRUE}
+```
+
+---
+
+## Let's define a new function
+
+* Take contents of `for` loop from `getNext` and use it to make a function `cat` (conCATenate)
+* Modify `getNext` to create `getNext2`, which calls `cat`
+* Also, we're getting nailed on recreating a new list every time we add a new k-mer. Let's drop the word list and create it at the end when we have all of the paths
+
+---
+
+## New `cat` function
+
+```{r}
+cat <- function(i, length, paths){
+	prev <- paths[[length]][i,]
+	nextChar <- neighbors[[prev[length]]]
+	goodNeighbors <- nextChar[!nextChar %in% prev]
+	if(length(goodNeighbors)>0){
+		n.goodneighbors <- length(goodNeighbors)
+		new.paths <- cbind(matrix(rep(prev, n.goodneighbors), nrow=n.goodneighbors, byrow=T), goodNeighbors)
+		return(new.paths)
+	} else{
+		return(NULL);  #needed in case there are no neighbors remaining
+	}
+}
+```
+
+---
+
+## New `getNext2` function
+
+```{r}
+getNext2 <- function(new.length, paths){
+	length <- new.length - 1
+	n.prev <- nrow(paths[[length]])
+	path.list <- sapply(1:n.prev, cat, length, paths)  #<-- This replaces for loop
+	return(do.call(rbind, path.list))
+}
+```
+
+---
+
+## Try again...
+
+```{r, cache=TRUE}
+start <- proc.time()
+
+paths <- list()
+
+paths[[1]] <- matrix(1:16, ncol=1)
+for(l in 2:10){
+	paths[[l]] <- getNext2(l, paths)
+}
+
+end <- proc.time()
+end-start
+```
+
+* The lingering `for` loop is still a problem
+
+---
+
+## Now we need to translate our paths to words
+
+* Let's look an an example (ignore the "goodNeighbors")...
+
+```{r}
+paths[[9]][1,]
+board[paths[[9]][1,]]
+paste(board[paths[[9]][1,]], collapse="")
+```
+
+---
+
+## Think about the data structure we have
+
+* It's a list where each value of paths is a different k-mer size
+* Within each k-mer is a matrix of n rows and k columns
+* To tranlate the entire list we need to...
+  * Translate each matrix
+  * Translate each row of each matrix
+* Then glue it all together as a big vector of words
+
+---
+
+## R
+
+```{r}
+translate.vector <- function(x){
+	paste(board[x], collapse="")
+}
+
+translate.matrix <- function(x){
+	apply(x, 1, translate.vector)
+}
+
+words <- list()
+words <- lapply(paths, translate.matrix)
+words.vector <- unlist(words)
+```
+
+---
+
+## What do these words look like?
+
+```{r}
+length(words.vector)
+sort(words.vector)[1:100]
+```
+
+---
+
+## A lot of that is jibberish
+
+* Need to cross reference our `r length(words.vector)` words with the dictionary
+
+```{r}
+overlap <- intersect(words.vector, dictionary)
+
+length(overlap)
+sort(overlap)[1:100]
+```
+
+---
+
+## Recall how we might sort these by length?
+
+```{r, echo=FALSE}
+o <- order(nchar(overlap), decreasing=T)
+overlap[o]
+```
+
+---
+
+## Now we need to recover the paths
+
+```{r getPath, echo=T, results='hide', cache=TRUE}
+getPath <- function(word){
+	wordLength <- nchar(word)
+	hit <- which(words[[wordLength]] == word)
+	path <- paths[[wordLength]][hit,]
+	if(length(hit) > 1){
+		path.strings <- apply(path, 1, paste, collapse=",")	
+		path.strings <- paste(path.strings, collapse=" / ")
+	} else {
+		path.strings <- paste(path, collapse=",")
+	}
+	return(path.strings)
+}
+
+sapply(overlap, getPath)
+```
+
+---
+
+```{r getPath, echo=FALSE, results='asis'}
+```
+
+---
+
+## Things that still could be done...
+
+* Calculate scores
+* Return highest scoring path
+* Figure out how to get rid of `for` loop
+* Try other algorithm approaches and see if they are more practical (Remember we only go up to 10-mers)
+* Pre-screen dictionary (e.g. exclude words with "X" since they aren't on our board)
+* Test with other boards
+
+--- .segue .dark
+
+## Questions?
