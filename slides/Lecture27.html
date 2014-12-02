@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 27</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Final project (due 12/16/2014)
+
+<ul>
+<li>Email me your idea by Tuesday</li>
+<li>Should be a program that others can use to do something useful (I have ideas if you need one)</li>
+<li>Create a public repository with documentation in README file and license</li>
+</ul></li>
+<li>Will have class on Friday, but not next Tuesday</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>We&#39;ve talked a lot about the R programming language and how we can do it to
+do useful things and help with our analyses</li>
+<li>The tools you have now will enable you to do many many things</li>
+<li>Let&#39;s spend the next two lectures talking about advanced programming concepts</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Define &quot;Test-driven development (TDD)&quot;</li>
+<li>See how to implement TDD to address HW4 (the paper assignment)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Think about software you know...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li>How often is it released? What type of problems do those fixes solve?</li>
+<li>When you do an experiment how do you know whether to trust the results?</li>
+<li>When you work on an assignment/project how do you test the results?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>TDD is a software development process where you...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Create a failing test that describes one a realistic problem you might face</li>
+<li>Make sure test fails / see which tests fail</li>
+<li>Write enough code to make sure test passes</li>
+<li>Run all tests to make sure you haven&#39;t broken other test</li>
+<li>Simplify the code</li>
+<li>Repeat</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Philosophy</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Every line of code has a test (extreme)</li>
+<li>The programmer writes the tests and so they aren&#39;t dependent on others getting requirements</li>
+<li>Don&#39;t Repeat Yourself (DRY)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>How did you test your paper reading code?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>First command...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>given a file name, create a list variable that contains any necessary information</li>
+<li>what would a test look like?</li>
+</ul>
+
+<pre><code class="r">words &lt;- readPaper(&quot;../../assignment04/mothur.txt&quot;)
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): could not find function &quot;readPaper&quot;
+</code></pre>
+
+<pre><code class="r">is.list(words)
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;words&#39; not found
+</code></pre>
+
+<ul>
+<li>It fails! (yippee!)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>Get it to work...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">readPaper &lt;- function(file){
+    words &lt;- list()
+    return(words)
+}
+
+words &lt;- readPaper(&quot;../../assignment04/mothur.txt&quot;)
+is.list(words)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<ul>
+<li>Um... cute.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Get it to work...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">readPaper &lt;- function(file){
+    words &lt;- list()
+    return(words)
+}
+
+words &lt;- readPaper(&quot;../../assignment04/mothur.txt&quot;)
+is.list(words)
+length(words[[1]])==2056
+</code></pre>
+
+<pre><code>## Error in words[[1]]: subscript out of bounds
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Get it to work...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">readPaper &lt;- function(file){
+    words &lt;- list(scan(file, what=&quot;&quot;))
+    return(words)
+}
+
+words &lt;- readPaper(&quot;../../assignment04/mothur.txt&quot;)
+is.list(words)
+length(words[[1]])==2056
+</code></pre>
+
+<pre><code>## [1] TRUE
+## [1] TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Great... next command</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>if I supply the output from readPaper and a word (or a vector of words), tell
+me how many times the word(s) shows up</li>
+</ul>
+
+<pre><code class="r">wordCount(&quot;mothur&quot;, words) == 25
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): could not find function &quot;wordCount&quot;
+</code></pre>
+
+<pre><code class="r">wordCount(&quot;the&quot;, words) == 133
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): could not find function &quot;wordCount&quot;
+</code></pre>
+
+<pre><code class="r">wordCount(c(&quot;mothur&quot;, &quot;the&quot;), words) == c(25, 133)
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): could not find function &quot;wordCount&quot;
+</code></pre>
+
+<ul>
+<li>FAIL!</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Great... next command</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">wordCount &lt;- function(word, wordList){
+    sum(wordList[[1]] == word)
+}
+
+wordCount(&quot;mothur&quot;, words) == 25
+wordCount(&quot;the&quot;, words) == 133
+wordCount(c(&quot;mothur&quot;, &quot;the&quot;), words) == c(25, 133)
+</code></pre>
+
+<pre><code>## [1] FALSE
+## [1] TRUE
+## [1] FALSE FALSE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Punctuation!</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">readPaper &lt;- function(file){
+    words &lt;- scan(file, what=&quot;&quot;)
+    words &lt;- gsub(&quot;\\W&quot;, &quot;&quot;, words)
+    words &lt;- tolower(words)
+    return(list(words))
+}
+
+wordCount &lt;- function(word, wordList){
+    sum(wordList[[1]] == tolower(word))
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Tests</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">words &lt;- readPaper(&quot;../../assignment04/mothur.txt&quot;)
+is.list(words)
+length(words[[1]])==2056
+sum(grepl(&quot;\\W&quot;, words[[1]])) == 0
+
+wordCount(&quot;mothur&quot;, words) == 25
+wordCount(&quot;the&quot;, words) == 133
+wordCount(c(&quot;mothur&quot;, &quot;the&quot;), words) == c(25, 133)
+</code></pre>
+
+<pre><code>## [1] TRUE
+## [1] TRUE
+## [1] TRUE
+## [1] TRUE
+## [1] TRUE
+## [1] FALSE FALSE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Reading in a vector</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">wordCount &lt;- function(word, wordList){
+    word &lt;- tolower(word)
+    word.count &lt;- numeric() 
+    for(w in word){
+        word.count[w] &lt;- sum(wordList[[1]]==w)
+    }
+    names(word.count) &lt;- NULL
+    return(word.count)
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Tests</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">words &lt;- readPaper(&quot;../../assignment04/mothur.txt&quot;)
+is.list(words)
+length(words[[1]])==2056
+sum(grepl(&quot;\\W&quot;, words[[1]])) == 0
+
+wordCount(&quot;mothur&quot;, words) == 25
+wordCount(&quot;the&quot;, words) == 133
+wordCount(c(&quot;mothur&quot;, &quot;the&quot;), words) == c(25, 133)
+</code></pre>
+
+<pre><code>## [1] TRUE
+## [1] TRUE
+## [1] TRUE
+## [1] TRUE
+## [1] TRUE
+## [1] TRUE TRUE
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Introducing: <code>testthat</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Problems with what we&#39;ve been doing
+
+<ul>
+<li>This process can get tedious</li>
+<li>It&#39;s not automated</li>
+</ul></li>
+<li><code>testthat</code> is an R package for doing testing
+
+<ul>
+<li>Put test code into a separate file (<code>test-????.R</code>)</li>
+<li>Code as normal in your R script file (<code>????.R</code>)</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2><code>test-pschloss.R</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>words &lt;- readPaper(&quot;../../assignment04/mothur.txt&quot;)
+expect_that(words, is_a(&quot;list&quot;))
+expect_that(length(words[[1]]), equals(2056))
+expect_that(sum(grepl(&quot;\\W&quot;, words[[1]])), equals(0))
+expect_that(wordCount(&quot;mothur&quot;, words), equals(25))
+expect_that(wordCount(&quot;the&quot;, words), equals(133))
+expect_that(wordCount(c(&quot;mothur&quot;, &quot;the&quot;), words), equals(c(25, 133)))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2><code>pschloss.R</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">readPaper &lt;- function(file){
+    words &lt;- scan(file, what=&quot;&quot;)
+    words &lt;- gsub(&quot;\\W&quot;, &quot;&quot;, words)
+    words &lt;- tolower(words)
+    return(list(words))
+}
+
+wordCount &lt;- function(word, wordList){
+    word &lt;- tolower(word)
+    word.count &lt;- numeric() 
+    for(w in word){
+        word.count[w] &lt;- sum(wordList[[1]]==w)
+    }
+    names(word.count) &lt;- NULL
+    return(word.count)
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>How to run...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Method #1:</li>
+</ul>
+
+<pre><code class="r">library(testthat)
+source(&quot;pschloss.R&quot;)
+source(&quot;test-pschloss.R&quot;)
+</code></pre>
+
+<ul>
+<li>Method #2:</li>
+</ul>
+
+<pre><code class="r">library(testthat)
+source(&quot;pschloss.R&quot;)
+test_dir(&quot;./&quot;)
+</code></pre>
+
+<pre><code>## ......
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Things to know about...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Expects the testing file to be named <code>test_something.R</code></li>
+<li>Options to go with <code>expect_that</code> include:
+
+<ul>
+<li><code>is_true</code>: truth</li>
+<li><code>is_false</code>: falsehood</li>
+<li><code>is_a</code>: inheritance</li>
+<li><code>equals</code>: equality with numerical tolerance</li>
+<li><code>equals_reference</code>: equality relative to a reference</li>
+<li><code>is_equivalent_to</code>: equality ignoring attributes</li>
+<li><code>is_identical_to</code>: exact identity</li>
+<li><code>matches</code>: string matching</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>More...</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Options to go with <code>expect_that</code> include:
+
+<ul>
+<li><code>prints_text</code>: output matching</li>
+<li><code>throws_error</code>: error matching</li>
+<li><code>gives_warning</code>: warning matching</li>
+<li><code>shows_message</code>: message matching</li>
+<li><code>takes_less_than</code>: performance</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>Other elements of <code>testthat</code></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Can get fancy by defining your own expectation functions</li>
+<li>Can establish specific contexts with environmental settings, etc.</li>
+<li>Can automate testing so that it runs the tests whenever you update the source code</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>Exercise</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>if I give a word, tell me the frequency of words that follow it</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Learning objectives'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Think about software you know...'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='TDD is a software development process where you...'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Philosophy'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='How did you test your paper reading code?'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='First command...'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Get it to work...'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Get it to work...'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Get it to work...'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Great... next command'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Great... next command'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Punctuation!'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Tests'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Reading in a vector'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Tests'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Introducing: <code>testthat</code>'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='<code>test-pschloss.R</code>'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='<code>pschloss.R</code>'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='How to run...'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Things to know about...'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='More...'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Other elements of <code>testthat</code>'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Exercise'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Questions?'>
+         26
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

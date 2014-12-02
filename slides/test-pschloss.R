@@ -1,0 +1,7 @@
+words <- readPaper("../../assignment04/mothur.txt")
+expect_that(words, is_a("list"))
+expect_that(length(words[[1]]), equals(2056))
+expect_that(sum(grepl("\\W", words[[1]])), equals(0))
+expect_that(wordCount("mothur", words), equals(25))
+expect_that(wordCount("the", words), equals(133))
+expect_that(wordCount(c("mothur", "the"), words), equals(c(25, 133)))
