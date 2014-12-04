@@ -1,0 +1,293 @@
+---
+title       : Microbial Informatics
+subtitle    : Lecture 27
+date        : December 2, 2014
+author      : Patrick D. Schloss, PhD (microbialinformatics.github.io)
+job         : Department of Microbiology & Immunology
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      #
+widgets     : mathjax       # {mathjax, quiz, bootstrap}
+mode        : standalone    # {selfcontained, standalone, draft}
+knit        : slidify::knit2slides
+
+---
+
+## Announcements
+* Final project (due 12/16/2014)
+  * Should be a program that others can use to do something useful (I have ideas if you need one, but really...)
+	* Would be smart to include a test file
+	* Create a public repository with documentation in README file and license
+* Will have class on Friday, but not next Tuesday
+
+
+
+---
+
+## Review
+* We've talked a lot about the R programming language and how we can do it to
+	do useful things and help with our analyses
+* The tools you have now will enable you to do many many things
+* TDD is a software development process that results in a rapid development cycle
+
+---
+
+## Learning objectives
+* Continue development of TDD skills
+* Variable scoping
+
+---
+
+## TDD is a software development process where you...
+
+1. Create a failing test that describes one a realistic problem you might face
+1. Make sure test fails / see which tests fail
+1. Write enough code to make sure test passes
+1. Run all tests to make sure you haven't broken other test
+1. Simplify the code
+1. Repeat
+
+---
+
+## Introducing: `testthat`
+
+* Problems with what we've been doing
+	* This process can get tedious
+	* It's not automated
+* `testthat` is an R package for doing testing
+  * Put test code into a separate file (`test-????.R`)
+  * Code as normal in your R script file (`????.R`)
+
+---
+
+## `test-pschloss.R`
+
+```
+words <- readPaper("../../assignment04/mothur.txt")
+expect_that(words, is_a("list"))
+expect_that(length(words[[1]]), equals(2056))
+expect_that(sum(grepl("\\W", words[[1]])), equals(0))
+expect_that(wordCount("mothur", words), equals(25))
+expect_that(wordCount("the", words), equals(133))
+expect_that(wordCount(c("mothur", "the"), words), equals(c(25, 133)))
+```
+
+---
+
+## `pschloss.R`
+
+
+```r
+readPaper <- function(file){
+	words <- scan(file, what="")
+	words <- gsub("\\W", "", words)
+	words <- tolower(words)
+	return(list(words))
+}
+
+wordCount <- function(word, wordList){
+	word <- tolower(word)
+	word.count <- numeric()	
+	for(w in word){
+		word.count[w] <- sum(wordList[[1]]==w)
+	}
+	names(word.count) <- NULL
+	return(word.count)
+}
+```
+
+---
+
+## How to run...
+
+
+```r
+library(testthat)
+source("pschloss.R")
+test_dir("./")
+```
+
+```
+## ......
+```
+
+--- &twocol
+
+## `expect_that` command options...
+
+*** {name: left}
+  * `is_true`: truth
+  * `is_false`: falsehood
+  * `is_a`: inheritance
+  * `equals`: equality with numerical tolerance
+  * `is_identical_to`: exact identity
+  * `is_equivalent_to`: equality ignoring attributes
+  * `matches`: string matching
+
+*** {name: right}
+  * `prints_text`: output matching
+  * `throws_error`: error matching
+  * `gives_warning`: warning matching
+  * `shows_message`: message matching
+  * `takes_less_than`: performance
+
+---
+
+## Other elements of `testthat`
+
+* Test file must have a `test-` prefix
+* Can get fancy by defining your own expectation functions
+* Can establish specific contexts with environmental settings, etc.
+* Can automate testing so that it runs the tests whenever you update the source code
+
+---
+
+## Exercise
+
+* Here is a toy DNA sequence:
+```
+CTACATGATCCTACCGCTCAACTACCAATCGTAACC
+```
+* Create a function that will return a vector containing the start and end positions of the start and stop codons
+* Do this in a TDD approach
+
+---
+
+## Variable scoping
+
+* To this point we've largely ignored the issue of where our variables live and where they're "allowed to go"
+* This has to do with a concept of variable scoping and the various environments that are used within R
+
+---
+
+## Consider this example...
+
+
+```r
+dna <- "ATGCCTGACCTTTGCATACAA"
+
+getRevComp <- function(sequence){
+	rev.sequence <- paste(rev(unlist(strsplit(sequence, ""))), collapse="")
+	comp.rev.sequence <- chartr("ATGC", "TACG", rev.sequence)
+	return(comp.rev.sequence)
+}
+```
+
+* Where can `dna` be used?
+* Where can `getRevComp` be used?
+* Where can `rev.sequence` be used?
+
+---
+
+## What happens if...
+
+
+```r
+getRevComp <- function(sequence){
+	rev.sequence <- paste(rev(unlist(strsplit(sequence, ""))), collapse="")
+	comp.rev.sequence <- chartr("ATGC", "TACG", rev.sequence)
+	print(dna, "")  <----
+	return(comp.rev.sequence)
+}
+getRevComp(dna)
+```
+
+---
+
+## What happens if...
+
+
+```r
+rev.sequence
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'rev.sequence' not found
+```
+
+---
+
+## What happens if...
+
+
+```r
+getRevComp <- function(sequence){
+	rev.sequence <- paste(rev(unlist(strsplit(sequence, ""))), collapse="")
+	comp.rev.sequence <- chartr("ATGC", "TACG", rev.sequence)
+	dna <- comp.rev.sequence
+	return(comp.rev.sequence)
+}
+
+dna
+getRevComp(dna)
+dna
+```
+
+```
+## [1] "ATGCCTGACCTTTGCATACAA"
+## [1] "TTGTATGCAAAGGTCAGGCAT"
+## [1] "ATGCCTGACCTTTGCATACAA"
+```
+
+---
+
+## What's happening locally?
+
+
+```r
+ls()
+```
+
+```
+## [1] "dna"        "encoding"   "getRevComp" "inputFile"  "readPaper" 
+## [6] "wordCount"
+```
+
+---
+
+## Quick summary
+
+> * At the time `getRevComp` is created, there are the objects `rev.sequence` and `comp.rev.sequence` created within getRevComp, plus those objects from the environment `getRevComp` is sitting in, namely `dna`
+> * But it is important to note that the reverse is not true. The outermost environment is not affected by what goes on inside `getRevComp` (e.g. `dna` was n ot changed). This means that functions have no *side effects*
+> * So you can have name conflicts between the objects within and outside your functions, but this is generally not a good idea. Sometimes people will use `l_` as a prefix on all variables within a function.
+> * Upshot is that objects exist within a heirarchy
+
+---
+
+## How do we write up the heirarchy?
+
+* As we've seen we can only read variables from up the heirarchy. We can't write variables up the heirarchy
+* Unless we use the superassignment (`<<-`) operator
+
+
+```r
+getRevComp <- function(sequence){
+	rev.sequence <- paste(rev(unlist(strsplit(sequence, ""))), collapse="")
+	comp.rev.sequence <- chartr("ATGC", "TACG", rev.sequence)
+	dna <<- comp.rev.sequence
+	return(comp.rev.sequence)
+}
+dna
+getRevComp(dna)
+dna
+```
+
+```
+## [1] "ATGCCTGACCTTTGCATACAA"
+## [1] "TTGTATGCAAAGGTCAGGCAT"
+## [1] "TTGTATGCAAAGGTCAGGCAT"
+```
+
+---
+
+## Should you use the superassignment operator?
+
+* This creates **global variables**, which are controversial
+* Problems caused by potential side effects and difficulty debugging code
+* Benefits are that they can make the code easier to read/write
+
+> * Be careful
+
+--- .segue .dark
+
+## Questions?
