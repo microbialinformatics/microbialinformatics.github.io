@@ -98,6 +98,6 @@ Class	|	Date	|	Topic	|	Reading
 	|	11/27	|	Thanksgiving (no class)	|
 	|	11/28	|	Thanksgiving (no class)	|
 27	|	12/2	|	[Testing (27 slides)](slides/Lecture27)	|
-28	|	12/4	|	[Testing / Variable scoping](slides/Lecture28)	|
+28	|	12/4	|	[Testing / Variable scoping (22 slides)](slides/Lecture28)	| TAoRP 7
 29	|	12/5	|	Conclusion	|
 30	|	12/9	| No class - work on projects |
