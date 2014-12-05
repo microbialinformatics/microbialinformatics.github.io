@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Microbial Informatics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Microbial Informatics">
+  <meta name="author" content="Patrick D. Schloss, PhD (microbialinformatics.github.io)">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/my.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="./assets/css/slidify.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/slides" 
+    src="http://slidifylibraries2.googlecode.com/git/inst/libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Microbial Informatics</h1>
+    <h2>Lecture 29</h2>
+    <p>Patrick D. Schloss, PhD (microbialinformatics.github.io)<br/>Department of Microbiology &amp; Immunology</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Announcements</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Final project (due 12/16/2014)
+
+<ul>
+<li>Should be a program that others can use to do something useful (I have ideas if you need one, but really...)</li>
+<li>Would be smart to include a test file</li>
+<li>Create a public repository with documentation in README file and license</li>
+</ul></li>
+<li>Will have class on Friday, but not next Tuesday</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Review</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>We&#39;ve talked a lot about the R programming language and how we can do it to
+do useful things and help with our analyses</li>
+<li>The tools you have now will enable you to do many many things</li>
+<li>TDD is a software development process that results in a rapid development cycle</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Learning objectives</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Variable scoping</li>
+<li>Software licensing</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Variable scoping</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>To this point we&#39;ve largely ignored the issue of where our variables live and where they&#39;re &quot;allowed to go&quot;</li>
+<li>This has to do with a concept of variable scoping and the various environments that are used within R</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Consider this example...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">dna &lt;- &quot;ATGCCTGACCTTTGCATACAA&quot;
+
+getRevComp &lt;- function(sequence){
+    rev.sequence &lt;- paste(rev(unlist(strsplit(sequence, &quot;&quot;))), collapse=&quot;&quot;)
+    comp.rev.sequence &lt;- chartr(&quot;ATGC&quot;, &quot;TACG&quot;, rev.sequence)
+    return(comp.rev.sequence)
+}
+</code></pre>
+
+<ul>
+<li>Where can <code>dna</code> be used?</li>
+<li>Where can <code>getRevComp</code> be used?</li>
+<li>Where can <code>rev.sequence</code> be used?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>What happens if...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">getRevComp &lt;- function(sequence){
+    rev.sequence &lt;- paste(rev(unlist(strsplit(sequence, &quot;&quot;))), collapse=&quot;&quot;)
+    comp.rev.sequence &lt;- chartr(&quot;ATGC&quot;, &quot;TACG&quot;, rev.sequence)
+    print(dna, &quot;&quot;)  &lt;----
+    return(comp.rev.sequence)
+}
+getRevComp(dna)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>What happens if...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">rev.sequence
+</code></pre>
+
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;rev.sequence&#39; not found
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>What happens if...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">getRevComp &lt;- function(sequence){
+    rev.sequence &lt;- paste(rev(unlist(strsplit(sequence, &quot;&quot;))), collapse=&quot;&quot;)
+    comp.rev.sequence &lt;- chartr(&quot;ATGC&quot;, &quot;TACG&quot;, rev.sequence)
+    dna &lt;- comp.rev.sequence
+    return(comp.rev.sequence)
+}
+
+dna
+getRevComp(dna)
+dna
+</code></pre>
+
+<pre><code>## [1] &quot;ATGCCTGACCTTTGCATACAA&quot;
+## [1] &quot;TTGTATGCAAAGGTCAGGCAT&quot;
+## [1] &quot;ATGCCTGACCTTTGCATACAA&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>What&#39;s happening locally?</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">ls()
+</code></pre>
+
+<pre><code>## [1] &quot;dna&quot;        &quot;encoding&quot;   &quot;getRevComp&quot; &quot;inputFile&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Quick summary</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li>At the time <code>getRevComp</code> is created, there are the objects <code>rev.sequence</code> and <code>comp.rev.sequence</code> created within getRevComp, plus those objects from the environment <code>getRevComp</code> is sitting in, namely <code>dna</code></li>
+<li>But it is important to note that the reverse is not true. The outermost environment is not affected by what goes on inside <code>getRevComp</code> (e.g. <code>dna</code> was n ot changed). This means that functions have no <em>side effects</em></li>
+<li>So you can have name conflicts between the objects within and outside your functions, but this is generally not a good idea. Sometimes people will use <code>l_</code> as a prefix on all variables within a function.</li>
+<li>Upshot is that objects exist within a heirarchy</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>How do we write up the heirarchy?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>As we&#39;ve seen we can only read variables from up the heirarchy. We can&#39;t write variables up the heirarchy</li>
+<li>Unless we use the superassignment (<code>&lt;&lt;-</code>) operator</li>
+</ul>
+
+<pre><code class="r">getRevComp &lt;- function(sequence){
+    rev.sequence &lt;- paste(rev(unlist(strsplit(sequence, &quot;&quot;))), collapse=&quot;&quot;)
+    comp.rev.sequence &lt;- chartr(&quot;ATGC&quot;, &quot;TACG&quot;, rev.sequence)
+    dna &lt;&lt;- comp.rev.sequence
+    return(comp.rev.sequence)
+}
+dna
+getRevComp(dna)
+dna
+</code></pre>
+
+<pre><code>## [1] &quot;ATGCCTGACCTTTGCATACAA&quot;
+## [1] &quot;TTGTATGCAAAGGTCAGGCAT&quot;
+## [1] &quot;TTGTATGCAAAGGTCAGGCAT&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>Should you use the superassignment operator?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>This creates <strong>global variables</strong>, which are controversial</li>
+<li>Problems caused by potential side effects and difficulty debugging code</li>
+<li>Benefits are that they can make the code easier to read/write</li>
+</ul>
+
+<ul class = "build incremental">
+<li>Be careful</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2><a href="http://www.astrobetter.com/the-whys-and-hows-of-licensing-scientific-code/">Licensing</a></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>A legally-binding agreement which governs the use and redistribution of software</li>
+<li>Can range from being proprietary (e.g. M$ Windows/OS X) to open source (e.g. Linux/R)</li>
+<li>You need a license</li>
+</ul>
+
+<h2><a href="http://www.howtogeek.com/howto/31717/what-do-the-phrases-free-speech-vs.-free-beer-really-mean/">Cost of code</a></h2>
+
+<ul>
+<li>Can be $$$ or free (as in speech) or free (as in beer)</li>
+<li>Beer
+
+<ul>
+<li>No cost</li>
+<li>No expectations of how used</li>
+<li>Source code not necessarily open (e.g. Java)</li>
+</ul></li>
+<li>Speech
+
+<ul>
+<li>Free to use as you want</li>
+<li>Free to see how it works</li>
+<li>Free to distribute how you&#39;d like</li>
+<li>Free to improve</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2><a href="http://www.astrobetter.com/the-whys-and-hows-of-licensing-scientific-code/">Why do you need a license on your code?</a></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>&quot;Unlicensed code is closed code, so any open license is better than none&quot;</li>
+<li>If you want others to see and use your code (which is why you&#39;re doing it), then you need a license</li>
+<li>Once you select a license, include it with your code - GitHub will provide you with a license</li>
+<li>You generally want to use a Free and Open Source Software (FOSS) license</li>
+<li>You do not necessarily lose copywright protecton</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2><a href="http://www.astrobetter.com/the-whys-and-hows-of-licensing-scientific-code/">Use a GNU Public License (GPL)-compatible license</a></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><a href="http://www.gnu.org/licenses/gpl.html">GPL License</a></li>
+<li>Guarantees the freedom of users to use, copy, and modify code</li>
+<li>Copyrights are maintained</li>
+<li>May charge for software or (re)distribute for free</li>
+<li>May only be combined with other code that uses GPL</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2><a href="http://www.astrobetter.com/the-whys-and-hows-of-licensing-scientific-code/">Use a permissive, BSD/MIT-style license</a></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><a href="http://opensource.org/licenses/BSD-2-Clause">BSD</a>/<a href="http://opensource.org/licenses/MIT">MIT</a> licenses are compatible with a GPL license</li>
+<li>Copyrights are maintained</li>
+<li>May be combined with code using any other license</li>
+<li>Easier for others (including commercial companies) to incorporate your work</li>
+<li>Minimal difference between BSD and MIT licenses</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>Conclusion</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Reproducible research is critical to doing good science</li>
+<li>Making data analysis scripts and other code open is critical to reproduciblity</li>
+<li>R is a great tool for doing your analysis</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>Going forward</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Learn another language (Python)</li>
+<li>Datbases (SQL)</li>
+<li>Evangelize to your labmates and PI
+
+<ul>
+<li>Use collaborative features within GitHub</li>
+<li>Develop and distribute your code</li>
+<li>Work on another groups prooject</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="segue dark" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Questions?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Announcements'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Review'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Learning objectives'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Variable scoping'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Consider this example...'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='What happens if...'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='What happens if...'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='What happens if...'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='What&#39;s happening locally?'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Quick summary'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='How do we write up the heirarchy?'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Should you use the superassignment operator?'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='<a href="http://www.astrobetter.com/the-whys-and-hows-of-licensing-scientific-code/">Licensing</a>'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='<a href="http://www.astrobetter.com/the-whys-and-hows-of-licensing-scientific-code/">Why do you need a license on your code?</a>'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='<a href="http://www.astrobetter.com/the-whys-and-hows-of-licensing-scientific-code/">Use a GNU Public License (GPL)-compatible license</a>'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='<a href="http://www.astrobetter.com/the-whys-and-hows-of-licensing-scientific-code/">Use a permissive, BSD/MIT-style license</a>'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Conclusion'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Going forward'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Questions?'>
+         19
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="http://slidifylibraries2.googlecode.com/git/inst/libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
