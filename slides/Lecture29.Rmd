@@ -159,6 +159,7 @@ dna
 * Can range from being proprietary (e.g. M$ Windows/OS X) to open source (e.g. Linux/R)
 * You need a license
 
+---
 
 ## [Cost of code](http://www.howtogeek.com/howto/31717/what-do-the-phrases-free-speech-vs.-free-beer-really-mean/)
 
