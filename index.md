@@ -45,6 +45,7 @@ The following links go to github repositories that have the homework assignments
 The following links go to github repositories that have the two projects for the course. Each project accounts for 25% of the grade:
 
 * [Project 01](https://github.com/microbialinformatics/project1): Data analysis (Due 10/24/2014)
+* [Project 02](https://github.com/microbialinformatics/project2): Software engineering (Due 12/16/2014)
 
 ----
 
